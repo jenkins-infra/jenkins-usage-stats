@@ -7,6 +7,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"io/ioutil"
+	"strings"
 )
 
 func ParseDailyJSON(filename string) ([]*JSONReport, error) {
@@ -30,8 +31,19 @@ func ParseDailyJSON(filename string) ([]*JSONReport, error) {
 		if err != nil {
 			return nil, err
 		}
+		FilterPrivateFromReport(r)
 		reports = append(reports, r)
 	}
 
 	return reports, nil
+}
+
+func FilterPrivateFromReport(r *JSONReport) {
+	var plugins []JSONPlugin
+	for _, p := range r.Plugins {
+		if !strings.HasPrefix(p.Name, "privateplugin-") && !strings.Contains(p.Version, "(private)") {
+			plugins = append(plugins, p)
+		}
+	}
+	r.Plugins = plugins
 }
