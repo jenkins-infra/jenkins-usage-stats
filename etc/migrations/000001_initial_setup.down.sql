@@ -1,0 +1,9 @@
+drop table nodes;
+drop table jvm_versions;
+drop table os_types;
+drop table job_reports;
+drop table job_types;
+drop table plugin_reports;
+drop table plugins;
+drop table instance_reports;
+drop table jenkins_versions;
