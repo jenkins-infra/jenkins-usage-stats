@@ -4,6 +4,8 @@ import (
 	"database/sql"
 	"time"
 
+	"github.com/hashicorp/go-multierror"
+
 	"github.com/jmoiron/sqlx"
 )
 
@@ -229,11 +231,11 @@ func AddReport(db *sqlx.DB, jsonReport *JSONReport) error {
 			report.ServletContainer,
 			1)
 		if err != nil {
-			return err
+			return handleDBError(db, err)
 		}
 		insertID, err := result.LastInsertId()
 		if err != nil {
-			return err
+			return handleDBError(db, err)
 		}
 		report.ID = uint64(insertID)
 	} else {
@@ -245,32 +247,32 @@ SET report_time = ?,
 WHERE id = ?
 `, report.ReportTime, report.Version, report.ServletContainer, report.CountForMonth+1, report.ID)
 		if err != nil {
-			return err
+			return handleDBError(db, err)
 		}
 
 		// Delete the existing plugin, job, and node reports for the existing report ID
 		_, err = tx.Exec("DELETE FROM plugin_reports WHERE report_id = ?", report.ID)
 		if err != nil {
-			return err
+			return handleDBError(db, err)
 		}
 		_, err = tx.Exec("DELETE FROM job_reports WHERE report_id = ?", report.ID)
 		if err != nil {
-			return err
+			return handleDBError(db, err)
 		}
 		_, err = tx.Exec("DELETE FROM nodes WHERE report_id = ?", report.ID)
 		if err != nil {
-			return err
+			return handleDBError(db, err)
 		}
 	}
 
 	for _, jsonPlugin := range jsonReport.Plugins {
 		pluginID, err := GetPluginID(tx, jsonPlugin.Name, jsonPlugin.Version)
 		if err != nil {
-			return err
+			return handleDBError(db, err)
 		}
 		_, err = tx.Exec("INSERT INTO plugin_reports (report_id, plugin_id) VALUES (?, ?)", report.ID, pluginID)
 		if err != nil {
-			return err
+			return handleDBError(db, err)
 		}
 	}
 
@@ -278,11 +280,11 @@ WHERE id = ?
 		if count != 0 {
 			jobTypeID, err := GetJobTypeID(tx, jobType)
 			if err != nil {
-				return err
+				return handleDBError(db, err)
 			}
 			_, err = tx.Exec("INSERT INTO job_reports (report_id, job_type_id, count) VALUES (?, ?, ?)", report.ID, jobTypeID, count)
 			if err != nil {
-				return err
+				return handleDBError(db, err)
 			}
 		}
 	}
@@ -290,11 +292,11 @@ WHERE id = ?
 	for _, jsonNode := range jsonReport.Nodes {
 		jvmVersionID, err := GetJVMVersionID(tx, jsonNode.JVMVersion)
 		if err != nil {
-			return err
+			return handleDBError(db, err)
 		}
 		osTypeID, err := GetOSTypeID(tx, jsonNode.OS)
 		if err != nil {
-			return err
+			return handleDBError(db, err)
 		}
 		_, err = tx.Exec("INSERT INTO nodes (report_id, os_id, jvm_version_id, executors, jvm_name, jvm_vendor, is_controller) VALUES (?, ?, ?, ?, ?, ?, ?)",
 			report.ID,
@@ -305,9 +307,23 @@ WHERE id = ?
 			jsonNode.JVMVendor,
 			jsonNode.IsController)
 		if err != nil {
-			return err
+			return handleDBError(db, err)
 		}
 	}
 
-	return nil
+	return tx.Commit()
+}
+
+func handleDBError(db dbInterface, dbErr error) error {
+	var errs error
+	errs = multierror.Append(errs, dbErr)
+	tx, ok := db.(*sqlx.Tx)
+	if ok {
+		err := tx.Rollback()
+		if err != nil {
+			errs = multierror.Append(errs, err)
+		}
+	}
+
+	return errs
 }
