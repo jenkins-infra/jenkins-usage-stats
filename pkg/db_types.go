@@ -73,6 +73,7 @@ type NodeReport struct {
 type dbInterface interface {
 	Get(dest interface{}, query string, args ...interface{}) error
 	Exec(query string, args ...interface{}) (sql.Result, error)
+	Query(query string, args ...interface{}) (*sql.Rows, error)
 }
 
 func GetJVMVersionID(db dbInterface, name string) (uint64, error) {
@@ -326,4 +327,27 @@ func handleDBError(db dbInterface, dbErr error) error {
 	}
 
 	return errs
+}
+
+func GetInstallCountForVersions(db dbInterface, year, month string) (map[string]uint64, error) {
+	results, err := db.Query("SELECT jenkins_versions.version, COUNT(*) AS number FROM jenkins_versions inner join instance_reports on jenkins_versions.id = instance_reports.version WHERE instance_reports.year=? AND instance_reports.month=? GROUP BY jenkins_versions.version", year, month)
+	if err != nil {
+		return nil, err
+	}
+	defer func() {
+		_ = results.Close()
+	}()
+
+	versionMap := make(map[string]uint64)
+	for results.Next() {
+		var v string
+		var c uint64
+		err := results.Scan(&v, &c)
+		if err != nil {
+			return nil, err
+		}
+		versionMap[v] = c
+	}
+
+	return versionMap, nil
 }
