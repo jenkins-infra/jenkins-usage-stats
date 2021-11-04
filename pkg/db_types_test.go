@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"log"
 	"os"
+	"path/filepath"
 	"testing"
 
 	_ "github.com/lib/pq"
@@ -125,6 +126,34 @@ func TestGetPluginID(t *testing.T) {
 	otherPluginID, err := pkg.GetPluginID(db, secondName, firstVer)
 	require.NoError(t, err)
 	assert.NotEqual(t, firstID, otherPluginID)
+}
+
+func TestAddReport(t *testing.T) {
+	db, closeFunc := DBForTest(t)
+	defer closeFunc()
+
+	initialFile := filepath.Join("testdata", "base.json.gz")
+	jsonReports, err := pkg.ParseDailyJSON(initialFile)
+	require.NoError(t, err)
+
+	for _, jr := range jsonReports {
+		require.NoError(t, pkg.AddReport(db, jr))
+	}
+
+	result, err := pkg.PSQL().Select("count(*)").
+		From("instance_reports").
+		RunWith(db).
+		Query()
+	require.NoError(t, err)
+
+	var counts []int
+	for result.Next() {
+		var c int
+		require.NoError(t, result.Scan(&c))
+		counts = append(counts, c)
+	}
+	require.Len(t, counts, 1)
+	require.Equal(t, 2, counts[0])
 }
 
 // Fataler interface has a single method Fatal, which takes

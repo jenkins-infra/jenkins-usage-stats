@@ -193,7 +193,7 @@ func AddReport(db *sqlx.DB, jsonReport *JSONReport) error {
 	insertRow := false
 
 	// Check if there's an existing report.
-	var report *InstanceReport
+	var report InstanceReport
 	err = db.Get(&report, "SELECT * FROM instance_reports WHERE instance_id = $1 and year = $2 and month = $3",
 		jsonReport.Install,
 		ts.Year(),
