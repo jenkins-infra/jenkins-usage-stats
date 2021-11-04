@@ -101,7 +101,7 @@ func GetJVMVersionID(db dbInterface, name string) (uint64, error) {
 }
 
 func GetOSTypeID(db dbInterface, name string) (uint64, error) {
-	var row *OSType
+	var row OSType
 	err := db.Get(&row, "SELECT * FROM os_types where name = $1", name)
 	if err == sql.ErrNoRows {
 		stmt, err := db.Preparex("INSERT INTO os_types (name) VALUES ($1) RETURNING id")
@@ -122,7 +122,7 @@ func GetOSTypeID(db dbInterface, name string) (uint64, error) {
 }
 
 func GetJobTypeID(db dbInterface, name string) (uint64, error) {
-	var row *JobType
+	var row JobType
 	err := db.Get(&row, "SELECT * FROM job_types where name = $1", name)
 	if err == sql.ErrNoRows {
 		stmt, err := db.Preparex("INSERT INTO job_types (name) VALUES ($1) RETURNING id")
@@ -143,7 +143,7 @@ func GetJobTypeID(db dbInterface, name string) (uint64, error) {
 }
 
 func GetJenkinsVersionID(db dbInterface, version string) (uint64, error) {
-	var row *JenkinsVersion
+	var row JenkinsVersion
 	err := db.Get(&row, "SELECT * FROM jenkins_versions where version = $1", version)
 	if err == sql.ErrNoRows {
 		stmt, err := db.Preparex("INSERT INTO jenkins_versions (version) VALUES ($1) RETURNING id")
@@ -164,7 +164,7 @@ func GetJenkinsVersionID(db dbInterface, version string) (uint64, error) {
 }
 
 func GetPluginID(db dbInterface, name, version string) (uint64, error) {
-	var row *Plugin
+	var row Plugin
 	err := db.Get(&row, "SELECT * FROM plugins where name = $1 and version = $2", name, version)
 	if err == sql.ErrNoRows {
 		stmt, err := db.Preparex("INSERT INTO plugins (name, version) VALUES ($1, $2) RETURNING id")
@@ -233,7 +233,7 @@ func AddReport(db *sqlx.DB, jsonReport *JSONReport) error {
 	if insertRow {
 		stmt, err := tx.Preparex("INSERT INTO instance_reports (instance_id, report_time, year, month, version, servlet_container, count_for_month) VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING id")
 		if err != nil {
-			return handleDBError(db, err)
+			return HandleErrorInTx(db, err)
 		}
 		var insertID int
 		err = stmt.Get(&insertID,
@@ -245,7 +245,7 @@ func AddReport(db *sqlx.DB, jsonReport *JSONReport) error {
 			report.ServletContainer,
 			1)
 		if err != nil {
-			return handleDBError(db, err)
+			return HandleErrorInTx(db, err)
 		}
 		report.ID = uint64(insertID)
 	} else {
@@ -257,32 +257,32 @@ SET report_time = $1,
 WHERE id = $5
 `, report.ReportTime, report.Version, report.ServletContainer, report.CountForMonth+1, report.ID)
 		if err != nil {
-			return handleDBError(db, err)
+			return HandleErrorInTx(db, err)
 		}
 
 		// Delete the existing plugin, job, and node reports for the existing report ID
 		_, err = tx.Exec("DELETE FROM plugin_reports WHERE report_id = $1", report.ID)
 		if err != nil {
-			return handleDBError(db, err)
+			return HandleErrorInTx(db, err)
 		}
 		_, err = tx.Exec("DELETE FROM job_reports WHERE report_id = $1", report.ID)
 		if err != nil {
-			return handleDBError(db, err)
+			return HandleErrorInTx(db, err)
 		}
 		_, err = tx.Exec("DELETE FROM nodes WHERE report_id = $1", report.ID)
 		if err != nil {
-			return handleDBError(db, err)
+			return HandleErrorInTx(db, err)
 		}
 	}
 
 	for _, jsonPlugin := range jsonReport.Plugins {
 		pluginID, err := GetPluginID(tx, jsonPlugin.Name, jsonPlugin.Version)
 		if err != nil {
-			return handleDBError(db, err)
+			return HandleErrorInTx(db, err)
 		}
 		_, err = tx.Exec("INSERT INTO plugin_reports (report_id, plugin_id) VALUES ($1, $2)", report.ID, pluginID)
 		if err != nil {
-			return handleDBError(db, err)
+			return HandleErrorInTx(db, err)
 		}
 	}
 
@@ -290,11 +290,11 @@ WHERE id = $5
 		if count != 0 {
 			jobTypeID, err := GetJobTypeID(tx, jobType)
 			if err != nil {
-				return handleDBError(db, err)
+				return HandleErrorInTx(db, err)
 			}
 			_, err = tx.Exec("INSERT INTO job_reports (report_id, job_type_id, count) VALUES ($1, $2, $3)", report.ID, jobTypeID, count)
 			if err != nil {
-				return handleDBError(db, err)
+				return HandleErrorInTx(db, err)
 			}
 		}
 	}
@@ -302,11 +302,11 @@ WHERE id = $5
 	for _, jsonNode := range jsonReport.Nodes {
 		jvmVersionID, err := GetJVMVersionID(tx, jsonNode.JVMVersion)
 		if err != nil {
-			return handleDBError(db, err)
+			return HandleErrorInTx(db, err)
 		}
 		osTypeID, err := GetOSTypeID(tx, jsonNode.OS)
 		if err != nil {
-			return handleDBError(db, err)
+			return HandleErrorInTx(db, err)
 		}
 		_, err = tx.Exec("INSERT INTO nodes (report_id, os_id, jvm_version_id, executors, jvm_name, jvm_vendor, is_controller) VALUES ($1, $2, $3, $4, $5, $6, $7)",
 			report.ID,
@@ -317,14 +317,14 @@ WHERE id = $5
 			jsonNode.JVMVendor,
 			jsonNode.IsController)
 		if err != nil {
-			return handleDBError(db, err)
+			return HandleErrorInTx(db, err)
 		}
 	}
 
 	return tx.Commit()
 }
 
-func handleDBError(db dbInterface, dbErr error) error {
+func HandleErrorInTx(db dbInterface, dbErr error) error {
 	var errs error
 	errs = multierror.Append(errs, dbErr)
 	tx, ok := db.(*sqlx.Tx)
