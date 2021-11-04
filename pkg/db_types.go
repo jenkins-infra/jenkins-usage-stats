@@ -4,6 +4,8 @@ import (
 	"database/sql"
 	"time"
 
+	sq "github.com/Masterminds/squirrel"
+
 	"github.com/hashicorp/go-multierror"
 
 	"github.com/jmoiron/sqlx"
@@ -329,20 +331,27 @@ func handleDBError(db dbInterface, dbErr error) error {
 	return errs
 }
 
-func GetInstallCountForVersions(db dbInterface, year, month string) (map[string]uint64, error) {
-	results, err := db.Query("SELECT jenkins_versions.version, COUNT(*) AS number FROM jenkins_versions inner join instance_reports on jenkins_versions.id = instance_reports.version WHERE instance_reports.year=? AND instance_reports.month=? GROUP BY jenkins_versions.version", year, month)
+func GetInstallCountForVersions(db sq.BaseRunner, year, month string) (map[string]uint64, error) {
+	rows, err := PSQL().Select("jenkins_versions.version as version", "count(*) as number").
+		From("instance_reports").
+		Join("jenkins_versions on instance_reports.version = jenkins_versions.id").
+		Where(sq.Eq{"instance_reports.year": year}).
+		Where(sq.Eq{"instance_reports.month": month}).
+		GroupBy("version").
+		RunWith(db).
+		Query()
 	if err != nil {
 		return nil, err
 	}
 	defer func() {
-		_ = results.Close()
+		_ = rows.Close()
 	}()
 
 	versionMap := make(map[string]uint64)
-	for results.Next() {
+	for rows.Next() {
 		var v string
 		var c uint64
-		err := results.Scan(&v, &c)
+		err := rows.Scan(&v, &c)
 		if err != nil {
 			return nil, err
 		}
@@ -350,4 +359,72 @@ func GetInstallCountForVersions(db dbInterface, year, month string) (map[string]
 	}
 
 	return versionMap, nil
+}
+
+func GetPluginCounts(db sq.BaseRunner, year, month string) (map[string]uint64, error) {
+	rows, err := PSQL().Select("plugins.name as name", "count(*) as number").
+		From("plugin_reports").
+		Join("plugins on plugin_reports.plugin_id = plugins.id").
+		Join("instance_reports on plugin_reports.report_id = instance_reports.id").
+		Where(sq.Eq{"instance_reports.year": year}).
+		Where(sq.Eq{"instance_reports.month": month}).
+		GroupBy("name").
+		RunWith(db).
+		Query()
+	if err != nil {
+		return nil, err
+	}
+	defer func() {
+		_ = rows.Close()
+	}()
+
+	pluginMap := make(map[string]uint64)
+	for rows.Next() {
+		var p string
+		var c uint64
+		err := rows.Scan(&p, &c)
+		if err != nil {
+			return nil, err
+		}
+		pluginMap[p] = c
+	}
+
+	return pluginMap, nil
+}
+
+func GetCapabilities(db sq.BaseRunner, year, month string) (map[string]uint64, error) {
+	rows, err := PSQL().Select("jenkins_versions.version as version", "count(*) as number").
+		From("instance_reports").
+		Join("jenkins_versions on instance_reports.version = jenkins_versions.id").
+		Where(sq.Eq{"instance_reports.year": year}).
+		Where(sq.Eq{"instance_reports.month": month}).
+		GroupBy("version").
+		OrderBy("version DESC").
+		RunWith(db).
+		Query()
+	if err != nil {
+		return nil, err
+	}
+	defer func() {
+		_ = rows.Close()
+	}()
+
+	higherCapabilityCount := uint64(0)
+	versionMap := make(map[string]uint64)
+	for rows.Next() {
+		var p string
+		var c uint64
+		err := rows.Scan(&p, &c)
+		if err != nil {
+			return nil, err
+		}
+		versionMap[p] = c + higherCapabilityCount
+	}
+
+	return versionMap, nil
+}
+
+// PSQL is a postgresql squirrel statement builder
+func PSQL() sq.StatementBuilderType {
+	return sq.StatementBuilder.PlaceholderFormat(sq.Dollar)
 }

@@ -32,6 +32,7 @@ func ParseDailyJSON(filename string) ([]*JSONReport, error) {
 			return nil, err
 		}
 		FilterPrivateFromReport(r)
+		StandardizeJVMVersions(r)
 		reports = append(reports, r)
 	}
 
@@ -46,4 +47,19 @@ func FilterPrivateFromReport(r *JSONReport) {
 		}
 	}
 	r.Plugins = plugins
+}
+
+func StandardizeJVMVersions(r *JSONReport) {
+	var nodes []JSONNode
+	for _, n := range r.Nodes {
+		fullVersion := n.JVMVersion
+		if strings.HasPrefix(fullVersion, "1.") {
+			n.JVMVersion = fullVersion[0:3]
+		} else {
+			splitVersion := strings.Split(fullVersion, ".")
+			n.JVMVersion = splitVersion[0]
+		}
+		nodes = append(nodes, n)
+	}
+	r.Nodes = nodes
 }
