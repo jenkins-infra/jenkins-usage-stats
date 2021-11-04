@@ -5,7 +5,6 @@ import (
 	"bytes"
 	"compress/gzip"
 	"encoding/json"
-	"fmt"
 	"io/ioutil"
 	"strings"
 )
@@ -26,7 +25,6 @@ func ParseDailyJSON(filename string) ([]*JSONReport, error) {
 
 	for scanner.Scan() {
 		var r *JSONReport
-		fmt.Printf("line: %s\n", scanner.Text())
 		err = json.Unmarshal(scanner.Bytes(), &r)
 		if err != nil {
 			return nil, err

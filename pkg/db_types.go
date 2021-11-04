@@ -41,8 +41,8 @@ type InstanceReport struct {
 	ID               uint64         `db:"id"`
 	InstanceID       string         `db:"instance_id"`
 	ReportTime       time.Time      `db:"report_time"`
-	Year             uint8          `db:"year"`
-	Month            uint8          `db:"month"`
+	Year             uint16         `db:"year"`
+	Month            uint16         `db:"month"`
 	Version          uint64         `db:"version"`
 	ServletContainer sql.NullString `db:"servlet_container"`
 	CountForMonth    uint64         `db:"count_for_month"`
@@ -202,8 +202,8 @@ func AddReport(db *sqlx.DB, jsonReport *JSONReport) error {
 		if err == sql.ErrNoRows {
 			insertRow = true
 			report.InstanceID = jsonReport.Install
-			report.Year = uint8(ts.Year())
-			report.Month = uint8(ts.Month())
+			report.Year = uint16(ts.Year())
+			report.Month = uint16(ts.Month())
 		} else {
 			return err
 		}

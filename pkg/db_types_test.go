@@ -155,10 +155,35 @@ func TestAddReport(t *testing.T) {
 	require.Len(t, counts, 1)
 	require.Equal(t, 2, counts[0])
 
+	unchangedInstanceID := "b072fa1e15fa4529001bb1ab81a7c2f2af63284811f4f9d6c2bc511f797218c8"
+	updatedInstanceID := "32b68faa8644852c4ad79540b4bfeb1caf63284811f4f9d6c2bc511f797218c8"
+
+	// Get the job type IDs for "com-tikal-jenkins-plugins-multijob-MultiJobProject" and "hudson-matrix-MatrixProject"
+	multiJobID, err := pkg.GetJobTypeID(db, "com-tikal-jenkins-plugins-multijob-MultiJobProject")
+	require.NoError(t, err)
+	matrixJobID, err := pkg.GetJobTypeID(db, "hudson-matrix-MatrixProject")
+	require.NoError(t, err)
+
 	var firstReports []pkg.InstanceReport
 	require.NoError(t, db.Select(&firstReports, "SELECT * FROM instance_reports order by instance_id asc"))
 
 	firstJobsForReports, firstNodesForReports, firstPluginsForReports := getSubReports(t, db, firstReports)
+
+	// There should be 11 MultiJobs in the initial report
+	assert.Equal(t, 11, int(firstJobsForReports[updatedInstanceID][multiJobID]))
+	// There should be 0 MatrixProjects in the initial report
+	assert.Equal(t, 0, int(firstJobsForReports[updatedInstanceID][matrixJobID]))
+
+	var unchangedFirstReport pkg.InstanceReport
+	var updatedFirstReport pkg.InstanceReport
+	for _, r := range firstReports {
+		switch r.InstanceID {
+		case unchangedInstanceID:
+			unchangedFirstReport = r
+		case updatedInstanceID:
+			updatedFirstReport = r
+		}
+	}
 
 	secondFile := filepath.Join("testdata", "day-later.json.gz")
 	dayLaterReports, err := pkg.ParseDailyJSON(secondFile)
@@ -173,31 +198,49 @@ func TestAddReport(t *testing.T) {
 
 	secondJobsForReports, secondNodesForReports, secondPluginsForReports := getSubReports(t, db, secondReports)
 
-	unchangedInstanceID := "b072fa1e15fa4529001bb1ab81a7c2f2af63284811f4f9d6c2bc511f797218c8"
-	updatedInstanceID := "32b68faa8644852c4ad79540b4bfeb1caf63284811f4f9d6c2bc511f797218c8"
+	var unchangedSecondReport pkg.InstanceReport
+	var updatedSecondReport pkg.InstanceReport
+	for _, r := range secondReports {
+		switch r.InstanceID {
+		case unchangedInstanceID:
+			unchangedSecondReport = r
+		case updatedInstanceID:
+			updatedSecondReport = r
+		}
+	}
 
+	assert.Equal(t, unchangedFirstReport, unchangedSecondReport)
 	assert.Equal(t, firstJobsForReports[unchangedInstanceID], secondJobsForReports[unchangedInstanceID])
 	assert.Equal(t, firstNodesForReports[unchangedInstanceID], secondNodesForReports[unchangedInstanceID])
 	assert.Equal(t, firstPluginsForReports[unchangedInstanceID], secondPluginsForReports[unchangedInstanceID])
 
-	assert.Equal(t, firstJobsForReports[updatedInstanceID], secondJobsForReports[updatedInstanceID])
-	assert.Equal(t, firstNodesForReports[updatedInstanceID], secondNodesForReports[updatedInstanceID])
-	assert.Equal(t, firstPluginsForReports[updatedInstanceID], secondPluginsForReports[updatedInstanceID])
+	assert.NotEqual(t, updatedFirstReport, updatedSecondReport)
+	assert.NotEqual(t, firstJobsForReports[updatedInstanceID], secondJobsForReports[updatedInstanceID])
+	assert.NotEqual(t, firstNodesForReports[updatedInstanceID], secondNodesForReports[updatedInstanceID])
+	assert.NotEqual(t, firstPluginsForReports[updatedInstanceID], secondPluginsForReports[updatedInstanceID])
+	// CountForMonth should be one higher
+	assert.Equal(t, updatedFirstReport.CountForMonth+1, updatedSecondReport.CountForMonth)
+	// There should be once less plugin in the second report
+	assert.Len(t, secondPluginsForReports[updatedInstanceID], len(firstPluginsForReports[updatedInstanceID])-1)
+	// There should be 0 MultiJobs
+	assert.Equal(t, 0, int(secondJobsForReports[updatedInstanceID][multiJobID]))
+	// There should be 10 MatrixProjects
+	assert.Equal(t, 10, int(secondJobsForReports[updatedInstanceID][matrixJobID]))
 }
 
-func getSubReports(t *testing.T, db *sqlx.DB, instanceReports []pkg.InstanceReport) (map[string][]pkg.JobReport, map[string][]pkg.NodeReport, map[string][]pkg.PluginReport) {
-	jobReports := make(map[string][]pkg.JobReport)
+func getSubReports(t *testing.T, db *sqlx.DB, instanceReports []pkg.InstanceReport) (map[string]map[uint64]uint64, map[string][]pkg.NodeReport, map[string][]pkg.PluginReport) {
+	jobReports := make(map[string]map[uint64]uint64)
 	nodeReports := make(map[string][]pkg.NodeReport)
 	pluginReports := make(map[string][]pkg.PluginReport)
 
 	for _, r := range instanceReports {
-		jobReports[r.InstanceID] = []pkg.JobReport{}
+		jobReports[r.InstanceID] = make(map[uint64]uint64)
 		var jobReport pkg.JobReport
 		jobRows, err := db.Queryx("SELECT * FROM job_reports where report_id = $1", r.ID)
 		require.NoError(t, err)
 		for jobRows.Next() {
 			require.NoError(t, jobRows.StructScan(&jobReport))
-			jobReports[r.InstanceID] = append(jobReports[r.InstanceID], jobReport)
+			jobReports[r.InstanceID][jobReport.JobTypeID] = jobReport.Count
 		}
 
 		nodeReports[r.InstanceID] = []pkg.NodeReport{}
