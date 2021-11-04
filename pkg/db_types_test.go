@@ -1,22 +1,38 @@
 package pkg_test
 
 import (
+	"database/sql"
 	"fmt"
 	"log"
 	"os"
+	"testing"
+
+	_ "github.com/lib/pq"
+	"github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/require"
 
 	sq "github.com/Masterminds/squirrel"
 	"github.com/abayer/jenkins-usage-stats/pkg"
 	"github.com/jmoiron/sqlx"
 )
 
-/*func TestGetJVMVersionID(t *testing.T) {
+func TestGetJVMVersionID(t *testing.T) {
 	db, closeFunc := DBForTest(t)
 	defer closeFunc()
 
-	firstVer := "1.12"
+	firstVer := "1.7"
+	//	secondVer := "13"
+
+	var fetchedVersion pkg.JVMVersion
+	err := db.Get(&fetchedVersion, "SELECT * FROM jvm_versions WHERE name = $1", firstVer)
+	require.Equal(t, sql.ErrNoRows, err)
+
+	firstID, err := pkg.GetJVMVersionID(db, firstVer)
+	require.NoError(t, err)
+	require.NoError(t, db.Get(&fetchedVersion, "SELECT * FROM jvm_versions WHERE name = $1", firstVer))
+	assert.Equal(t, firstID, fetchedVersion.ID)
 }
-*/
+
 // Fataler interface has a single method Fatal, which takes
 // a slice of arguments and is expected to panic.
 type Fataler interface {
