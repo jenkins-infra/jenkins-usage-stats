@@ -154,6 +154,72 @@ func TestAddReport(t *testing.T) {
 	}
 	require.Len(t, counts, 1)
 	require.Equal(t, 2, counts[0])
+
+	var firstReports []pkg.InstanceReport
+	require.NoError(t, db.Select(&firstReports, "SELECT * FROM instance_reports order by instance_id asc"))
+
+	firstJobsForReports, firstNodesForReports, firstPluginsForReports := getSubReports(t, db, firstReports)
+
+	secondFile := filepath.Join("testdata", "day-later.json.gz")
+	dayLaterReports, err := pkg.ParseDailyJSON(secondFile)
+	require.NoError(t, err)
+
+	for _, jr := range dayLaterReports {
+		require.NoError(t, pkg.AddReport(db, jr))
+	}
+
+	var secondReports []pkg.InstanceReport
+	require.NoError(t, db.Select(&secondReports, "SELECT * FROM instance_reports order by instance_id asc"))
+
+	secondJobsForReports, secondNodesForReports, secondPluginsForReports := getSubReports(t, db, secondReports)
+
+	unchangedInstanceID := "b072fa1e15fa4529001bb1ab81a7c2f2af63284811f4f9d6c2bc511f797218c8"
+	updatedInstanceID := "32b68faa8644852c4ad79540b4bfeb1caf63284811f4f9d6c2bc511f797218c8"
+
+	assert.Equal(t, firstJobsForReports[unchangedInstanceID], secondJobsForReports[unchangedInstanceID])
+	assert.Equal(t, firstNodesForReports[unchangedInstanceID], secondNodesForReports[unchangedInstanceID])
+	assert.Equal(t, firstPluginsForReports[unchangedInstanceID], secondPluginsForReports[unchangedInstanceID])
+
+	assert.Equal(t, firstJobsForReports[updatedInstanceID], secondJobsForReports[updatedInstanceID])
+	assert.Equal(t, firstNodesForReports[updatedInstanceID], secondNodesForReports[updatedInstanceID])
+	assert.Equal(t, firstPluginsForReports[updatedInstanceID], secondPluginsForReports[updatedInstanceID])
+}
+
+func getSubReports(t *testing.T, db *sqlx.DB, instanceReports []pkg.InstanceReport) (map[string][]pkg.JobReport, map[string][]pkg.NodeReport, map[string][]pkg.PluginReport) {
+	jobReports := make(map[string][]pkg.JobReport)
+	nodeReports := make(map[string][]pkg.NodeReport)
+	pluginReports := make(map[string][]pkg.PluginReport)
+
+	for _, r := range instanceReports {
+		jobReports[r.InstanceID] = []pkg.JobReport{}
+		var jobReport pkg.JobReport
+		jobRows, err := db.Queryx("SELECT * FROM job_reports where report_id = $1", r.ID)
+		require.NoError(t, err)
+		for jobRows.Next() {
+			require.NoError(t, jobRows.StructScan(&jobReport))
+			jobReports[r.InstanceID] = append(jobReports[r.InstanceID], jobReport)
+		}
+
+		nodeReports[r.InstanceID] = []pkg.NodeReport{}
+		var nodeReport pkg.NodeReport
+		nodeRows, err := db.Queryx("SELECT * FROM nodes where report_id = $1", r.ID)
+		require.NoError(t, err)
+		for nodeRows.Next() {
+			require.NoError(t, nodeRows.StructScan(&nodeReport))
+			nodeReports[r.InstanceID] = append(nodeReports[r.InstanceID], nodeReport)
+		}
+
+		pluginReports[r.InstanceID] = []pkg.PluginReport{}
+		var pluginReport pkg.PluginReport
+		pluginRows, err := db.Queryx("SELECT * FROM plugin_reports where report_id = $1", r.ID)
+		require.NoError(t, err)
+		for pluginRows.Next() {
+			require.NoError(t, pluginRows.StructScan(&pluginReport))
+			pluginReports[r.InstanceID] = append(pluginReports[r.InstanceID], pluginReport)
+		}
+	}
+
+	return jobReports, nodeReports, pluginReports
 }
 
 // Fataler interface has a single method Fatal, which takes
