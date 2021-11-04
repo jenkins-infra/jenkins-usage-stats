@@ -11,32 +11,38 @@ import (
 	"github.com/jmoiron/sqlx"
 )
 
+// JVMVersion represents a row in the jvm_versions table
 type JVMVersion struct {
 	ID   uint64 `db:"id"`
 	Name string `db:"name"`
 }
 
+// OSType represents a row in the os_types table
 type OSType struct {
 	ID   uint64 `db:"id"`
 	Name string `db:"name"`
 }
 
+// JobType represents a row in the job_types table
 type JobType struct {
 	ID   uint64 `db:"id"`
 	Name string `db:"name"`
 }
 
+// Plugin represents a row in the plugins table
 type Plugin struct {
 	ID      uint64 `db:"id"`
 	Name    string `db:"name"`
 	Version string `db:"version"`
 }
 
+// JenkinsVersion represents a row in the jenkins_versions table
 type JenkinsVersion struct {
 	ID      uint64 `db:"id"`
 	Version string `db:"version"`
 }
 
+// InstanceReport is a record of an individual instance's most recent report in a given month
 type InstanceReport struct {
 	ID               uint64         `db:"id"`
 	InstanceID       string         `db:"instance_id"`
@@ -48,12 +54,14 @@ type InstanceReport struct {
 	CountForMonth    uint64         `db:"count_for_month"`
 }
 
+// PluginReport is an individual plugin seen in a particular instance report
 type PluginReport struct {
 	ID       uint64 `db:"id"`
 	ReportID uint64 `db:"report_id"`
 	PluginID uint64 `db:"plugin_id"`
 }
 
+// JobReport is an individual job type and count seen in a particular instance report
 type JobReport struct {
 	ID        uint64 `db:"id"`
 	ReportID  uint64 `db:"report_id"`
@@ -61,6 +69,7 @@ type JobReport struct {
 	Count     uint64 `db:"count"`
 }
 
+// NodeReport is an individual node seen in a particular instance report
 type NodeReport struct {
 	ID           uint64         `db:"id"`
 	ReportID     uint64         `db:"report_id"`
@@ -79,6 +88,7 @@ type dbInterface interface {
 	Preparex(query string) (*sqlx.Stmt, error)
 }
 
+// GetJVMVersionID gets the ID for the row of this version if it exists, and creates it and returns the ID if not
 func GetJVMVersionID(db dbInterface, name string) (uint64, error) {
 	var row JVMVersion
 	err := db.Get(&row, "SELECT * FROM jvm_versions where name = $1", name)
@@ -100,6 +110,7 @@ func GetJVMVersionID(db dbInterface, name string) (uint64, error) {
 	return 0, err
 }
 
+// GetOSTypeID gets the ID for the row of this OS if it exists, and creates it and returns the ID if not
 func GetOSTypeID(db dbInterface, name string) (uint64, error) {
 	var row OSType
 	err := db.Get(&row, "SELECT * FROM os_types where name = $1", name)
@@ -121,6 +132,7 @@ func GetOSTypeID(db dbInterface, name string) (uint64, error) {
 	return 0, err
 }
 
+// GetJobTypeID gets the ID for the row of this job type if it exists, and creates it and returns the ID if not
 func GetJobTypeID(db dbInterface, name string) (uint64, error) {
 	var row JobType
 	err := db.Get(&row, "SELECT * FROM job_types where name = $1", name)
@@ -142,6 +154,7 @@ func GetJobTypeID(db dbInterface, name string) (uint64, error) {
 	return 0, err
 }
 
+// GetJenkinsVersionID gets the ID for the row of this version if it exists, and creates it and returns the ID if not
 func GetJenkinsVersionID(db dbInterface, version string) (uint64, error) {
 	var row JenkinsVersion
 	err := db.Get(&row, "SELECT * FROM jenkins_versions where version = $1", version)
@@ -163,6 +176,7 @@ func GetJenkinsVersionID(db dbInterface, version string) (uint64, error) {
 	return 0, err
 }
 
+// GetPluginID gets the ID for the row of this plugin/version if it exists, and creates it and returns the ID if not
 func GetPluginID(db dbInterface, name, version string) (uint64, error) {
 	var row Plugin
 	err := db.Get(&row, "SELECT * FROM plugins where name = $1 and version = $2", name, version)
@@ -184,6 +198,7 @@ func GetPluginID(db dbInterface, name, version string) (uint64, error) {
 	return 0, err
 }
 
+// AddReport adds/updates the JSON report to the database, along with all related tables.
 func AddReport(db *sqlx.DB, jsonReport *JSONReport) error {
 	ts, err := jsonReport.Timestamp()
 	if err != nil {
@@ -233,7 +248,7 @@ func AddReport(db *sqlx.DB, jsonReport *JSONReport) error {
 	if insertRow {
 		stmt, err := tx.Preparex("INSERT INTO instance_reports (instance_id, report_time, year, month, version, servlet_container, count_for_month) VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING id")
 		if err != nil {
-			return HandleErrorInTx(db, err)
+			return handleErrorInTx(db, err)
 		}
 		var insertID int
 		err = stmt.Get(&insertID,
@@ -245,7 +260,7 @@ func AddReport(db *sqlx.DB, jsonReport *JSONReport) error {
 			report.ServletContainer,
 			1)
 		if err != nil {
-			return HandleErrorInTx(db, err)
+			return handleErrorInTx(db, err)
 		}
 		report.ID = uint64(insertID)
 	} else {
@@ -257,32 +272,32 @@ SET report_time = $1,
 WHERE id = $5
 `, report.ReportTime, report.Version, report.ServletContainer, report.CountForMonth+1, report.ID)
 		if err != nil {
-			return HandleErrorInTx(db, err)
+			return handleErrorInTx(db, err)
 		}
 
 		// Delete the existing plugin, job, and node reports for the existing report ID
 		_, err = tx.Exec("DELETE FROM plugin_reports WHERE report_id = $1", report.ID)
 		if err != nil {
-			return HandleErrorInTx(db, err)
+			return handleErrorInTx(db, err)
 		}
 		_, err = tx.Exec("DELETE FROM job_reports WHERE report_id = $1", report.ID)
 		if err != nil {
-			return HandleErrorInTx(db, err)
+			return handleErrorInTx(db, err)
 		}
 		_, err = tx.Exec("DELETE FROM nodes WHERE report_id = $1", report.ID)
 		if err != nil {
-			return HandleErrorInTx(db, err)
+			return handleErrorInTx(db, err)
 		}
 	}
 
 	for _, jsonPlugin := range jsonReport.Plugins {
 		pluginID, err := GetPluginID(tx, jsonPlugin.Name, jsonPlugin.Version)
 		if err != nil {
-			return HandleErrorInTx(db, err)
+			return handleErrorInTx(db, err)
 		}
 		_, err = tx.Exec("INSERT INTO plugin_reports (report_id, plugin_id) VALUES ($1, $2)", report.ID, pluginID)
 		if err != nil {
-			return HandleErrorInTx(db, err)
+			return handleErrorInTx(db, err)
 		}
 	}
 
@@ -290,11 +305,11 @@ WHERE id = $5
 		if count != 0 {
 			jobTypeID, err := GetJobTypeID(tx, jobType)
 			if err != nil {
-				return HandleErrorInTx(db, err)
+				return handleErrorInTx(db, err)
 			}
 			_, err = tx.Exec("INSERT INTO job_reports (report_id, job_type_id, count) VALUES ($1, $2, $3)", report.ID, jobTypeID, count)
 			if err != nil {
-				return HandleErrorInTx(db, err)
+				return handleErrorInTx(db, err)
 			}
 		}
 	}
@@ -302,11 +317,11 @@ WHERE id = $5
 	for _, jsonNode := range jsonReport.Nodes {
 		jvmVersionID, err := GetJVMVersionID(tx, jsonNode.JVMVersion)
 		if err != nil {
-			return HandleErrorInTx(db, err)
+			return handleErrorInTx(db, err)
 		}
 		osTypeID, err := GetOSTypeID(tx, jsonNode.OS)
 		if err != nil {
-			return HandleErrorInTx(db, err)
+			return handleErrorInTx(db, err)
 		}
 		_, err = tx.Exec("INSERT INTO nodes (report_id, os_id, jvm_version_id, executors, jvm_name, jvm_vendor, is_controller) VALUES ($1, $2, $3, $4, $5, $6, $7)",
 			report.ID,
@@ -317,14 +332,14 @@ WHERE id = $5
 			jsonNode.JVMVendor,
 			jsonNode.IsController)
 		if err != nil {
-			return HandleErrorInTx(db, err)
+			return handleErrorInTx(db, err)
 		}
 	}
 
 	return tx.Commit()
 }
 
-func HandleErrorInTx(db dbInterface, dbErr error) error {
+func handleErrorInTx(db dbInterface, dbErr error) error {
 	var errs error
 	errs = multierror.Append(errs, dbErr)
 	tx, ok := db.(*sqlx.Tx)
@@ -338,6 +353,7 @@ func HandleErrorInTx(db dbInterface, dbErr error) error {
 	return errs
 }
 
+// GetInstallCountForVersions generates a map of Jenkins versions to install counts
 func GetInstallCountForVersions(db sq.BaseRunner, year, month string) (map[string]uint64, error) {
 	rows, err := PSQL().Select("jenkins_versions.version as version", "count(*) as number").
 		From("instance_reports").
@@ -368,6 +384,7 @@ func GetInstallCountForVersions(db sq.BaseRunner, year, month string) (map[strin
 	return versionMap, nil
 }
 
+// GetPluginCounts generates a map of plugin name and install counts
 func GetPluginCounts(db sq.BaseRunner, year, month string) (map[string]uint64, error) {
 	rows, err := PSQL().Select("plugins.name as name", "count(*) as number").
 		From("plugin_reports").
@@ -399,6 +416,7 @@ func GetPluginCounts(db sq.BaseRunner, year, month string) (map[string]uint64, e
 	return pluginMap, nil
 }
 
+// GetCapabilities generates a map of Jenkins versions and install counts for that version and all earlier ones
 func GetCapabilities(db sq.BaseRunner, year, month string) (map[string]uint64, error) {
 	rows, err := PSQL().Select("jenkins_versions.version as version", "count(*) as number").
 		From("instance_reports").

@@ -9,8 +9,9 @@ import (
 	"strings"
 )
 
+// ParseDailyJSON parses an individual day's gzipped JSON reports
 func ParseDailyJSON(filename string) ([]*JSONReport, error) {
-	gzippedJSON, err := ioutil.ReadFile(filename)
+	gzippedJSON, err := ioutil.ReadFile(filename) // #nosec
 	if err != nil {
 		return nil, err
 	}
@@ -30,13 +31,14 @@ func ParseDailyJSON(filename string) ([]*JSONReport, error) {
 			return nil, err
 		}
 		FilterPrivateFromReport(r)
-		StandardizeJVMVersions(r)
+		standardizeJVMVersions(r)
 		reports = append(reports, r)
 	}
 
 	return reports, nil
 }
 
+// FilterPrivateFromReport removes private plugins from the report
 func FilterPrivateFromReport(r *JSONReport) {
 	var plugins []JSONPlugin
 	for _, p := range r.Plugins {
@@ -47,7 +49,7 @@ func FilterPrivateFromReport(r *JSONReport) {
 	r.Plugins = plugins
 }
 
-func StandardizeJVMVersions(r *JSONReport) {
+func standardizeJVMVersions(r *JSONReport) {
 	var nodes []JSONNode
 	for _, n := range r.Nodes {
 		fullVersion := n.JVMVersion

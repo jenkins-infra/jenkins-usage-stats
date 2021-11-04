@@ -23,6 +23,7 @@ var (
 	}
 )
 
+// JSONNode is how a node report is represented in the JSON
 type JSONNode struct {
 	Executors    uint64 `json:"executors,omitempty"`
 	JVMName      string `json:"jvm-name,omitempty"`
@@ -32,11 +33,13 @@ type JSONNode struct {
 	OS           string `json:"os,omitempty"`
 }
 
+// JSONPlugin is how a plugin report is represented in the JSON
 type JSONPlugin struct {
 	Name    string `json:"name"`
 	Version string `json:"version"`
 }
 
+// JSONReport is how an instance report is represented in the JSON
 type JSONReport struct {
 	Install          string            `json:"install"`
 	Jobs             map[string]uint64 `json:"jobs"`
@@ -47,10 +50,12 @@ type JSONReport struct {
 	Version          string            `json:"version"`
 }
 
+// Timestamp parses the raw timestamp string on a report
 func (j *JSONReport) Timestamp() (time.Time, error) {
 	return time.Parse(time.RFC3339, JSONTimestampToRFC3339(j.TimestampString))
 }
 
+// JSONTimestampToRFC3339 converts the timestamp string in the raw reports into a form Go can parse
 func JSONTimestampToRFC3339(ts string) string {
 	withoutZone := strings.TrimSuffix(ts, " +0000")
 	splitDateAndTime := strings.SplitN(withoutZone, ":", 2)
