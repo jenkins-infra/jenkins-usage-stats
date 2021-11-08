@@ -2,8 +2,12 @@ package pkg
 
 import (
 	"fmt"
-	"strings"
+	"regexp"
 	"time"
+)
+
+const (
+	jsonReportDateRE = `(\d\d)\/(\w\w\w)\/(\d\d\d\d)\:(\d\d\:\d\d\:\d\d) ([\+\-]\d\d)(\d\d)`
 )
 
 var (
@@ -57,8 +61,11 @@ func (j *JSONReport) Timestamp() (time.Time, error) {
 
 // JSONTimestampToRFC3339 converts the timestamp string in the raw reports into a form Go can parse
 func JSONTimestampToRFC3339(ts string) string {
-	withoutZone := strings.TrimSuffix(ts, " +0000")
-	splitDateAndTime := strings.SplitN(withoutZone, ":", 2)
-	dayMonthYear := strings.Split(splitDateAndTime[0], "/")
-	return fmt.Sprintf("%s-%s-%sT%sZ", dayMonthYear[2], shortMonthToNumber[dayMonthYear[1]], dayMonthYear[0], splitDateAndTime[1])
+	re := regexp.MustCompile(jsonReportDateRE)
+	matches := re.FindAllStringSubmatch(ts, -1)
+	return fmt.Sprintf("%s-%s-%sT%s%s:%s", matches[0][3], shortMonthToNumber[matches[0][2]], matches[0][1], matches[0][4], matches[0][5], matches[0][6])
+	/*	withoutZone := strings.TrimSuffix(ts, " +0000")
+		splitDateAndTime := strings.SplitN(withoutZone, ":", 2)
+		dayMonthYear := strings.Split(splitDateAndTime[0], "/")
+		return fmt.Sprintf("%s-%s-%sT%sZ", dayMonthYear[2], shortMonthToNumber[dayMonthYear[1]], dayMonthYear[0], splitDateAndTime[1])*/
 }

@@ -14,26 +14,28 @@ import (
 
 	sq "github.com/Masterminds/squirrel"
 	"github.com/abayer/jenkins-usage-stats/pkg"
-	"github.com/jmoiron/sqlx"
 )
 
 func TestGetJVMVersionID(t *testing.T) {
 	db, closeFunc := DBForTest(t)
 	defer closeFunc()
 
+	cache := pkg.NewStatsCache()
 	firstVer := "1.7"
 	secondVer := "13"
 
 	var fetchedVersion pkg.JVMVersion
-	err := db.Get(&fetchedVersion, "SELECT * FROM jvm_versions WHERE name = $1", firstVer)
+	err := pkg.PSQL().Select("id", "name").From("jvm_versions").Where(sq.Eq{"name": firstVer}).RunWith(db).
+		QueryRow().Scan(&fetchedVersion.ID, &fetchedVersion.Name)
 	require.Equal(t, sql.ErrNoRows, err)
 
-	firstID, err := pkg.GetJVMVersionID(db, firstVer)
+	firstID, err := pkg.GetJVMVersionID(db, cache, firstVer)
 	require.NoError(t, err)
-	require.NoError(t, db.Get(&fetchedVersion, "SELECT * FROM jvm_versions WHERE name = $1", firstVer))
+	require.NoError(t, pkg.PSQL().Select("id", "name").From("jvm_versions").Where(sq.Eq{"name": firstVer}).RunWith(db).
+		QueryRow().Scan(&fetchedVersion.ID, &fetchedVersion.Name))
 	assert.Equal(t, firstID, fetchedVersion.ID)
 
-	secondID, err := pkg.GetJVMVersionID(db, secondVer)
+	secondID, err := pkg.GetJVMVersionID(db, cache, secondVer)
 	require.NoError(t, err)
 	assert.NotEqual(t, firstID, secondID)
 }
@@ -42,19 +44,23 @@ func TestGetOSTypeID(t *testing.T) {
 	db, closeFunc := DBForTest(t)
 	defer closeFunc()
 
+	cache := pkg.NewStatsCache()
+
 	firstVer := "Windows 11"
 	secondVer := "Ubuntu something"
 
 	var fetchedOS pkg.OSType
-	err := db.Get(&fetchedOS, "SELECT * FROM os_types WHERE name = $1", firstVer)
+	err := pkg.PSQL().Select("id", "name").From("os_types").Where(sq.Eq{"name": firstVer}).RunWith(db).
+		QueryRow().Scan(&fetchedOS.ID, &fetchedOS.Name)
 	require.Equal(t, sql.ErrNoRows, err)
 
-	firstID, err := pkg.GetOSTypeID(db, firstVer)
+	firstID, err := pkg.GetOSTypeID(db, cache, firstVer)
 	require.NoError(t, err)
-	require.NoError(t, db.Get(&fetchedOS, "SELECT * FROM os_types WHERE name = $1", firstVer))
+	require.NoError(t, pkg.PSQL().Select("id", "name").From("os_types").Where(sq.Eq{"name": firstVer}).RunWith(db).
+		QueryRow().Scan(&fetchedOS.ID, &fetchedOS.Name))
 	assert.Equal(t, firstID, fetchedOS.ID)
 
-	secondID, err := pkg.GetOSTypeID(db, secondVer)
+	secondID, err := pkg.GetOSTypeID(db, cache, secondVer)
 	require.NoError(t, err)
 	assert.NotEqual(t, firstID, secondID)
 }
@@ -63,19 +69,23 @@ func TestGetJobTypeID(t *testing.T) {
 	db, closeFunc := DBForTest(t)
 	defer closeFunc()
 
+	cache := pkg.NewStatsCache()
+
 	firstVer := "hudson-maven-MavenModuleSet"
 	secondVer := "org-jenkinsci-plugins-workflow-job-WorkflowJob"
 
 	var fetchedJobType pkg.JobType
-	err := db.Get(&fetchedJobType, "SELECT * FROM job_types WHERE name = $1", firstVer)
+	err := pkg.PSQL().Select("id", "name").From("job_types").Where(sq.Eq{"name": firstVer}).RunWith(db).
+		QueryRow().Scan(&fetchedJobType.ID, &fetchedJobType.Name)
 	require.Equal(t, sql.ErrNoRows, err)
 
-	firstID, err := pkg.GetJobTypeID(db, firstVer)
+	firstID, err := pkg.GetJobTypeID(db, cache, firstVer)
 	require.NoError(t, err)
-	require.NoError(t, db.Get(&fetchedJobType, "SELECT * FROM job_types WHERE name = $1", firstVer))
+	require.NoError(t, pkg.PSQL().Select("id", "name").From("job_types").Where(sq.Eq{"name": firstVer}).RunWith(db).
+		QueryRow().Scan(&fetchedJobType.ID, &fetchedJobType.Name))
 	assert.Equal(t, firstID, fetchedJobType.ID)
 
-	secondID, err := pkg.GetJobTypeID(db, secondVer)
+	secondID, err := pkg.GetJobTypeID(db, cache, secondVer)
 	require.NoError(t, err)
 	assert.NotEqual(t, firstID, secondID)
 }
@@ -84,19 +94,23 @@ func TestGetJenkinsVersionID(t *testing.T) {
 	db, closeFunc := DBForTest(t)
 	defer closeFunc()
 
+	cache := pkg.NewStatsCache()
+
 	firstVer := "1.500"
 	secondVer := "2.201.1"
 
 	var fetchedJV pkg.JenkinsVersion
-	err := db.Get(&fetchedJV, "SELECT * FROM jenkins_versions WHERE version = $1", firstVer)
+	err := pkg.PSQL().Select("id", "version").From("jenkins_versions").Where(sq.Eq{"version": firstVer}).RunWith(db).
+		QueryRow().Scan(&fetchedJV.ID, &fetchedJV.Version)
 	require.Equal(t, sql.ErrNoRows, err)
 
-	firstID, err := pkg.GetJenkinsVersionID(db, firstVer)
+	firstID, err := pkg.GetJenkinsVersionID(db, cache, firstVer)
 	require.NoError(t, err)
-	require.NoError(t, db.Get(&fetchedJV, "SELECT * FROM jenkins_versions WHERE version = $1", firstVer))
+	require.NoError(t, pkg.PSQL().Select("id", "version").From("jenkins_versions").Where(sq.Eq{"version": firstVer}).RunWith(db).
+		QueryRow().Scan(&fetchedJV.ID, &fetchedJV.Version))
 	assert.Equal(t, firstID, fetchedJV.ID)
 
-	secondID, err := pkg.GetJenkinsVersionID(db, secondVer)
+	secondID, err := pkg.GetJenkinsVersionID(db, cache, secondVer)
 	require.NoError(t, err)
 	assert.NotEqual(t, firstID, secondID)
 }
@@ -105,25 +119,29 @@ func TestGetPluginID(t *testing.T) {
 	db, closeFunc := DBForTest(t)
 	defer closeFunc()
 
+	cache := pkg.NewStatsCache()
+
 	firstName := "first-plugin"
 	firstVer := "1.0"
 	secondVer := "2.0"
 	secondName := "second-plugin"
 
 	var fetchedPlugin pkg.Plugin
-	err := db.Get(&fetchedPlugin, "SELECT * FROM plugins WHERE name = $1 and version = $2", firstName, firstVer)
+	err := pkg.PSQL().Select("id", "name", "version").From("plugins").Where(sq.Eq{"name": firstName}).Where(sq.Eq{"version": firstVer}).RunWith(db).
+		QueryRow().Scan(&fetchedPlugin.ID, &fetchedPlugin.Name, &fetchedPlugin.Version)
 	require.Equal(t, sql.ErrNoRows, err)
 
-	firstID, err := pkg.GetPluginID(db, firstName, firstVer)
+	firstID, err := pkg.GetPluginID(db, cache, firstName, firstVer)
 	require.NoError(t, err)
-	require.NoError(t, db.Get(&fetchedPlugin, "SELECT * FROM plugins WHERE name = $1 and version = $2", firstName, firstVer))
+	require.NoError(t, pkg.PSQL().Select("id", "name", "version").From("plugins").Where(sq.Eq{"name": firstName}).Where(sq.Eq{"version": firstVer}).RunWith(db).
+		QueryRow().Scan(&fetchedPlugin.ID, &fetchedPlugin.Name, &fetchedPlugin.Version))
 	assert.Equal(t, firstID, fetchedPlugin.ID)
 
-	secondID, err := pkg.GetPluginID(db, firstName, secondVer)
+	secondID, err := pkg.GetPluginID(db, cache, firstName, secondVer)
 	require.NoError(t, err)
 	assert.NotEqual(t, firstID, secondID)
 
-	otherPluginID, err := pkg.GetPluginID(db, secondName, firstVer)
+	otherPluginID, err := pkg.GetPluginID(db, cache, secondName, firstVer)
 	require.NoError(t, err)
 	assert.NotEqual(t, firstID, otherPluginID)
 }
@@ -132,12 +150,14 @@ func TestAddReport(t *testing.T) {
 	db, closeFunc := DBForTest(t)
 	defer closeFunc()
 
+	cache := pkg.NewStatsCache()
+
 	initialFile := filepath.Join("testdata", "base.json.gz")
 	jsonReports, err := pkg.ParseDailyJSON(initialFile)
 	require.NoError(t, err)
 
 	for _, jr := range jsonReports {
-		require.NoError(t, pkg.AddReport(db, jr))
+		require.NoError(t, pkg.AddReport(db, cache, jr))
 	}
 
 	result, err := pkg.PSQL().Select("count(*)").
@@ -159,20 +179,26 @@ func TestAddReport(t *testing.T) {
 	updatedInstanceID := "32b68faa8644852c4ad79540b4bfeb1caf63284811f4f9d6c2bc511f797218c8"
 
 	// Get the job type IDs for "com-tikal-jenkins-plugins-multijob-MultiJobProject" and "hudson-matrix-MatrixProject"
-	multiJobID, err := pkg.GetJobTypeID(db, "com-tikal-jenkins-plugins-multijob-MultiJobProject")
+	multiJobID, err := pkg.GetJobTypeID(db, cache, "com-tikal-jenkins-plugins-multijob-MultiJobProject")
 	require.NoError(t, err)
-	matrixJobID, err := pkg.GetJobTypeID(db, "hudson-matrix-MatrixProject")
+	matrixJobID, err := pkg.GetJobTypeID(db, cache, "hudson-matrix-MatrixProject")
 	require.NoError(t, err)
 
 	var firstReports []pkg.InstanceReport
-	require.NoError(t, db.Select(&firstReports, "SELECT * FROM instance_reports order by instance_id asc"))
+	reportsQuery := pkg.PSQL().RunWith(db).Select("id", "instance_id", "report_time", "year", "month", "version", "servlet_container", "jvm_version_id",
+		"executors", "jvm_name", "jvm_vendor", "count_for_month", "plugins", "jobs", "nodes").
+		From("instance_reports").
+		OrderBy("instance_id asc")
 
-	firstJobsForReports, firstNodesForReports, firstPluginsForReports := getSubReports(t, db, firstReports)
-
-	// There should be 11 MultiJobs in the initial report
-	assert.Equal(t, 11, int(firstJobsForReports[updatedInstanceID][multiJobID]))
-	// There should be 0 MatrixProjects in the initial report
-	assert.Equal(t, 0, int(firstJobsForReports[updatedInstanceID][matrixJobID]))
+	rows, err := reportsQuery.Query()
+	require.NoError(t, err)
+	for rows.Next() {
+		var ir pkg.InstanceReport
+		require.NoError(t, rows.Scan(&ir.ID, &ir.InstanceID, &ir.ReportTime, &ir.Year, &ir.Month, &ir.Version, &ir.ServletContainer,
+			&ir.JVMVersionID, &ir.Executors, &ir.JVMName, &ir.JVMVendor, &ir.CountForMonth, &ir.Plugins, &ir.Jobs, &ir.Nodes))
+		firstReports = append(firstReports, ir)
+	}
+	assert.Len(t, firstReports, 2)
 
 	var unchangedFirstReport pkg.InstanceReport
 	var updatedFirstReport pkg.InstanceReport
@@ -185,18 +211,31 @@ func TestAddReport(t *testing.T) {
 		}
 	}
 
+	// There should be 11 MultiJobs in the initial report
+	assert.Equal(t, 11, int(updatedFirstReport.Jobs[multiJobID]))
+	// There should be 0 MatrixProjects in the initial report
+	assert.Equal(t, 0, int(updatedFirstReport.Jobs[matrixJobID]))
+
 	secondFile := filepath.Join("testdata", "day-later.json.gz")
 	dayLaterReports, err := pkg.ParseDailyJSON(secondFile)
 	require.NoError(t, err)
 
 	for _, jr := range dayLaterReports {
-		require.NoError(t, pkg.AddReport(db, jr))
+		require.NoError(t, pkg.AddReport(db, cache, jr))
 	}
 
 	var secondReports []pkg.InstanceReport
-	require.NoError(t, db.Select(&secondReports, "SELECT * FROM instance_reports order by instance_id asc"))
+	rows, err = reportsQuery.Query()
+	require.NoError(t, err)
+	for rows.Next() {
+		var ir pkg.InstanceReport
+		require.NoError(t, rows.Scan(&ir.ID, &ir.InstanceID, &ir.ReportTime, &ir.Year, &ir.Month, &ir.Version, &ir.ServletContainer,
+			&ir.JVMVersionID, &ir.Executors, &ir.JVMName, &ir.JVMVendor, &ir.CountForMonth, &ir.Plugins, &ir.Jobs, &ir.Nodes))
+		secondReports = append(secondReports, ir)
+	}
 
-	secondJobsForReports, secondNodesForReports, secondPluginsForReports := getSubReports(t, db, secondReports)
+	// Make sure there are only two reports, since the second run should just overwrite the updatedInstanceID's report from the first run.
+	assert.Len(t, secondReports, 2)
 
 	var unchangedSecondReport pkg.InstanceReport
 	var updatedSecondReport pkg.InstanceReport
@@ -210,59 +249,16 @@ func TestAddReport(t *testing.T) {
 	}
 
 	assert.Equal(t, unchangedFirstReport, unchangedSecondReport)
-	assert.Equal(t, firstJobsForReports[unchangedInstanceID], secondJobsForReports[unchangedInstanceID])
-	assert.Equal(t, firstNodesForReports[unchangedInstanceID], secondNodesForReports[unchangedInstanceID])
-	assert.Equal(t, firstPluginsForReports[unchangedInstanceID], secondPluginsForReports[unchangedInstanceID])
 
 	assert.NotEqual(t, updatedFirstReport, updatedSecondReport)
-	assert.NotEqual(t, firstJobsForReports[updatedInstanceID], secondJobsForReports[updatedInstanceID])
-	assert.NotEqual(t, firstNodesForReports[updatedInstanceID], secondNodesForReports[updatedInstanceID])
-	assert.NotEqual(t, firstPluginsForReports[updatedInstanceID], secondPluginsForReports[updatedInstanceID])
 	// CountForMonth should be one higher
 	assert.Equal(t, updatedFirstReport.CountForMonth+1, updatedSecondReport.CountForMonth)
 	// There should be once less plugin in the second report
-	assert.Len(t, secondPluginsForReports[updatedInstanceID], len(firstPluginsForReports[updatedInstanceID])-1)
+	assert.Len(t, updatedSecondReport.Plugins, len(updatedFirstReport.Plugins)-1)
 	// There should be 0 MultiJobs
-	assert.Equal(t, 0, int(secondJobsForReports[updatedInstanceID][multiJobID]))
+	assert.Equal(t, 0, int(updatedSecondReport.Jobs[multiJobID]))
 	// There should be 10 MatrixProjects
-	assert.Equal(t, 10, int(secondJobsForReports[updatedInstanceID][matrixJobID]))
-}
-
-func getSubReports(t *testing.T, db *sqlx.DB, instanceReports []pkg.InstanceReport) (map[string]map[uint64]uint64, map[string][]pkg.NodeReport, map[string][]pkg.PluginReport) {
-	jobReports := make(map[string]map[uint64]uint64)
-	nodeReports := make(map[string][]pkg.NodeReport)
-	pluginReports := make(map[string][]pkg.PluginReport)
-
-	for _, r := range instanceReports {
-		jobReports[r.InstanceID] = make(map[uint64]uint64)
-		var jobReport pkg.JobReport
-		jobRows, err := db.Queryx("SELECT * FROM job_reports where report_id = $1", r.ID)
-		require.NoError(t, err)
-		for jobRows.Next() {
-			require.NoError(t, jobRows.StructScan(&jobReport))
-			jobReports[r.InstanceID][jobReport.JobTypeID] = jobReport.Count
-		}
-
-		nodeReports[r.InstanceID] = []pkg.NodeReport{}
-		var nodeReport pkg.NodeReport
-		nodeRows, err := db.Queryx("SELECT * FROM nodes where report_id = $1", r.ID)
-		require.NoError(t, err)
-		for nodeRows.Next() {
-			require.NoError(t, nodeRows.StructScan(&nodeReport))
-			nodeReports[r.InstanceID] = append(nodeReports[r.InstanceID], nodeReport)
-		}
-
-		pluginReports[r.InstanceID] = []pkg.PluginReport{}
-		var pluginReport pkg.PluginReport
-		pluginRows, err := db.Queryx("SELECT * FROM plugin_reports where report_id = $1", r.ID)
-		require.NoError(t, err)
-		for pluginRows.Next() {
-			require.NoError(t, pluginRows.StructScan(&pluginReport))
-			pluginReports[r.InstanceID] = append(pluginReports[r.InstanceID], pluginReport)
-		}
-	}
-
-	return jobReports, nodeReports, pluginReports
+	assert.Equal(t, 10, int(updatedSecondReport.Jobs[matrixJobID]))
 }
 
 // Fataler interface has a single method Fatal, which takes
@@ -272,13 +268,13 @@ type Fataler interface {
 }
 
 // DBForTest connects to a local database for testing
-func DBForTest(f Fataler) (*sqlx.DB, func()) {
+func DBForTest(f Fataler) (sq.BaseRunner, func()) {
 	databaseURL := os.Getenv("DATABASE_URL")
 	if databaseURL == "" {
 		databaseURL = "postgres://localhost/jenkins_usage_stats?sslmode=disable&timezone=UTC"
 	}
 
-	db, err := sqlx.Open("postgres", databaseURL)
+	db, err := sql.Open("postgres", databaseURL)
 	if err != nil {
 		f.Fatal(err)
 	}
@@ -292,13 +288,13 @@ func DBForTest(f Fataler) (*sqlx.DB, func()) {
 	if err := TruncateAll(db); err != nil {
 		f.Fatal(err)
 	}
-	return db, closeFunc
+	return sq.NewStmtCacheProxy(db), closeFunc
 }
 
 // TruncateAll takes a database connection, lists all the tables which
 // aren't tracking schema_migrations and issues a cascading truncate
 // across each of them.
-func TruncateAll(db *sqlx.DB) error {
+func TruncateAll(db *sql.DB) error {
 	rows, err := pkg.PSQL().
 		Select("tablename").
 		From("pg_tables").

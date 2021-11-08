@@ -17,13 +17,13 @@ func TestTimestampFuncs(t *testing.T) {
 	}{
 		{
 			orig:        "14/Feb/2008:03:44:55 +0000",
-			reorganized: "2008-02-14T03:44:55Z",
-			timestamp:   time.Date(2008, time.February, 14, 3, 44, 55, 0, time.UTC),
+			reorganized: "2008-02-14T03:44:55+00:00",
+			timestamp:   time.Date(2008, time.February, 14, 3, 44, 55, 0, time.FixedZone("", 0)),
 		},
 		{
-			orig:        "02/Mar/2014:21:23:59 +0000",
-			reorganized: "2014-03-02T21:23:59Z",
-			timestamp:   time.Date(2014, time.March, 2, 21, 23, 59, 0, time.UTC),
+			orig:        "02/Mar/2014:21:23:59 -0700",
+			reorganized: "2014-03-02T21:23:59-07:00",
+			timestamp:   time.Date(2014, time.March, 2, 21, 23, 59, 0, time.FixedZone("", -7*60*60)),
 		},
 	}
 
