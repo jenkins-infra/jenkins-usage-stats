@@ -452,7 +452,7 @@ func AddReport(db sq.BaseRunner, cache *StatsCache, jsonReport *JSONReport) erro
 
 	report.ReportTime = ts
 	if jsonReport.ServletContainer != "" {
-		report.ServletContainer = sql.NullString{String: jsonReport.ServletContainer}
+		report.ServletContainer = sql.NullString{String: jsonReport.ServletContainer, Valid: true}
 	}
 
 	jvID, err := GetJenkinsVersionID(db, cache, jsonReport.Version)
@@ -465,7 +465,6 @@ func AddReport(db sq.BaseRunner, cache *StatsCache, jsonReport *JSONReport) erro
 		return err
 	}
 
-	//	alreadySeenPlugins := make(map[uint64]uint64)
 	if insertRow {
 		insertStart := time.Now()
 		_, err = PSQL().RunWith(db).Insert("instance_reports").
