@@ -6,9 +6,27 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
+	"reflect"
 	"time"
 
+	"github.com/lib/pq"
+
 	sq "github.com/Masterminds/squirrel"
+)
+
+const (
+	// JVMVersionsTable is the jvm_versions table name
+	JVMVersionsTable = "jvm_versions"
+	// OSTypesTable is the os_types table name
+	OSTypesTable = "os_types"
+	// JobTypesTable is the job_types table name
+	JobTypesTable = "job_types"
+	// PluginsTable is the plugins table name
+	PluginsTable = "plugins"
+	// JenkinsVersionsTable is the jenkins_versions table name
+	JenkinsVersionsTable = "jenkins_versions"
+	// InstanceReportsTable is the instance_reports table name
+	InstanceReportsTable = "instance_reports"
 )
 
 // ReportFile records a daily report file which has been imported.
@@ -49,21 +67,18 @@ type JenkinsVersion struct {
 
 // InstanceReport is a record of an individual instance's most recent report in a given month
 type InstanceReport struct {
-	ID               uint64           `db:"id"`
-	InstanceID       string           `db:"instance_id"`
-	ReportTime       time.Time        `db:"report_time"`
-	Year             uint16           `db:"year"`
-	Month            uint16           `db:"month"`
-	Version          uint64           `db:"version"`
-	ServletContainer sql.NullString   `db:"servlet_container"`
-	JVMVersionID     uint64           `db:"jvm_version_id"`
-	Executors        uint64           `db:"executors"`
-	JVMName          sql.NullString   `db:"jvm_name"`
-	JVMVendor        sql.NullString   `db:"jvm_vendor"`
-	CountForMonth    uint64           `db:"count_for_month"`
-	Plugins          PluginsForReport `db:"plugins"`
-	Jobs             JobsForReport    `db:"jobs"`
-	Nodes            NodesForReport   `db:"nodes"`
+	ID            uint64         `db:"id"`
+	InstanceID    string         `db:"instance_id"`
+	ReportTime    time.Time      `db:"report_time"`
+	Year          int            `db:"year"`
+	Month         int            `db:"month"`
+	Version       uint64         `db:"version"`
+	JVMVersionID  uint64         `db:"jvm_version_id"`
+	Executors     uint64         `db:"executors"`
+	CountForMonth uint64         `db:"count_for_month"`
+	Plugins       pq.Int64Array  `db:"plugins"`
+	Jobs          JobsForReport  `db:"jobs"`
+	Nodes         NodesForReport `db:"nodes"`
 }
 
 // PluginsForReport is a map of IDs from the "plugins" table seen on an instance report
@@ -185,13 +200,13 @@ func GetJVMVersionID(db sq.BaseRunner, cache *StatsCache, name string) (uint64, 
 		return cached, nil
 	}
 	var row JVMVersion
-	err := PSQL().RunWith(db).Select("id").From("jvm_versions").
+	err := PSQL(db).Select("id").From(JVMVersionsTable).
 		Where(sq.Eq{"name": name}).
 		QueryRow().
 		Scan(&row.ID)
 	if err == sql.ErrNoRows {
 		var id uint64
-		q := PSQL().RunWith(db).Insert("jvm_versions").Columns("name").Values(name).Suffix(`RETURNING "id"`)
+		q := PSQL(db).Insert(JVMVersionsTable).Columns("name").Values(name).Suffix(`RETURNING "id"`)
 		err = q.QueryRow().Scan(&id)
 		if err != nil {
 			return 0, err
@@ -216,13 +231,13 @@ func GetOSTypeID(db sq.BaseRunner, cache *StatsCache, name string) (uint64, erro
 		return cached, nil
 	}
 	var row OSType
-	err := PSQL().RunWith(db).Select("id").From("os_types").
+	err := PSQL(db).Select("id").From(OSTypesTable).
 		Where(sq.Eq{"name": name}).
 		QueryRow().
 		Scan(&row.ID)
 	if err == sql.ErrNoRows {
 		var id uint64
-		q := PSQL().RunWith(db).Insert("os_types").Columns("name").Values(name).Suffix(`RETURNING "id"`)
+		q := PSQL(db).Insert(OSTypesTable).Columns("name").Values(name).Suffix(`RETURNING "id"`)
 		err = q.QueryRow().Scan(&id)
 		if err != nil {
 			return 0, err
@@ -247,13 +262,13 @@ func GetJobTypeID(db sq.BaseRunner, cache *StatsCache, name string) (uint64, err
 		return cached, nil
 	}
 	var row JobType
-	err := PSQL().RunWith(db).Select("id").From("job_types").
+	err := PSQL(db).Select("id").From(JobTypesTable).
 		Where(sq.Eq{"name": name}).
 		QueryRow().
 		Scan(&row.ID)
 	if err == sql.ErrNoRows {
 		var id uint64
-		q := PSQL().RunWith(db).Insert("job_types").Columns("name").Values(name).Suffix(`RETURNING "id"`)
+		q := PSQL(db).Insert(JobTypesTable).Columns("name").Values(name).Suffix(`RETURNING "id"`)
 		err = q.QueryRow().Scan(&id)
 		if err != nil {
 			return 0, err
@@ -278,13 +293,13 @@ func GetJenkinsVersionID(db sq.BaseRunner, cache *StatsCache, version string) (u
 		return cached, nil
 	}
 	var row JenkinsVersion
-	err := PSQL().RunWith(db).Select("id").From("jenkins_versions").
+	err := PSQL(db).Select("id").From(JenkinsVersionsTable).
 		Where(sq.Eq{"version": version}).
 		QueryRow().
 		Scan(&row.ID)
 	if err == sql.ErrNoRows {
 		var id uint64
-		q := PSQL().RunWith(db).Insert("jenkins_versions").Columns("version").Values(version).Suffix(`RETURNING "id"`)
+		q := PSQL(db).Insert(JenkinsVersionsTable).Columns("version").Values(version).Suffix(`RETURNING "id"`)
 		err = q.QueryRow().Scan(&id)
 		if err != nil {
 			return 0, err
@@ -313,14 +328,14 @@ func GetPluginID(db sq.BaseRunner, cache *StatsCache, name, version string) (uin
 		cache.plugins[name] = make(map[string]uint64)
 	}
 	var row Plugin
-	err := PSQL().RunWith(db).Select("id").From("plugins").
+	err := PSQL(db).Select("id").From(PluginsTable).
 		Where(sq.Eq{"name": name}).
 		Where(sq.Eq{"version": version}).
 		QueryRow().
 		Scan(&row.ID)
 	if err == sql.ErrNoRows {
 		var id uint64
-		q := PSQL().RunWith(db).Insert("plugins").Columns("name", "version").Values(name, version).Suffix(`RETURNING "id"`)
+		q := PSQL(db).Insert(PluginsTable).Columns("name", "version").Values(name, version).Suffix(`RETURNING "id"`)
 		err = q.QueryRow().Scan(&id)
 		if err != nil {
 			return 0, err
@@ -335,8 +350,13 @@ func GetPluginID(db sq.BaseRunner, cache *StatsCache, name, version string) (uin
 	return 0, err
 }
 
-// AddReport adds/updates the JSON report to the database, along with all related tables.
-func AddReport(db sq.BaseRunner, cache *StatsCache, jsonReport *JSONReport) error {
+// AddIndividualReport adds/updates the JSON report to the database, along with all related tables.
+func AddIndividualReport(db sq.BaseRunner, cache *StatsCache, jsonReport *JSONReport) error {
+	// Short-circuit for a few weird cases where the instance ID is >64 characters
+	if len(jsonReport.Install) > 64 {
+		return nil
+	}
+
 	ts, err := jsonReport.Timestamp()
 	if err != nil {
 		return err
@@ -346,10 +366,12 @@ func AddReport(db sq.BaseRunner, cache *StatsCache, jsonReport *JSONReport) erro
 
 	// Check if there's an existing report.
 	var report InstanceReport
+	var prevReport InstanceReport
+
 	getReportStart := time.Now()
-	rows, err := PSQL().RunWith(db).
-		Select("id", "count_for_month, report_time").
-		From("instance_reports").
+	rows, err := PSQL(db).
+		Select("id", "count_for_month, report_time", "version", "jvm_version_id", "executors", "plugins", "jobs", "nodes").
+		From(InstanceReportsTable).
 		Where(sq.Eq{"instance_id": jsonReport.Install}).
 		Where(sq.Eq{"year": ts.Year()}).
 		Where(sq.Eq{"month": ts.Month()}).
@@ -357,37 +379,31 @@ func AddReport(db sq.BaseRunner, cache *StatsCache, jsonReport *JSONReport) erro
 	defer func() {
 		_ = rows.Close()
 	}()
-	cache.getInstanceReportTime += time.Since(getReportStart)
 	if err == sql.ErrNoRows {
 		insertRow = true
 	} else if err != nil {
 		return err
 	} else {
 		for rows.Next() {
-			var c uint64
-			var rt time.Time
-			var id uint64
-			err = rows.Scan(&id, &c, &rt)
+			err = rows.Scan(&prevReport.ID, &prevReport.CountForMonth, &prevReport.ReportTime, &prevReport.Version, &prevReport.JVMVersionID, &prevReport.Executors, &prevReport.Plugins, &prevReport.Jobs, &prevReport.Nodes)
 			if err != nil {
 				return err
 			}
-			report.ID = id
-			report.CountForMonth = c
-			report.ReportTime = rt
 		}
 	}
+	cache.getInstanceReportTime += time.Since(getReportStart)
 
-	if report.CountForMonth == 0 {
+	if prevReport.CountForMonth == 0 {
 		insertRow = true
 	}
 
 	report.CountForMonth++
 	report.InstanceID = jsonReport.Install
-	report.Year = uint16(ts.Year())
-	report.Month = uint16(ts.Month())
+	report.Year = ts.Year()
+	report.Month = int(ts.Month())
 
 	// If we already have a report for this install at this time, skip it.
-	if report.ReportTime == ts {
+	if prevReport.ReportTime == ts {
 		return nil
 	}
 
@@ -401,15 +417,11 @@ func AddReport(db sq.BaseRunner, cache *StatsCache, jsonReport *JSONReport) erro
 				return err
 			}
 			report.JVMVersionID = jvmVersionID
-
-			if jsonNode.JVMName != "" {
-				report.JVMName = sql.NullString{String: jsonNode.JVMName, Valid: true}
-			}
-			if jsonNode.JVMVendor != "" {
-				report.JVMVendor = sql.NullString{String: jsonNode.JVMVendor, Valid: true}
-			}
 		}
-		report.Executors += jsonNode.Executors
+		// At least one report somehow screwed up and claims to have 32-bit max executors, so ignore that.
+		if jsonNode.Executors != 2147483647 {
+			report.Executors += jsonNode.Executors
+		}
 
 		osTypeID, err := GetOSTypeID(db, cache, jsonNode.OS)
 		if err != nil {
@@ -427,13 +439,13 @@ func AddReport(db sq.BaseRunner, cache *StatsCache, jsonReport *JSONReport) erro
 		return nil
 	}
 
-	var pluginIDs PluginsForReport
+	var pluginIDs pq.Int64Array
 	for _, jsonPlugin := range jsonReport.Plugins {
 		pluginID, err := GetPluginID(db, cache, jsonPlugin.Name, jsonPlugin.Version)
 		if err != nil {
 			return err
 		}
-		pluginIDs = append(pluginIDs, pluginID)
+		pluginIDs = append(pluginIDs, int64(pluginID))
 	}
 	report.Plugins = pluginIDs
 
@@ -451,9 +463,6 @@ func AddReport(db sq.BaseRunner, cache *StatsCache, jsonReport *JSONReport) erro
 	cache.insertNewReportsTime += time.Since(newReportsStart)
 
 	report.ReportTime = ts
-	if jsonReport.ServletContainer != "" {
-		report.ServletContainer = sql.NullString{String: jsonReport.ServletContainer, Valid: true}
-	}
 
 	jvID, err := GetJenkinsVersionID(db, cache, jsonReport.Version)
 	if err != nil {
@@ -467,43 +476,51 @@ func AddReport(db sq.BaseRunner, cache *StatsCache, jsonReport *JSONReport) erro
 
 	if insertRow {
 		insertStart := time.Now()
-		_, err = PSQL().RunWith(db).Insert("instance_reports").
-			Columns("instance_id", "report_time", "year", "month", "version", "servlet_container", "jvm_version_id",
-				"executors", "jvm_name", "jvm_vendor", "count_for_month", "plugins", "jobs", "nodes").
+		_, err = PSQL(db).Insert(InstanceReportsTable).
+			Columns("instance_id", "report_time", "year", "month", "version", "jvm_version_id",
+				"executors", "count_for_month", "plugins", "jobs", "nodes").
 			Values(report.InstanceID,
 				report.ReportTime,
 				report.Year,
 				report.Month,
 				report.Version,
-				report.ServletContainer,
 				report.JVMVersionID,
 				report.Executors,
-				report.JVMName,
-				report.JVMVendor,
 				1,
 				report.Plugins,
 				report.Jobs,
 				report.Nodes).
 			Exec()
 		cache.insertInstanceReportTime += time.Since(insertStart)
-		if err == nil {
+		if err != nil {
 			return err
 		}
 	} else {
 		updateStart := time.Now()
-		_, err = PSQL().RunWith(db).Update("instance_reports").Where(sq.Eq{"id": report.ID}).
-			Set("report_time", report.ReportTime).
-			Set("version", report.Version).
-			Set("servlet_container", report.ServletContainer).
+		q := PSQL(db).Update(InstanceReportsTable).
+			Where(sq.Eq{"id": report.ID}).
 			Set("count_for_month", report.CountForMonth).
-			Set("jvm_version_id", report.JVMVersionID).
-			Set("jvm_vendor", report.JVMVendor).
-			Set("jvm_name", report.JVMName).
-			Set("executors", report.Executors).
-			Set("plugins", report.Plugins).
-			Set("jobs", report.Jobs).
-			Set("nodes", report.Nodes).
-			Exec()
+			Set("report_time", report.ReportTime)
+
+		if prevReport.Version != report.Version {
+			q = q.Set("version", report.Version)
+		}
+		if prevReport.JVMVersionID != report.JVMVersionID {
+			q = q.Set("jvm_version_id", report.JVMVersionID)
+		}
+		if prevReport.Executors != report.Executors {
+			q = q.Set("executors", report.Executors)
+		}
+		if !reflect.DeepEqual(prevReport.Plugins, report.Plugins) {
+			q = q.Set("plugins", report.Plugins)
+		}
+		if fmt.Sprint(report.Jobs) != fmt.Sprint(prevReport.Jobs) {
+			q = q.Set("jobs", report.Jobs)
+		}
+		if fmt.Sprint(report.Nodes) != fmt.Sprint(prevReport.Nodes) {
+			q = q.Set("nodes", report.Nodes)
+		}
+		_, err = q.Exec()
 		cache.updateInstanceReportTime += time.Since(updateStart)
 		if err != nil {
 			return err
@@ -513,111 +530,11 @@ func AddReport(db sq.BaseRunner, cache *StatsCache, jsonReport *JSONReport) erro
 	return nil
 }
 
-// GetInstallCountForVersions generates a map of Jenkins versions to install counts
-func GetInstallCountForVersions(db sq.BaseRunner, year, month string) (map[string]uint64, error) {
-	rows, err := PSQL().Select("jenkins_versions.version as version", "count(*) as number").
-		From("instance_reports").
-		Join("jenkins_versions on instance_reports.version = jenkins_versions.id").
-		Where(sq.Eq{"instance_reports.year": year}).
-		Where(sq.Eq{"instance_reports.month": month}).
-		Where(sq.GtOrEq{"instance_reports.count_for_month": 2}).
-		GroupBy("version").
-		RunWith(db).
-		Query()
-	if err != nil {
-		return nil, err
-	}
-	defer func() {
-		_ = rows.Close()
-	}()
-
-	versionMap := make(map[string]uint64)
-	for rows.Next() {
-		var v string
-		var c uint64
-		err := rows.Scan(&v, &c)
-		if err != nil {
-			return nil, err
-		}
-		versionMap[v] = c
-	}
-
-	return versionMap, nil
-}
-
-// GetPluginCounts generates a map of plugin name and install counts
-func GetPluginCounts(db sq.BaseRunner, year, month string) (map[string]uint64, error) {
-	rows, err := PSQL().Select("p.name as pn", "count(*) as number").
-		From("instance_reports i").
-		From("jsonb_array_elements_text(i.plugins) pr(id)").
-		Join("plugins p on p.id::text = pr.id").
-		Where(sq.Eq{"i.year": year}).
-		Where(sq.Eq{"i.month": month}).
-		Where(sq.GtOrEq{"i.count_for_month": 2}).
-		GroupBy("name").
-		RunWith(db).
-		Query()
-	if err != nil {
-		return nil, err
-	}
-	defer func() {
-		_ = rows.Close()
-	}()
-
-	pluginMap := make(map[string]uint64)
-	for rows.Next() {
-		var p string
-		var c uint64
-		err := rows.Scan(&p, &c)
-		if err != nil {
-			return nil, err
-		}
-		pluginMap[p] = c
-	}
-
-	return pluginMap, nil
-}
-
-// GetCapabilities generates a map of Jenkins versions and install counts for that version and all earlier ones
-func GetCapabilities(db sq.BaseRunner, year, month string) (map[string]uint64, error) {
-	rows, err := PSQL().Select("jenkins_versions.version as version", "count(*) as number").
-		From("instance_reports").
-		Join("jenkins_versions on instance_reports.version = jenkins_versions.id").
-		Where(sq.Eq{"instance_reports.year": year}).
-		Where(sq.Eq{"instance_reports.month": month}).
-		Where(sq.GtOrEq{"instance_reports.count_for_month": 2}).
-		GroupBy("version").
-		OrderBy("version DESC").
-		RunWith(db).
-		Query()
-	if err != nil {
-		return nil, err
-	}
-	defer func() {
-		_ = rows.Close()
-	}()
-
-	higherCapabilityCount := uint64(0)
-	versionMap := make(map[string]uint64)
-	for rows.Next() {
-		var p string
-		var c uint64
-		err := rows.Scan(&p, &c)
-		if err != nil {
-			return nil, err
-		}
-		versionMap[p] = c + higherCapabilityCount
-	}
-
-	return versionMap, nil
-}
-
 // ReportAlreadyRead checks if a filename has already been read and processed
 func ReportAlreadyRead(db sq.BaseRunner, filename string) (bool, error) {
-	rows, err := PSQL().Select("count(*)").
+	rows, err := PSQL(db).Select("count(*)").
 		From("report_files").
 		Where(sq.Eq{"filename": filename}).
-		RunWith(db).
 		Query()
 	defer func() {
 		_ = rows.Close()
@@ -644,11 +561,15 @@ func ReportAlreadyRead(db sq.BaseRunner, filename string) (bool, error) {
 
 // MarkReportRead records that we've read and processed a filename.
 func MarkReportRead(db sq.BaseRunner, filename string) error {
-	_, err := PSQL().RunWith(db).Insert("report_files").Columns("filename").Values(filename).Exec()
+	_, err := PSQL(db).Insert("report_files").Columns("filename").Values(filename).Exec()
 	return err
 }
 
 // PSQL is a postgresql squirrel statement builder
-func PSQL() sq.StatementBuilderType {
-	return sq.StatementBuilder.PlaceholderFormat(sq.Dollar)
+func PSQL(db sq.BaseRunner) sq.StatementBuilderType {
+	return sq.StatementBuilder.PlaceholderFormat(sq.Dollar).RunWith(db)
+}
+
+func startDateForYearMonth(year int, month int) time.Time {
+	return time.Date(year, time.Month(month), 1, 0, 0, 0, 0, time.FixedZone("", 0))
 }

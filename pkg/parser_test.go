@@ -11,7 +11,7 @@ import (
 )
 
 func TestParseDailyJSON(t *testing.T) {
-	fooFile := filepath.Join("testdata", "foo.json.gz")
+	fooFile := filepath.Join("testdata", "base.json.gz")
 
 	reports, err := pkg.ParseDailyJSON(fooFile)
 	require.NoError(t, err)
@@ -24,7 +24,7 @@ func TestParseDailyJSON(t *testing.T) {
 
 	ts, err := reports[0].Timestamp()
 	require.NoError(t, err)
-	assert.Equal(t, time.Date(2021, time.October, 30, 23, 59, 54, 0, time.UTC), ts)
+	assert.Equal(t, time.Date(2021, time.October, 30, 23, 59, 54, 0, time.FixedZone("", 0)), ts)
 }
 
 func TestFilterPrivateFromReport(t *testing.T) {

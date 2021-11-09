@@ -25,13 +25,13 @@ func TestGetJVMVersionID(t *testing.T) {
 	secondVer := "13"
 
 	var fetchedVersion pkg.JVMVersion
-	err := pkg.PSQL().Select("id", "name").From("jvm_versions").Where(sq.Eq{"name": firstVer}).RunWith(db).
+	err := pkg.PSQL(db).Select("id", "name").From(pkg.JVMVersionsTable).Where(sq.Eq{"name": firstVer}).
 		QueryRow().Scan(&fetchedVersion.ID, &fetchedVersion.Name)
 	require.Equal(t, sql.ErrNoRows, err)
 
 	firstID, err := pkg.GetJVMVersionID(db, cache, firstVer)
 	require.NoError(t, err)
-	require.NoError(t, pkg.PSQL().Select("id", "name").From("jvm_versions").Where(sq.Eq{"name": firstVer}).RunWith(db).
+	require.NoError(t, pkg.PSQL(db).Select("id", "name").From(pkg.JVMVersionsTable).Where(sq.Eq{"name": firstVer}).
 		QueryRow().Scan(&fetchedVersion.ID, &fetchedVersion.Name))
 	assert.Equal(t, firstID, fetchedVersion.ID)
 
@@ -50,13 +50,13 @@ func TestGetOSTypeID(t *testing.T) {
 	secondVer := "Ubuntu something"
 
 	var fetchedOS pkg.OSType
-	err := pkg.PSQL().Select("id", "name").From("os_types").Where(sq.Eq{"name": firstVer}).RunWith(db).
+	err := pkg.PSQL(db).Select("id", "name").From(pkg.OSTypesTable).Where(sq.Eq{"name": firstVer}).
 		QueryRow().Scan(&fetchedOS.ID, &fetchedOS.Name)
 	require.Equal(t, sql.ErrNoRows, err)
 
 	firstID, err := pkg.GetOSTypeID(db, cache, firstVer)
 	require.NoError(t, err)
-	require.NoError(t, pkg.PSQL().Select("id", "name").From("os_types").Where(sq.Eq{"name": firstVer}).RunWith(db).
+	require.NoError(t, pkg.PSQL(db).Select("id", "name").From(pkg.OSTypesTable).Where(sq.Eq{"name": firstVer}).
 		QueryRow().Scan(&fetchedOS.ID, &fetchedOS.Name))
 	assert.Equal(t, firstID, fetchedOS.ID)
 
@@ -75,13 +75,13 @@ func TestGetJobTypeID(t *testing.T) {
 	secondVer := "org-jenkinsci-plugins-workflow-job-WorkflowJob"
 
 	var fetchedJobType pkg.JobType
-	err := pkg.PSQL().Select("id", "name").From("job_types").Where(sq.Eq{"name": firstVer}).RunWith(db).
+	err := pkg.PSQL(db).Select("id", "name").From(pkg.JobTypesTable).Where(sq.Eq{"name": firstVer}).
 		QueryRow().Scan(&fetchedJobType.ID, &fetchedJobType.Name)
 	require.Equal(t, sql.ErrNoRows, err)
 
 	firstID, err := pkg.GetJobTypeID(db, cache, firstVer)
 	require.NoError(t, err)
-	require.NoError(t, pkg.PSQL().Select("id", "name").From("job_types").Where(sq.Eq{"name": firstVer}).RunWith(db).
+	require.NoError(t, pkg.PSQL(db).Select("id", "name").From(pkg.JobTypesTable).Where(sq.Eq{"name": firstVer}).
 		QueryRow().Scan(&fetchedJobType.ID, &fetchedJobType.Name))
 	assert.Equal(t, firstID, fetchedJobType.ID)
 
@@ -100,13 +100,13 @@ func TestGetJenkinsVersionID(t *testing.T) {
 	secondVer := "2.201.1"
 
 	var fetchedJV pkg.JenkinsVersion
-	err := pkg.PSQL().Select("id", "version").From("jenkins_versions").Where(sq.Eq{"version": firstVer}).RunWith(db).
+	err := pkg.PSQL(db).Select("id", "version").From(pkg.JenkinsVersionsTable).Where(sq.Eq{"version": firstVer}).
 		QueryRow().Scan(&fetchedJV.ID, &fetchedJV.Version)
 	require.Equal(t, sql.ErrNoRows, err)
 
 	firstID, err := pkg.GetJenkinsVersionID(db, cache, firstVer)
 	require.NoError(t, err)
-	require.NoError(t, pkg.PSQL().Select("id", "version").From("jenkins_versions").Where(sq.Eq{"version": firstVer}).RunWith(db).
+	require.NoError(t, pkg.PSQL(db).Select("id", "version").From(pkg.JenkinsVersionsTable).Where(sq.Eq{"version": firstVer}).
 		QueryRow().Scan(&fetchedJV.ID, &fetchedJV.Version))
 	assert.Equal(t, firstID, fetchedJV.ID)
 
@@ -127,13 +127,13 @@ func TestGetPluginID(t *testing.T) {
 	secondName := "second-plugin"
 
 	var fetchedPlugin pkg.Plugin
-	err := pkg.PSQL().Select("id", "name", "version").From("plugins").Where(sq.Eq{"name": firstName}).Where(sq.Eq{"version": firstVer}).RunWith(db).
+	err := pkg.PSQL(db).Select("id", "name", "version").From(pkg.PluginsTable).Where(sq.Eq{"name": firstName}).Where(sq.Eq{"version": firstVer}).
 		QueryRow().Scan(&fetchedPlugin.ID, &fetchedPlugin.Name, &fetchedPlugin.Version)
 	require.Equal(t, sql.ErrNoRows, err)
 
 	firstID, err := pkg.GetPluginID(db, cache, firstName, firstVer)
 	require.NoError(t, err)
-	require.NoError(t, pkg.PSQL().Select("id", "name", "version").From("plugins").Where(sq.Eq{"name": firstName}).Where(sq.Eq{"version": firstVer}).RunWith(db).
+	require.NoError(t, pkg.PSQL(db).Select("id", "name", "version").From(pkg.PluginsTable).Where(sq.Eq{"name": firstName}).Where(sq.Eq{"version": firstVer}).
 		QueryRow().Scan(&fetchedPlugin.ID, &fetchedPlugin.Name, &fetchedPlugin.Version))
 	assert.Equal(t, firstID, fetchedPlugin.ID)
 
@@ -146,7 +146,7 @@ func TestGetPluginID(t *testing.T) {
 	assert.NotEqual(t, firstID, otherPluginID)
 }
 
-func TestAddReport(t *testing.T) {
+func TestAddIndividualReport(t *testing.T) {
 	db, closeFunc := DBForTest(t)
 	defer closeFunc()
 
@@ -157,12 +157,11 @@ func TestAddReport(t *testing.T) {
 	require.NoError(t, err)
 
 	for _, jr := range jsonReports {
-		require.NoError(t, pkg.AddReport(db, cache, jr))
+		require.NoError(t, pkg.AddIndividualReport(db, cache, jr))
 	}
 
-	result, err := pkg.PSQL().Select("count(*)").
-		From("instance_reports").
-		RunWith(db).
+	result, err := pkg.PSQL(db).Select("count(*)").
+		From(pkg.InstanceReportsTable).
 		Query()
 	require.NoError(t, err)
 
@@ -185,17 +184,16 @@ func TestAddReport(t *testing.T) {
 	require.NoError(t, err)
 
 	var firstReports []pkg.InstanceReport
-	reportsQuery := pkg.PSQL().RunWith(db).Select("id", "instance_id", "report_time", "year", "month", "version", "servlet_container", "jvm_version_id",
-		"executors", "jvm_name", "jvm_vendor", "count_for_month", "plugins", "jobs", "nodes").
-		From("instance_reports").
+	reportsQuery := pkg.PSQL(db).Select("id", "instance_id", "report_time", "year", "month", "version", "jvm_version_id",
+		"executors", "count_for_month", "plugins", "jobs", "nodes").
+		From(pkg.InstanceReportsTable).
 		OrderBy("instance_id asc")
 
 	rows, err := reportsQuery.Query()
 	require.NoError(t, err)
 	for rows.Next() {
 		var ir pkg.InstanceReport
-		require.NoError(t, rows.Scan(&ir.ID, &ir.InstanceID, &ir.ReportTime, &ir.Year, &ir.Month, &ir.Version, &ir.ServletContainer,
-			&ir.JVMVersionID, &ir.Executors, &ir.JVMName, &ir.JVMVendor, &ir.CountForMonth, &ir.Plugins, &ir.Jobs, &ir.Nodes))
+		require.NoError(t, rows.Scan(&ir.ID, &ir.InstanceID, &ir.ReportTime, &ir.Year, &ir.Month, &ir.Version, &ir.JVMVersionID, &ir.Executors, &ir.CountForMonth, &ir.Plugins, &ir.Jobs, &ir.Nodes))
 		firstReports = append(firstReports, ir)
 	}
 	assert.Len(t, firstReports, 2)
@@ -221,7 +219,7 @@ func TestAddReport(t *testing.T) {
 	require.NoError(t, err)
 
 	for _, jr := range dayLaterReports {
-		require.NoError(t, pkg.AddReport(db, cache, jr))
+		require.NoError(t, pkg.AddIndividualReport(db, cache, jr))
 	}
 
 	var secondReports []pkg.InstanceReport
@@ -229,8 +227,7 @@ func TestAddReport(t *testing.T) {
 	require.NoError(t, err)
 	for rows.Next() {
 		var ir pkg.InstanceReport
-		require.NoError(t, rows.Scan(&ir.ID, &ir.InstanceID, &ir.ReportTime, &ir.Year, &ir.Month, &ir.Version, &ir.ServletContainer,
-			&ir.JVMVersionID, &ir.Executors, &ir.JVMName, &ir.JVMVendor, &ir.CountForMonth, &ir.Plugins, &ir.Jobs, &ir.Nodes))
+		require.NoError(t, rows.Scan(&ir.ID, &ir.InstanceID, &ir.ReportTime, &ir.Year, &ir.Month, &ir.Version, &ir.JVMVersionID, &ir.Executors, &ir.CountForMonth, &ir.Plugins, &ir.Jobs, &ir.Nodes))
 		secondReports = append(secondReports, ir)
 	}
 
@@ -295,12 +292,11 @@ func DBForTest(f Fataler) (sq.BaseRunner, func()) {
 // aren't tracking schema_migrations and issues a cascading truncate
 // across each of them.
 func TruncateAll(db *sql.DB) error {
-	rows, err := pkg.PSQL().
+	rows, err := pkg.PSQL(db).
 		Select("tablename").
 		From("pg_tables").
 		Where(sq.Eq{"schemaname": "public"}).
 		Where(sq.NotEq{"tablename": "schema_migrations"}).
-		RunWith(db).
 		Query()
 	if err != nil {
 		return err
