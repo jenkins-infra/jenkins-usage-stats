@@ -6,7 +6,6 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
-	"reflect"
 	"time"
 
 	"github.com/lib/pq"
@@ -142,6 +141,7 @@ type StatsCache struct {
 	jobTypes        map[string]uint64
 	jenkinsVersions map[string]uint64
 	plugins         map[string]map[string]uint64
+	lastReport      map[string]InstanceReport
 
 	getJVMVersionTime     time.Duration
 	getOSTypeTime         time.Duration
@@ -178,6 +178,7 @@ func NewStatsCache() *StatsCache {
 		jobTypes:                 map[string]uint64{},
 		jenkinsVersions:          map[string]uint64{},
 		plugins:                  map[string]map[string]uint64{},
+		lastReport:               map[string]InstanceReport{},
 		getJVMVersionTime:        0,
 		getOSTypeTime:            0,
 		getJobTypeTime:           0,
@@ -366,28 +367,31 @@ func AddIndividualReport(db sq.BaseRunner, cache *StatsCache, jsonReport *JSONRe
 
 	// Check if there's an existing report.
 	var report InstanceReport
-	var prevReport InstanceReport
 
 	getReportStart := time.Now()
-	rows, err := PSQL(db).
-		Select("id", "count_for_month, report_time", "version", "jvm_version_id", "executors", "plugins", "jobs", "nodes").
-		From(InstanceReportsTable).
-		Where(sq.Eq{"instance_id": jsonReport.Install}).
-		Where(sq.Eq{"year": ts.Year()}).
-		Where(sq.Eq{"month": ts.Month()}).
-		Query()
-	defer func() {
-		_ = rows.Close()
-	}()
-	if err == sql.ErrNoRows {
-		insertRow = true
-	} else if err != nil {
-		return err
-	} else {
-		for rows.Next() {
-			err = rows.Scan(&prevReport.ID, &prevReport.CountForMonth, &prevReport.ReportTime, &prevReport.Version, &prevReport.JVMVersionID, &prevReport.Executors, &prevReport.Plugins, &prevReport.Jobs, &prevReport.Nodes)
-			if err != nil {
-				return err
+	prevReport, ok := cache.lastReport[jsonReport.Install]
+	if !ok || prevReport.Year != ts.Year() || prevReport.Month != int(ts.Month()) {
+
+		rows, err := PSQL(db).
+			Select("id", "count_for_month, report_time").
+			From(InstanceReportsTable).
+			Where(sq.Eq{"instance_id": jsonReport.Install}).
+			Where(sq.Eq{"year": ts.Year()}).
+			Where(sq.Eq{"month": ts.Month()}).
+			Query()
+		defer func() {
+			_ = rows.Close()
+		}()
+		if err == sql.ErrNoRows {
+			insertRow = true
+		} else if err != nil {
+			return err
+		} else {
+			for rows.Next() {
+				err = rows.Scan(&prevReport.ID, &prevReport.CountForMonth, &prevReport.ReportTime)
+				if err != nil {
+					return err
+				}
 			}
 		}
 	}
@@ -397,13 +401,13 @@ func AddIndividualReport(db sq.BaseRunner, cache *StatsCache, jsonReport *JSONRe
 		insertRow = true
 	}
 
-	report.CountForMonth++
+	report.CountForMonth = prevReport.CountForMonth + 1
 	report.InstanceID = jsonReport.Install
 	report.Year = ts.Year()
 	report.Month = int(ts.Month())
 
 	// If we already have a report for this install at this time, skip it.
-	if prevReport.ReportTime == ts {
+	if prevReport.ReportTime == ts || ts.Before(prevReport.ReportTime) {
 		return nil
 	}
 
@@ -495,36 +499,26 @@ func AddIndividualReport(db sq.BaseRunner, cache *StatsCache, jsonReport *JSONRe
 		if err != nil {
 			return err
 		}
+		cache.lastReport[report.InstanceID] = report
 	} else {
 		updateStart := time.Now()
 		q := PSQL(db).Update(InstanceReportsTable).
 			Where(sq.Eq{"id": report.ID}).
 			Set("count_for_month", report.CountForMonth).
-			Set("report_time", report.ReportTime)
+			Set("report_time", report.ReportTime).
+			Set("version", report.Version).
+			Set("jvm_version_id", report.JVMVersionID).
+			Set("executors", report.Executors).
+			Set("plugins", report.Plugins).
+			Set("jobs", report.Jobs).
+			Set("nodes", report.Nodes)
 
-		if prevReport.Version != report.Version {
-			q = q.Set("version", report.Version)
-		}
-		if prevReport.JVMVersionID != report.JVMVersionID {
-			q = q.Set("jvm_version_id", report.JVMVersionID)
-		}
-		if prevReport.Executors != report.Executors {
-			q = q.Set("executors", report.Executors)
-		}
-		if !reflect.DeepEqual(prevReport.Plugins, report.Plugins) {
-			q = q.Set("plugins", report.Plugins)
-		}
-		if fmt.Sprint(report.Jobs) != fmt.Sprint(prevReport.Jobs) {
-			q = q.Set("jobs", report.Jobs)
-		}
-		if fmt.Sprint(report.Nodes) != fmt.Sprint(prevReport.Nodes) {
-			q = q.Set("nodes", report.Nodes)
-		}
 		_, err = q.Exec()
 		cache.updateInstanceReportTime += time.Since(updateStart)
 		if err != nil {
 			return err
 		}
+		cache.lastReport[report.InstanceID] = report
 	}
 
 	return nil

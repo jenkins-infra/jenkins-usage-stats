@@ -23,14 +23,14 @@ func TestDBIntegration(t *testing.T) {
 
 	cache := pkg.NewStatsCache()
 
-	sampleStatsDir := filepath.Join("testdata", "sample-stats")
+	sampleStatsDir := filepath.Join("testdata", "2021-stats")
 	files, err := ioutil.ReadDir(sampleStatsDir)
 	require.NoError(t, err)
 
 	totalReports := 0
 
 	for _, fi := range files {
-		if !fi.IsDir() && strings.HasSuffix(fi.Name(), ".gz") && strings.Contains(fi.Name(), ".201001") {
+		if !fi.IsDir() && strings.HasSuffix(fi.Name(), ".gz") { // && strings.Contains(fi.Name(), ".201001") {
 			startedAt := time.Now()
 			alreadyRead, err := pkg.ReportAlreadyRead(db, fi.Name())
 			require.NoError(t, err)
