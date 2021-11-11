@@ -6,6 +6,7 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
+	"strings"
 	"time"
 
 	"github.com/lib/pq"
@@ -455,7 +456,7 @@ func AddIndividualReport(db sq.BaseRunner, cache *StatsCache, jsonReport *JSONRe
 
 	jobs := JobsForReport{}
 	for jobType, count := range jsonReport.Jobs {
-		if count != 0 {
+		if count != 0 && !strings.HasPrefix(jobType, "private") {
 			jobTypeID, err := GetJobTypeID(db, cache, jobType)
 			if err != nil {
 				return err
