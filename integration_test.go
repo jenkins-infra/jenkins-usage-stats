@@ -57,7 +57,7 @@ func TestDBIntegration(t *testing.T) {
 
 // DBForIntTest connects to a local database for testing
 func DBForIntTest(f testutil.Fataler) (sq.BaseRunner, func()) {
-	databaseURL := os.Getenv("IT_DATABASE_URL")
+	databaseURL := os.Getenv("DATABASE_URL")
 	if databaseURL == "" {
 		databaseURL = "postgres://postgres@localhost/jenkins_usage_stats?sslmode=disable&timezone=UTC"
 	}

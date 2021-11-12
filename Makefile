@@ -2,7 +2,6 @@ NAME := jenkins-usage-stats
 BINARY_NAME := jenkins-usage-stats
 
 DATABASE_URL ?= postgres://postgres@localhost/jenkins_usage_stats?sslmode=disable&timezone=UTC
-IT_DATABASE_URL ?= postgres://postgres@localhost/jenkins_usage_stats_test?sslmode=disable&timezone=UTC
 
 MIGRATE_VERSION := v4.15.1
 TESTFIXTURES_VERSION := v3.6.1

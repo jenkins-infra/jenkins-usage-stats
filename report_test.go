@@ -183,7 +183,7 @@ func dbWithFixtures(t *testing.T) (sq.BaseRunner, func()) {
 }
 
 func useITDB(t *testing.T) (sq.BaseRunner, func()) {
-	databaseURL := os.Getenv("IT_DATABASE_URL")
+	databaseURL := os.Getenv("DATABASE_URL")
 	if databaseURL == "" {
 		databaseURL = "postgres://postgres@localhost/jenkins_usage_stats?sslmode=disable&timezone=UTC"
 	}
