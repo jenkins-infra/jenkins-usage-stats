@@ -304,16 +304,16 @@ type yearMonth struct {
 
 // GetInstallCountForVersions generates a map of Jenkins versions to install counts
 // analogous to Groovy version's generateInstallationsJson
-func GetInstallCountForVersions(db sq.BaseRunner, year, month string) (InstallationReport, error) {
+func GetInstallCountForVersions(db sq.BaseRunner, year, month int) (InstallationReport, error) {
 	report := InstallationReport{Installations: map[string]uint64{}}
-	rows, err := PSQL(db).Select("jenkins_versions.version as version", "count(*) as number").
+	rows, err := PSQL(db).Select("jenkins_versions.version as jvv", "count(*) as number").
 		From(InstanceReportsTable).
 		Join("jenkins_versions on instance_reports.version = jenkins_versions.id").
 		Where(sq.Eq{"instance_reports.year": year}).
 		Where(sq.Eq{"instance_reports.month": month}).
 		Where(sq.GtOrEq{"instance_reports.count_for_month": 2}).
 		Where(`jenkins_versions.version ~ '^\d' and jenkins_versions.version not like '%private%'`).
-		GroupBy("version").
+		GroupBy("jvv").
 		Query()
 	if err != nil {
 		return report, err
