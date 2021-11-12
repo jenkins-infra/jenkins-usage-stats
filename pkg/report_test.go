@@ -38,20 +38,40 @@ func TestReportFuncs(t *testing.T) {
 		require.NoError(t, err)
 
 		goldenFile := filepath.Join("testdata", "reports", "getInstallCountForVersions.json")
+		goldenBytes := readGoldenAndUpdateIfDesired(t, goldenFile, ir)
 
-		if os.Getenv("UPDATE_GOLDEN") != "" {
-			jb, err := json.MarshalIndent(ir, "", "  ")
-			require.NoError(t, err)
-			require.NoError(t, ioutil.WriteFile(goldenFile, jb, 0644)) //nolint:gosec
-		}
-
-		goldenBytes, err := ioutil.ReadFile(goldenFile) //nolint:gosec
-		require.NoError(t, err)
 		var goldenIR pkg.InstallationReport
 		require.NoError(t, json.Unmarshal(goldenBytes, &goldenIR))
 
 		assert.Equal(t, goldenIR, ir)
 	})
+
+	t.Run("GetLatestPluginNumbers", func(t *testing.T) {
+		pn, err := pkg.GetLatestPluginNumbers(db, 2009, 12)
+		require.NoError(t, err)
+
+		goldenFile := filepath.Join("testdata", "reports", "getLatestPluginNumbers.json")
+		goldenBytes := readGoldenAndUpdateIfDesired(t, goldenFile, pn)
+
+		var goldenPN pkg.LatestPluginNumbersReport
+		require.NoError(t, json.Unmarshal(goldenBytes, &goldenPN))
+
+		assert.Equal(t, goldenPN, pn)
+
+	})
+}
+
+func readGoldenAndUpdateIfDesired(t *testing.T, goldenFile string, input interface{}) []byte {
+	if os.Getenv("UPDATE_GOLDEN") != "" {
+		jb, err := json.MarshalIndent(input, "", "  ")
+		require.NoError(t, err)
+		require.NoError(t, ioutil.WriteFile(goldenFile, jb, 0644)) //nolint:gosec
+	}
+
+	goldenBytes, err := ioutil.ReadFile(goldenFile) //nolint:gosec
+	require.NoError(t, err)
+
+	return goldenBytes
 }
 
 func dbWithFixtures(t *testing.T) (sq.BaseRunner, func()) {

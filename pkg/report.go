@@ -343,8 +343,7 @@ func GetLatestPluginNumbers(db sq.BaseRunner, year, month int) (LatestPluginNumb
 		Plugins: map[string]uint64{},
 	}
 	rows, err := PSQL(db).Select("p.name as pn", "count(*) as number").
-		From("instance_reports i").
-		From("unnest(i.plugins) pr(id)").
+		From("instance_reports i, unnest(i.plugins) pr(id)").
 		Join("plugins p on p.id = pr.id").
 		Where(sq.Eq{"i.year": year}).
 		Where(sq.Eq{"i.month": month}).
