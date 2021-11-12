@@ -56,7 +56,11 @@ type JSONReport struct {
 
 // Timestamp parses the raw timestamp string on a report
 func (j *JSONReport) Timestamp() (time.Time, error) {
-	return time.Parse(time.RFC3339, JSONTimestampToRFC3339(j.TimestampString))
+	rawTime, err := time.Parse(time.RFC3339, JSONTimestampToRFC3339(j.TimestampString))
+	if err != nil {
+		return rawTime, err
+	}
+	return rawTime.In(time.UTC), nil
 }
 
 // JSONTimestampToRFC3339 converts the timestamp string in the raw reports into a form Go can parse

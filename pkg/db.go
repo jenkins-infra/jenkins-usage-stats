@@ -142,7 +142,6 @@ type StatsCache struct {
 	jobTypes        map[string]uint64
 	jenkinsVersions map[string]uint64
 	plugins         map[string]map[string]uint64
-	lastReport      map[string]InstanceReport
 
 	getJVMVersionTime     time.Duration
 	getOSTypeTime         time.Duration
@@ -179,7 +178,6 @@ func NewStatsCache() *StatsCache {
 		jobTypes:                 map[string]uint64{},
 		jenkinsVersions:          map[string]uint64{},
 		plugins:                  map[string]map[string]uint64{},
-		lastReport:               map[string]InstanceReport{},
 		getJVMVersionTime:        0,
 		getOSTypeTime:            0,
 		getJobTypeTime:           0,
@@ -370,29 +368,26 @@ func AddIndividualReport(db sq.BaseRunner, cache *StatsCache, jsonReport *JSONRe
 	var report InstanceReport
 
 	getReportStart := time.Now()
-	prevReport, ok := cache.lastReport[jsonReport.Install]
-	if !ok || prevReport.Year != ts.Year() || prevReport.Month != int(ts.Month()) {
-
-		rows, err := PSQL(db).
-			Select("id", "count_for_month, report_time").
-			From(InstanceReportsTable).
-			Where(sq.Eq{"instance_id": jsonReport.Install}).
-			Where(sq.Eq{"year": ts.Year()}).
-			Where(sq.Eq{"month": ts.Month()}).
-			Query()
-		defer func() {
-			_ = rows.Close()
-		}()
-		if err == sql.ErrNoRows {
-			insertRow = true
-		} else if err != nil {
-			return err
-		} else {
-			for rows.Next() {
-				err = rows.Scan(&prevReport.ID, &prevReport.CountForMonth, &prevReport.ReportTime)
-				if err != nil {
-					return err
-				}
+	var prevReport InstanceReport
+	rows, err := PSQL(db).
+		Select("id", "count_for_month, report_time").
+		From(InstanceReportsTable).
+		Where(sq.Eq{"instance_id": jsonReport.Install}).
+		Where(sq.Eq{"year": ts.Year()}).
+		Where(sq.Eq{"month": ts.Month()}).
+		Query()
+	defer func() {
+		_ = rows.Close()
+	}()
+	if err == sql.ErrNoRows {
+		insertRow = true
+	} else if err != nil {
+		return err
+	} else {
+		for rows.Next() {
+			err = rows.Scan(&prevReport.ID, &prevReport.CountForMonth, &prevReport.ReportTime)
+			if err != nil {
+				return err
 			}
 		}
 	}
@@ -492,10 +487,20 @@ func AddIndividualReport(db sq.BaseRunner, cache *StatsCache, jsonReport *JSONRe
 				report.Jobs,
 				report.Nodes).
 			Exec()
-		cache.insertInstanceReportTime += time.Since(insertStart)
 		if err != nil {
 			return err
 		}
+
+		err = PSQL(db).Select("id").From(InstanceReportsTable).
+			Where(sq.Eq{"instance_id": report.InstanceID}).
+			Where(sq.Eq{"year": ts.Year()}).
+			Where(sq.Eq{"month": ts.Month()}).
+			QueryRow().
+			Scan(&report.ID)
+		if err != nil {
+			return err
+		}
+		cache.insertInstanceReportTime += time.Since(insertStart)
 	} else {
 		updateStart := time.Now()
 		q := PSQL(db).Update(InstanceReportsTable).
@@ -514,7 +519,6 @@ func AddIndividualReport(db sq.BaseRunner, cache *StatsCache, jsonReport *JSONRe
 		if err != nil {
 			return err
 		}
-		cache.lastReport[report.InstanceID] = report
 	}
 
 	return nil
