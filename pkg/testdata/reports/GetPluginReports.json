@@ -1,0 +1,5159 @@
+[
+  {
+    "name": "bugzilla",
+    "installations": {
+      "1259625600": 356,
+      "1262304000": 325
+    },
+    "installationsPercentages": {
+      "1259625600": 2.5223184,
+      "1262304000": 2.4469206
+    },
+    "installationsPerVersion": {
+      "1.1": 1,
+      "1.2": 11,
+      "1.3": 313
+    },
+    "installationsPercentagePerVersion": {
+      "1.1": 0.007528987,
+      "1.2": 0.08281885,
+      "1.3": 2.3565729
+    }
+  },
+  {
+    "name": "klaros-testmanagement",
+    "installations": {
+      "1259625600": 5
+    },
+    "installationsPercentages": {
+      "1259625600": 0.03542582
+    },
+    "installationsPerVersion": {},
+    "installationsPercentagePerVersion": {}
+  },
+  {
+    "name": "pxe",
+    "installations": {
+      "1259625600": 33,
+      "1262304000": 28
+    },
+    "installationsPercentages": {
+      "1259625600": 0.2338104,
+      "1262304000": 0.21081163
+    },
+    "installationsPerVersion": {
+      "1.2": 3,
+      "1.3": 25
+    },
+    "installationsPercentagePerVersion": {
+      "1.2": 0.02258696,
+      "1.3": 0.18822466
+    }
+  },
+  {
+    "name": "ec2",
+    "installations": {
+      "1259625600": 71,
+      "1262304000": 68
+    },
+    "installationsPercentages": {
+      "1259625600": 0.50304663,
+      "1262304000": 0.5119711
+    },
+    "installationsPerVersion": {
+      "1.1": 2,
+      "1.2": 7,
+      "1.3": 2,
+      "1.4": 20,
+      "1.5": 37
+    },
+    "installationsPercentagePerVersion": {
+      "1.1": 0.015057974,
+      "1.2": 0.052702907,
+      "1.3": 0.015057974,
+      "1.4": 0.15057974,
+      "1.5": 0.2785725
+    }
+  },
+  {
+    "name": "msbuild",
+    "installations": {
+      "1259625600": 673,
+      "1262304000": 649
+    },
+    "installationsPercentages": {
+      "1259625600": 4.7683153,
+      "1262304000": 4.8863125
+    },
+    "installationsPerVersion": {
+      "1.0": 2,
+      "1.1": 56,
+      "1.2": 471,
+      "1.3": 120
+    },
+    "installationsPercentagePerVersion": {
+      "1.0": 0.015057974,
+      "1.1": 0.42162326,
+      "1.2": 3.5461526,
+      "1.3": 0.9034784
+    }
+  },
+  {
+    "name": "bitkeeper",
+    "installations": {
+      "1259625600": 8,
+      "1262304000": 3
+    },
+    "installationsPercentages": {
+      "1259625600": 0.05668131,
+      "1262304000": 0.02258696
+    },
+    "installationsPerVersion": {
+      "1.4": 3
+    },
+    "installationsPercentagePerVersion": {
+      "1.4": 0.02258696
+    }
+  },
+  {
+    "name": "clearcase-release",
+    "installations": {
+      "1259625600": 24,
+      "1262304000": 17
+    },
+    "installationsPercentages": {
+      "1259625600": 0.17004393,
+      "1262304000": 0.12799278
+    },
+    "installationsPerVersion": {
+      "0.1": 17
+    },
+    "installationsPercentagePerVersion": {
+      "0.1": 0.12799278
+    }
+  },
+  {
+    "name": "doclinks",
+    "installations": {
+      "1259625600": 262,
+      "1262304000": 255
+    },
+    "installationsPercentages": {
+      "1259625600": 1.8563129,
+      "1262304000": 1.9198916
+    },
+    "installationsPerVersion": {
+      "0.1": 1,
+      "0.2.1": 3,
+      "0.2.2": 251
+    },
+    "installationsPercentagePerVersion": {
+      "0.1": 0.007528987,
+      "0.2.1": 0.02258696,
+      "0.2.2": 1.8897756
+    }
+  },
+  {
+    "name": "copyarchiver",
+    "installations": {
+      "1259625600": 174,
+      "1262304000": 156
+    },
+    "installationsPercentages": {
+      "1259625600": 1.2328185,
+      "1262304000": 1.1745219
+    },
+    "installationsPerVersion": {
+      "0.1": 4,
+      "0.2": 1,
+      "0.3": 21,
+      "0.4.1": 1,
+      "0.4.2": 129
+    },
+    "installationsPercentagePerVersion": {
+      "0.1": 0.030115947,
+      "0.2": 0.007528987,
+      "0.3": 0.15810871,
+      "0.4.1": 0.007528987,
+      "0.4.2": 0.97123927
+    }
+  },
+  {
+    "name": "powershell",
+    "installations": {
+      "1259625600": 90,
+      "1262304000": 89
+    },
+    "installationsPercentages": {
+      "1259625600": 0.63766474,
+      "1262304000": 0.6700798
+    },
+    "installationsPerVersion": {
+      "1.0": 1,
+      "1.1": 6,
+      "1.2": 82
+    },
+    "installationsPercentagePerVersion": {
+      "1.0": 0.007528987,
+      "1.1": 0.04517392,
+      "1.2": 0.6173769
+    }
+  },
+  {
+    "name": "dashboard-view",
+    "installations": {
+      "1259625600": 472,
+      "1262304000": 456
+    },
+    "installationsPercentages": {
+      "1259625600": 3.3441973,
+      "1262304000": 3.433218
+    },
+    "installationsPerVersion": {
+      "1.0": 78,
+      "1.1": 378
+    },
+    "installationsPercentagePerVersion": {
+      "1.0": 0.58726096,
+      "1.1": 2.845957
+    }
+  },
+  {
+    "name": "greenballs",
+    "installations": {
+      "1259625600": 1560,
+      "1262304000": 1495
+    },
+    "installationsPercentages": {
+      "1259625600": 11.0528555,
+      "1262304000": 11.255835
+    },
+    "installationsPerVersion": {
+      "1.4": 674,
+      "1.5": 821
+    },
+    "installationsPercentagePerVersion": {
+      "1.4": 5.074537,
+      "1.5": 6.181298
+    }
+  },
+  {
+    "name": "hadoop",
+    "installations": {
+      "1259625600": 23,
+      "1262304000": 13
+    },
+    "installationsPercentages": {
+      "1259625600": 0.16295877,
+      "1262304000": 0.097876824
+    },
+    "installationsPerVersion": {
+      "1.2": 2,
+      "1.3": 11
+    },
+    "installationsPercentagePerVersion": {
+      "1.2": 0.015057974,
+      "1.3": 0.08281885
+    }
+  },
+  {
+    "name": "rubyMetrics",
+    "installations": {
+      "1259625600": 162,
+      "1262304000": 145
+    },
+    "installationsPercentages": {
+      "1259625600": 1.1477965,
+      "1262304000": 1.091703
+    },
+    "installationsPerVersion": {
+      "1.2": 1,
+      "1.2.2": 6,
+      "1.2.6": 18,
+      "1.2.7": 14,
+      "1.2.8": 6,
+      "1.3": 86,
+      "1.4": 14
+    },
+    "installationsPercentagePerVersion": {
+      "1.2": 0.007528987,
+      "1.2.2": 0.04517392,
+      "1.2.6": 0.13552175,
+      "1.2.7": 0.105405815,
+      "1.2.8": 0.04517392,
+      "1.3": 0.6474928,
+      "1.4": 0.105405815
+    }
+  },
+  {
+    "name": "sloccount",
+    "installations": {
+      "1259625600": 324,
+      "1262304000": 297
+    },
+    "installationsPercentages": {
+      "1259625600": 2.295593,
+      "1262304000": 2.236109
+    },
+    "installationsPerVersion": {
+      "1.2": 38,
+      "1.3": 259
+    },
+    "installationsPercentagePerVersion": {
+      "1.2": 0.2861015,
+      "1.3": 1.9500076
+    }
+  },
+  {
+    "name": "m2-extra-steps",
+    "installations": {
+      "1259625600": 575,
+      "1262304000": 558
+    },
+    "installationsPercentages": {
+      "1259625600": 4.073969,
+      "1262304000": 4.2011747
+    },
+    "installationsPerVersion": {
+      "1.0": 40,
+      "1.1": 34,
+      "1.1.1": 73,
+      "1.1.2": 262,
+      "1.1.3": 149
+    },
+    "installationsPercentagePerVersion": {
+      "1.0": 0.30115947,
+      "1.1": 0.25598556,
+      "1.1.1": 0.54961604,
+      "1.1.2": 1.9725945,
+      "1.1.3": 1.121819
+    }
+  },
+  {
+    "name": "codescanner",
+    "installations": {
+      "1259625600": 13,
+      "1262304000": 7
+    },
+    "installationsPercentages": {
+      "1259625600": 0.092107125,
+      "1262304000": 0.052702907
+    },
+    "installationsPerVersion": {
+      "0.5": 5,
+      "0.6": 2
+    },
+    "installationsPercentagePerVersion": {
+      "0.5": 0.037644934,
+      "0.6": 0.015057974
+    }
+  },
+  {
+    "name": "htmlpublisher",
+    "installations": {
+      "1259625600": 213,
+      "1262304000": 207
+    },
+    "installationsPercentages": {
+      "1259625600": 1.5091399,
+      "1262304000": 1.5585002
+    },
+    "installationsPerVersion": {
+      "0.1.0": 207
+    },
+    "installationsPercentagePerVersion": {
+      "0.1.0": 1.5585002
+    }
+  },
+  {
+    "name": "collabnet",
+    "installations": {
+      "1259625600": 23,
+      "1262304000": 21
+    },
+    "installationsPercentages": {
+      "1259625600": 0.16295877,
+      "1262304000": 0.15810871
+    },
+    "installationsPerVersion": {
+      "1.0": 1,
+      "1.1.1": 14,
+      "1.1.2": 6
+    },
+    "installationsPercentagePerVersion": {
+      "1.0": 0.007528987,
+      "1.1.1": 0.105405815,
+      "1.1.2": 0.04517392
+    }
+  },
+  {
+    "name": "seleniumhq",
+    "installations": {
+      "1259625600": 264,
+      "1262304000": 237
+    },
+    "installationsPercentages": {
+      "1259625600": 1.8704832,
+      "1262304000": 1.7843698
+    },
+    "installationsPerVersion": {
+      "0.1": 23,
+      "0.2": 214
+    },
+    "installationsPercentagePerVersion": {
+      "0.1": 0.17316669,
+      "0.2": 1.6112031
+    }
+  },
+  {
+    "name": "perfpublisher",
+    "installations": {
+      "1262304000": 6
+    },
+    "installationsPercentages": {
+      "1262304000": 0.04517392
+    },
+    "installationsPerVersion": {
+      "7.93": 6
+    },
+    "installationsPercentagePerVersion": {
+      "7.93": 0.04517392
+    }
+  },
+  {
+    "name": "ivy",
+    "installations": {
+      "1259625600": 178,
+      "1262304000": 171
+    },
+    "installationsPercentages": {
+      "1259625600": 1.2611592,
+      "1262304000": 1.2874568
+    },
+    "installationsPerVersion": {
+      "0.1": 11,
+      "0.2": 2,
+      "0.3": 126,
+      "0.4": 32
+    },
+    "installationsPercentagePerVersion": {
+      "0.1": 0.08281885,
+      "0.2": 0.015057974,
+      "0.3": 0.9486523,
+      "0.4": 0.24092758
+    }
+  },
+  {
+    "name": "bazaar",
+    "installations": {
+      "1259625600": 49,
+      "1262304000": 50
+    },
+    "installationsPercentages": {
+      "1259625600": 0.347173,
+      "1262304000": 0.37644932
+    },
+    "installationsPerVersion": {
+      "1.0": 7,
+      "1.1": 43
+    },
+    "installationsPercentagePerVersion": {
+      "1.0": 0.052702907,
+      "1.1": 0.3237464
+    }
+  },
+  {
+    "name": "scp",
+    "installations": {
+      "1259625600": 893,
+      "1262304000": 826
+    },
+    "installationsPercentages": {
+      "1259625600": 6.327051,
+      "1262304000": 6.218943
+    },
+    "installationsPerVersion": {
+      "1.1": 1,
+      "1.3": 9,
+      "1.4": 6,
+      "1.5.1": 2,
+      "1.5.2": 808
+    },
+    "installationsPercentagePerVersion": {
+      "1.1": 0.007528987,
+      "1.3": 0.06776088,
+      "1.4": 0.04517392,
+      "1.5.1": 0.015057974,
+      "1.5.2": 6.083421
+    }
+  },
+  {
+    "name": "jdepend",
+    "installations": {
+      "1259625600": 269,
+      "1262304000": 243
+    },
+    "installationsPercentages": {
+      "1259625600": 1.9059091,
+      "1262304000": 1.8295437
+    },
+    "installationsPerVersion": {
+      "1.1.2": 3,
+      "1.1.4": 8,
+      "1.2": 4,
+      "1.2.1": 9,
+      "1.2.2": 219
+    },
+    "installationsPercentagePerVersion": {
+      "1.1.2": 0.02258696,
+      "1.1.4": 0.060231894,
+      "1.2": 0.030115947,
+      "1.2.1": 0.06776088,
+      "1.2.2": 1.648848
+    }
+  },
+  {
+    "name": "versionnumber",
+    "installations": {
+      "1259625600": 191,
+      "1262304000": 186
+    },
+    "installationsPercentages": {
+      "1259625600": 1.3532662,
+      "1262304000": 1.4003915
+    },
+    "installationsPerVersion": {
+      "1.1": 3,
+      "1.2": 93,
+      "1.3.1": 90
+    },
+    "installationsPercentagePerVersion": {
+      "1.1": 0.02258696,
+      "1.2": 0.7001957,
+      "1.3.1": 0.6776088
+    }
+  },
+  {
+    "name": "groovy",
+    "installations": {
+      "1259625600": 325,
+      "1262304000": 299
+    },
+    "installationsPercentages": {
+      "1259625600": 2.302678,
+      "1262304000": 2.251167
+    },
+    "installationsPerVersion": {
+      "1.0": 1,
+      "1.1": 2,
+      "1.2": 9,
+      "1.3": 232,
+      "1.4": 55
+    },
+    "installationsPercentagePerVersion": {
+      "1.0": 0.007528987,
+      "1.1": 0.015057974,
+      "1.2": 0.06776088,
+      "1.3": 1.7467248,
+      "1.4": 0.41409427
+    }
+  },
+  {
+    "name": "perforce",
+    "installations": {
+      "1259625600": 365,
+      "1262304000": 346
+    },
+    "installationsPercentages": {
+      "1259625600": 2.5860848,
+      "1262304000": 2.6050293
+    },
+    "installationsPerVersion": {
+      "1.0.11": 3,
+      "1.0.12": 42,
+      "1.0.13": 35,
+      "1.0.14": 106,
+      "1.0.14.arcsight": 1,
+      "1.0.14b": 1,
+      "1.0.15": 114,
+      "1.0.16": 43,
+      "smss-1.0.12": 1
+    },
+    "installationsPercentagePerVersion": {
+      "1.0.11": 0.02258696,
+      "1.0.12": 0.31621742,
+      "1.0.13": 0.26351452,
+      "1.0.14": 0.7980726,
+      "1.0.14.arcsight": 0.007528987,
+      "1.0.14b": 0.007528987,
+      "1.0.15": 0.8583045,
+      "1.0.16": 0.3237464,
+      "smss-1.0.12": 0.007528987
+    }
+  },
+  {
+    "name": "blame-upstream-commiters",
+    "installations": {
+      "1259625600": 2,
+      "1262304000": 2
+    },
+    "installationsPercentages": {
+      "1259625600": 0.014170327,
+      "1262304000": 0.015057974
+    },
+    "installationsPerVersion": {
+      "1.0": 2
+    },
+    "installationsPercentagePerVersion": {
+      "1.0": 0.015057974
+    }
+  },
+  {
+    "name": "selenium-aes",
+    "installations": {
+      "1259625600": 191,
+      "1262304000": 163
+    },
+    "installationsPercentages": {
+      "1259625600": 1.3532662,
+      "1262304000": 1.2272248
+    },
+    "installationsPerVersion": {
+      "0.1": 3,
+      "0.2": 160
+    },
+    "installationsPercentagePerVersion": {
+      "0.1": 0.02258696,
+      "0.2": 1.2046379
+    }
+  },
+  {
+    "name": "backup",
+    "installations": {
+      "1259625600": 692,
+      "1262304000": 641
+    },
+    "installationsPercentages": {
+      "1259625600": 4.902933,
+      "1262304000": 4.8260803
+    },
+    "installationsPerVersion": {
+      "1.0": 27,
+      "1.1": 42,
+      "1.2": 56,
+      "1.3": 516
+    },
+    "installationsPercentagePerVersion": {
+      "1.0": 0.20328264,
+      "1.1": 0.31621742,
+      "1.2": 0.42162326,
+      "1.3": 3.884957
+    }
+  },
+  {
+    "name": "configurationslicing",
+    "installations": {
+      "1259625600": 235,
+      "1262304000": 211
+    },
+    "installationsPercentages": {
+      "1259625600": 1.6650134,
+      "1262304000": 1.5886161
+    },
+    "installationsPerVersion": {
+      "1.10": 100,
+      "1.9": 111
+    },
+    "installationsPercentagePerVersion": {
+      "1.10": 0.75289863,
+      "1.9": 0.8357175
+    }
+  },
+  {
+    "name": "dry",
+    "installations": {
+      "1259625600": 610,
+      "1262304000": 551
+    },
+    "installationsPercentages": {
+      "1259625600": 4.32195,
+      "1262304000": 4.148472
+    },
+    "installationsPerVersion": {
+      "1.10": 24,
+      "1.11": 7,
+      "1.12": 20,
+      "1.13": 172,
+      "1.2": 1,
+      "1.3": 8,
+      "1.4": 1,
+      "1.5": 9,
+      "1.7": 14,
+      "1.8": 33,
+      "1.9": 21,
+      "2.0": 111,
+      "2.1": 130
+    },
+    "installationsPercentagePerVersion": {
+      "1.10": 0.18069568,
+      "1.11": 0.052702907,
+      "1.12": 0.15057974,
+      "1.13": 1.2949857,
+      "1.2": 0.007528987,
+      "1.3": 0.060231894,
+      "1.4": 0.007528987,
+      "1.5": 0.06776088,
+      "1.7": 0.105405815,
+      "1.8": 0.24845655,
+      "1.9": 0.15810871,
+      "2.0": 0.8357175,
+      "2.1": 0.9787682
+    }
+  },
+  {
+    "name": "mantis",
+    "installations": {
+      "1259625600": 245,
+      "1262304000": 231
+    },
+    "installationsPercentages": {
+      "1259625600": 1.7358651,
+      "1262304000": 1.739196
+    },
+    "installationsPerVersion": {
+      "0.2": 1,
+      "0.4.2": 1,
+      "0.4.3": 1,
+      "0.5.2": 10,
+      "0.6.1": 11,
+      "0.7": 2,
+      "0.7.1": 3,
+      "0.8.0": 6,
+      "0.8.1": 7,
+      "0.8.3": 189
+    },
+    "installationsPercentagePerVersion": {
+      "0.2": 0.007528987,
+      "0.4.2": 0.007528987,
+      "0.4.3": 0.007528987,
+      "0.5.2": 0.07528987,
+      "0.6.1": 0.08281885,
+      "0.7": 0.015057974,
+      "0.7.1": 0.02258696,
+      "0.8.0": 0.04517392,
+      "0.8.1": 0.052702907,
+      "0.8.3": 1.4229785
+    }
+  },
+  {
+    "name": "maven-info",
+    "installations": {
+      "1259625600": 185,
+      "1262304000": 169
+    },
+    "installationsPercentages": {
+      "1259625600": 1.3107553,
+      "1262304000": 1.2723987
+    },
+    "installationsPerVersion": {
+      "0.0.2": 103,
+      "0.0.3": 65,
+      "0.1.1": 1
+    },
+    "installationsPercentagePerVersion": {
+      "0.0.2": 0.77548563,
+      "0.0.3": 0.4893841,
+      "0.1.1": 0.007528987
+    }
+  },
+  {
+    "name": "active-directory",
+    "installations": {
+      "1259625600": 1035,
+      "1262304000": 971
+    },
+    "installationsPercentages": {
+      "1259625600": 7.333144,
+      "1262304000": 7.310646
+    },
+    "installationsPerVersion": {
+      "1.1": 2,
+      "1.11": 10,
+      "1.12": 33,
+      "1.13": 87,
+      "1.14": 8,
+      "1.15": 460,
+      "1.16": 272,
+      "1.2": 3,
+      "1.4": 1,
+      "1.5": 33,
+      "1.6": 2,
+      "1.7": 10,
+      "1.8": 13,
+      "1.9": 37
+    },
+    "installationsPercentagePerVersion": {
+      "1.1": 0.015057974,
+      "1.11": 0.07528987,
+      "1.12": 0.24845655,
+      "1.13": 0.65502185,
+      "1.14": 0.060231894,
+      "1.15": 3.4633338,
+      "1.16": 2.0478845,
+      "1.2": 0.02258696,
+      "1.4": 0.007528987,
+      "1.5": 0.24845655,
+      "1.6": 0.015057974,
+      "1.7": 0.07528987,
+      "1.8": 0.097876824,
+      "1.9": 0.2785725
+    }
+  },
+  {
+    "name": "python",
+    "installations": {
+      "1259625600": 242,
+      "1262304000": 214
+    },
+    "installationsPercentages": {
+      "1259625600": 1.7146096,
+      "1262304000": 1.6112031
+    },
+    "installationsPerVersion": {
+      "1.0": 214
+    },
+    "installationsPercentagePerVersion": {
+      "1.0": 1.6112031
+    }
+  },
+  {
+    "name": "cvs",
+    "installations": {
+      "1259625600": 13,
+      "1262304000": 40
+    },
+    "installationsPercentages": {
+      "1259625600": 0.092107125,
+      "1262304000": 0.30115947
+    },
+    "installationsPerVersion": {
+      "0.1": 40
+    },
+    "installationsPercentagePerVersion": {
+      "0.1": 0.30115947
+    }
+  },
+  {
+    "name": "easyant",
+    "installations": {
+      "1259625600": 47,
+      "1262304000": 37
+    },
+    "installationsPercentages": {
+      "1259625600": 0.3330027,
+      "1262304000": 0.2785725
+    },
+    "installationsPerVersion": {
+      "1.0": 37
+    },
+    "installationsPercentagePerVersion": {
+      "1.0": 0.2785725
+    }
+  },
+  {
+    "name": "scons",
+    "installations": {
+      "1259625600": 43,
+      "1262304000": 47
+    },
+    "installationsPercentages": {
+      "1259625600": 0.30466205,
+      "1262304000": 0.35386238
+    },
+    "installationsPerVersion": {
+      "0.1": 47
+    },
+    "installationsPercentagePerVersion": {
+      "0.1": 0.35386238
+    }
+  },
+  {
+    "name": "ssh-slaves",
+    "installations": {
+      "1259625600": 9331,
+      "1262304000": 8636
+    },
+    "installationsPercentages": {
+      "1259625600": 66.111664,
+      "1262304000": 65.020325
+    },
+    "installationsPerVersion": {
+      "0.10": 1,
+      "0.2": 6,
+      "0.4": 217,
+      "0.5.2": 954,
+      "0.6": 97,
+      "0.7": 2094,
+      "0.8": 2849,
+      "0.9": 2418
+    },
+    "installationsPercentagePerVersion": {
+      "0.10": 0.007528987,
+      "0.2": 0.04517392,
+      "0.4": 1.6337901,
+      "0.5.2": 7.1826534,
+      "0.6": 0.7303117,
+      "0.7": 15.7656975,
+      "0.8": 21.450083,
+      "0.9": 18.20509
+    }
+  },
+  {
+    "name": "secret",
+    "installations": {
+      "1259625600": 32,
+      "1262304000": 32
+    },
+    "installationsPercentages": {
+      "1259625600": 0.22672524,
+      "1262304000": 0.24092758
+    },
+    "installationsPerVersion": {
+      "1.4": 32
+    },
+    "installationsPercentagePerVersion": {
+      "1.4": 0.24092758
+    }
+  },
+  {
+    "name": "drools",
+    "installations": {
+      "1259625600": 17,
+      "1262304000": 19
+    },
+    "installationsPercentages": {
+      "1259625600": 0.120447785,
+      "1262304000": 0.14305075
+    },
+    "installationsPerVersion": {
+      "0.1": 19
+    },
+    "installationsPercentagePerVersion": {
+      "0.1": 0.14305075
+    }
+  },
+  {
+    "name": "synergy",
+    "installations": {
+      "1259625600": 37,
+      "1262304000": 38
+    },
+    "installationsPercentages": {
+      "1259625600": 0.26215106,
+      "1262304000": 0.2861015
+    },
+    "installationsPerVersion": {
+      "0.10 Nokia": 3,
+      "0.11 Nokia": 8,
+      "0.5 Nokia": 1,
+      "1.4": 7,
+      "1.5": 19
+    },
+    "installationsPercentagePerVersion": {
+      "0.10 Nokia": 0.02258696,
+      "0.11 Nokia": 0.060231894,
+      "0.5 Nokia": 0.007528987,
+      "1.4": 0.052702907,
+      "1.5": 0.14305075
+    }
+  },
+  {
+    "name": "dbCharts",
+    "installations": {
+      "1259625600": 30,
+      "1262304000": 20
+    },
+    "installationsPercentages": {
+      "1259625600": 0.21255492,
+      "1262304000": 0.15057974
+    },
+    "installationsPerVersion": {
+      "0.2.1": 20
+    },
+    "installationsPercentagePerVersion": {
+      "0.2.1": 0.15057974
+    }
+  },
+  {
+    "name": "kundo",
+    "installations": {
+      "1259625600": 9,
+      "1262304000": 6
+    },
+    "installationsPercentages": {
+      "1259625600": 0.06376647,
+      "1262304000": 0.04517392
+    },
+    "installationsPerVersion": {
+      "0.1": 6
+    },
+    "installationsPercentagePerVersion": {
+      "0.1": 0.04517392
+    }
+  },
+  {
+    "name": "mozmill",
+    "installations": {
+      "1259625600": 3,
+      "1262304000": 2
+    },
+    "installationsPercentages": {
+      "1259625600": 0.021255491,
+      "1262304000": 0.015057974
+    },
+    "installationsPerVersion": {
+      "1.2": 2
+    },
+    "installationsPercentagePerVersion": {
+      "1.2": 0.015057974
+    }
+  },
+  {
+    "name": "doxygen",
+    "installations": {
+      "1259625600": 325,
+      "1262304000": 303
+    },
+    "installationsPercentages": {
+      "1259625600": 2.302678,
+      "1262304000": 2.281283
+    },
+    "installationsPerVersion": {
+      "0.1": 12,
+      "0.2": 1,
+      "0.3": 1,
+      "0.4": 210,
+      "0.4.1": 1,
+      "0.5": 78
+    },
+    "installationsPercentagePerVersion": {
+      "0.1": 0.09034784,
+      "0.2": 0.007528987,
+      "0.3": 0.007528987,
+      "0.4": 1.5810872,
+      "0.4.1": 0.007528987,
+      "0.5": 0.58726096
+    }
+  },
+  {
+    "name": "Schmant",
+    "installations": {
+      "1259625600": 5,
+      "1262304000": 2
+    },
+    "installationsPercentages": {
+      "1259625600": 0.03542582,
+      "1262304000": 0.015057974
+    },
+    "installationsPerVersion": {
+      "1.0": 2
+    },
+    "installationsPercentagePerVersion": {
+      "1.0": 0.015057974
+    }
+  },
+  {
+    "name": "cpptest",
+    "installations": {
+      "1259625600": 12,
+      "1262304000": 8
+    },
+    "installationsPercentages": {
+      "1259625600": 0.085021965,
+      "1262304000": 0.060231894
+    },
+    "installationsPerVersion": {
+      "0.1": 1,
+      "0.2": 7
+    },
+    "installationsPercentagePerVersion": {
+      "0.1": 0.007528987,
+      "0.2": 0.052702907
+    }
+  },
+  {
+    "name": "createjobadvanced",
+    "installations": {
+      "1259625600": 83,
+      "1262304000": 75
+    },
+    "installationsPercentages": {
+      "1259625600": 0.5880686,
+      "1262304000": 0.564674
+    },
+    "installationsPerVersion": {
+      "1.0": 2,
+      "1.1": 8,
+      "1.2": 65
+    },
+    "installationsPercentagePerVersion": {
+      "1.0": 0.015057974,
+      "1.1": 0.060231894,
+      "1.2": 0.4893841
+    }
+  },
+  {
+    "name": "svn-release-mgr",
+    "installations": {
+      "1259625600": 648,
+      "1262304000": 600
+    },
+    "installationsPercentages": {
+      "1259625600": 4.591186,
+      "1262304000": 4.517392
+    },
+    "installationsPerVersion": {
+      "0.1": 304,
+      "0.2": 14,
+      "1.0": 282
+    },
+    "installationsPercentagePerVersion": {
+      "0.1": 2.288812,
+      "0.2": 0.105405815,
+      "1.0": 2.1231742
+    }
+  },
+  {
+    "name": "release",
+    "installations": {
+      "1259625600": 536,
+      "1262304000": 505
+    },
+    "installationsPercentages": {
+      "1259625600": 3.7976477,
+      "1262304000": 3.8021383
+    },
+    "installationsPerVersion": {
+      "1.0": 13,
+      "1.1": 18,
+      "1.2": 2,
+      "1.3": 2,
+      "1.4": 56,
+      "1.5": 26,
+      "1.7": 107,
+      "1.8": 24,
+      "1.9": 257
+    },
+    "installationsPercentagePerVersion": {
+      "1.0": 0.097876824,
+      "1.1": 0.13552175,
+      "1.2": 0.015057974,
+      "1.3": 0.015057974,
+      "1.4": 0.42162326,
+      "1.5": 0.19575365,
+      "1.7": 0.80560154,
+      "1.8": 0.18069568,
+      "1.9": 1.9349495
+    }
+  },
+  {
+    "name": "cmakebuilder",
+    "installations": {
+      "1259625600": 61,
+      "1262304000": 50
+    },
+    "installationsPercentages": {
+      "1259625600": 0.43219498,
+      "1262304000": 0.37644932
+    },
+    "installationsPerVersion": {
+      "0.5": 12,
+      "0.6": 1,
+      "1.0": 23,
+      "1.1": 14
+    },
+    "installationsPercentagePerVersion": {
+      "0.5": 0.09034784,
+      "0.6": 0.007528987,
+      "1.0": 0.17316669,
+      "1.1": 0.105405815
+    }
+  },
+  {
+    "name": "sectioned-view",
+    "installations": {
+      "1259625600": 364,
+      "1262304000": 339
+    },
+    "installationsPercentages": {
+      "1259625600": 2.5789995,
+      "1262304000": 2.5523264
+    },
+    "installationsPerVersion": {
+      "1.0": 13,
+      "1.1": 36,
+      "1.2": 9,
+      "1.3": 4,
+      "1.4": 57,
+      "1.5": 220
+    },
+    "installationsPercentagePerVersion": {
+      "1.0": 0.097876824,
+      "1.1": 0.2710435,
+      "1.2": 0.06776088,
+      "1.3": 0.030115947,
+      "1.4": 0.42915225,
+      "1.5": 1.6563771
+    }
+  },
+  {
+    "name": "webtestpresenter",
+    "installations": {
+      "1259625600": 98,
+      "1262304000": 98
+    },
+    "installationsPercentages": {
+      "1259625600": 0.694346,
+      "1262304000": 0.7378407
+    },
+    "installationsPerVersion": {
+      "0.21": 2,
+      "0.22": 96
+    },
+    "installationsPercentagePerVersion": {
+      "0.21": 0.015057974,
+      "0.22": 0.72278273
+    }
+  },
+  {
+    "name": "jswidgets",
+    "installations": {
+      "1259625600": 26,
+      "1262304000": 19
+    },
+    "installationsPercentages": {
+      "1259625600": 0.18421425,
+      "1262304000": 0.14305075
+    },
+    "installationsPerVersion": {
+      "1.2": 3,
+      "1.3": 16
+    },
+    "installationsPercentagePerVersion": {
+      "1.2": 0.02258696,
+      "1.3": 0.12046379
+    }
+  },
+  {
+    "name": "windmill",
+    "installations": {
+      "1259625600": 25,
+      "1262304000": 19
+    },
+    "installationsPercentages": {
+      "1259625600": 0.17712909,
+      "1262304000": 0.14305075
+    },
+    "installationsPerVersion": {
+      "1.3": 1,
+      "1.4": 18
+    },
+    "installationsPercentagePerVersion": {
+      "1.3": 0.007528987,
+      "1.4": 0.13552175
+    }
+  },
+  {
+    "name": "cppncss",
+    "installations": {
+      "1259625600": 15,
+      "1262304000": 11
+    },
+    "installationsPercentages": {
+      "1259625600": 0.10627746,
+      "1262304000": 0.08281885
+    },
+    "installationsPerVersion": {
+      "1.0-beta-4": 11
+    },
+    "installationsPercentagePerVersion": {
+      "1.0-beta-4": 0.08281885
+    }
+  },
+  {
+    "name": "claim",
+    "installations": {
+      "1259625600": 352,
+      "1262304000": 311
+    },
+    "installationsPercentages": {
+      "1259625600": 2.4939775,
+      "1262304000": 2.3415148
+    },
+    "installationsPerVersion": {
+      "1.0": 19,
+      "1.2": 1,
+      "1.3": 6,
+      "1.4": 36,
+      "1.5": 127,
+      "1.6": 122
+    },
+    "installationsPercentagePerVersion": {
+      "1.0": 0.14305075,
+      "1.2": 0.007528987,
+      "1.3": 0.04517392,
+      "1.4": 0.2710435,
+      "1.5": 0.9561813,
+      "1.6": 0.91853637
+    }
+  },
+  {
+    "name": "ftppublisher",
+    "installations": {
+      "1259625600": 412,
+      "1262304000": 394
+    },
+    "installationsPercentages": {
+      "1259625600": 2.9190874,
+      "1262304000": 2.9664207
+    },
+    "installationsPerVersion": {
+      "0.9": 393,
+      "0.9.1": 1
+    },
+    "installationsPercentagePerVersion": {
+      "0.9": 2.9588916,
+      "0.9.1": 0.007528987
+    }
+  },
+  {
+    "name": "build-timeout",
+    "installations": {
+      "1259625600": 1121,
+      "1262304000": 1030
+    },
+    "installationsPercentages": {
+      "1259625600": 7.9424686,
+      "1262304000": 7.754856
+    },
+    "installationsPerVersion": {
+      "1.2": 1,
+      "1.3": 11,
+      "1.4": 204,
+      "1.5": 627,
+      "1.6": 187
+    },
+    "installationsPercentagePerVersion": {
+      "1.2": 0.007528987,
+      "1.3": 0.08281885,
+      "1.4": 1.5359132,
+      "1.5": 4.7206745,
+      "1.6": 1.4079205
+    }
+  },
+  {
+    "name": "rake",
+    "installations": {
+      "1259625600": 300,
+      "1262304000": 275
+    },
+    "installationsPercentages": {
+      "1259625600": 2.125549,
+      "1262304000": 2.0704713
+    },
+    "installationsPerVersion": {
+      "1.1": 1,
+      "1.3": 5,
+      "1.4": 4,
+      "1.5": 40,
+      "1.6": 18,
+      "1.6.1": 31,
+      "1.6.2": 176
+    },
+    "installationsPercentagePerVersion": {
+      "1.1": 0.007528987,
+      "1.3": 0.037644934,
+      "1.4": 0.030115947,
+      "1.5": 0.30115947,
+      "1.6": 0.13552175,
+      "1.6.1": 0.23339859,
+      "1.6.2": 1.3251016
+    }
+  },
+  {
+    "name": "lastsuccessversioncolumn",
+    "installations": {
+      "1259625600": 59,
+      "1262304000": 62
+    },
+    "installationsPercentages": {
+      "1259625600": 0.41802466,
+      "1262304000": 0.46679717
+    },
+    "installationsPerVersion": {
+      "1.0": 62
+    },
+    "installationsPercentagePerVersion": {
+      "1.0": 0.46679717
+    }
+  },
+  {
+    "name": "changelog-history",
+    "installations": {
+      "1259625600": 459,
+      "1262304000": 432
+    },
+    "installationsPercentages": {
+      "1259625600": 3.2520902,
+      "1262304000": 3.2525222
+    },
+    "installationsPerVersion": {
+      "1.0": 105,
+      "1.1": 327
+    },
+    "installationsPercentagePerVersion": {
+      "1.0": 0.7905436,
+      "1.1": 2.4619787
+    }
+  },
+  {
+    "name": "rad-builder",
+    "installations": {
+      "1259625600": 12,
+      "1262304000": 8
+    },
+    "installationsPercentages": {
+      "1259625600": 0.085021965,
+      "1262304000": 0.060231894
+    },
+    "installationsPerVersion": {
+      "1.0.1": 1,
+      "1.1": 7
+    },
+    "installationsPercentagePerVersion": {
+      "1.0.1": 0.007528987,
+      "1.1": 0.052702907
+    }
+  },
+  {
+    "name": "tuxdroid",
+    "installations": {
+      "1259625600": 10,
+      "1262304000": 7
+    },
+    "installationsPercentages": {
+      "1259625600": 0.07085164,
+      "1262304000": 0.052702907
+    },
+    "installationsPerVersion": {
+      "1.2": 1,
+      "1.5": 6
+    },
+    "installationsPercentagePerVersion": {
+      "1.2": 0.007528987,
+      "1.5": 0.04517392
+    }
+  },
+  {
+    "name": "m2-repo-reaper",
+    "installations": {
+      "1259625600": 55,
+      "1262304000": 49
+    },
+    "installationsPercentages": {
+      "1259625600": 0.389684,
+      "1262304000": 0.36892036
+    },
+    "installationsPerVersion": {
+      "1.0": 49
+    },
+    "installationsPercentagePerVersion": {
+      "1.0": 0.36892036
+    }
+  },
+  {
+    "name": "javanet-uploader",
+    "installations": {
+      "1259625600": 67,
+      "1262304000": 59
+    },
+    "installationsPercentages": {
+      "1259625600": 0.47470596,
+      "1262304000": 0.4442102
+    },
+    "installationsPerVersion": {
+      "1.5": 5,
+      "1.6": 50,
+      "1.7": 4
+    },
+    "installationsPercentagePerVersion": {
+      "1.5": 0.037644934,
+      "1.6": 0.37644932,
+      "1.7": 0.030115947
+    }
+  },
+  {
+    "name": "grails",
+    "installations": {
+      "1259625600": 213,
+      "1262304000": 212
+    },
+    "installationsPercentages": {
+      "1259625600": 1.5091399,
+      "1262304000": 1.5961452
+    },
+    "installationsPerVersion": {
+      "1.0": 3,
+      "1.0.1": 2,
+      "1.0.2": 6,
+      "1.0.4": 46,
+      "1.0.5": 155
+    },
+    "installationsPercentagePerVersion": {
+      "1.0": 0.02258696,
+      "1.0.1": 0.015057974,
+      "1.0.2": 0.04517392,
+      "1.0.4": 0.34633338,
+      "1.0.5": 1.1669929
+    }
+  },
+  {
+    "name": "hgca",
+    "installations": {
+      "1259625600": 81,
+      "1262304000": 69
+    },
+    "installationsPercentages": {
+      "1259625600": 0.57389826,
+      "1262304000": 0.5195001
+    },
+    "installationsPerVersion": {
+      "1.0": 63,
+      "1.1": 6
+    },
+    "installationsPercentagePerVersion": {
+      "1.0": 0.47432616,
+      "1.1": 0.04517392
+    }
+  },
+  {
+    "name": "testabilityexplorer",
+    "installations": {
+      "1259625600": 158,
+      "1262304000": 139
+    },
+    "installationsPercentages": {
+      "1259625600": 1.1194558,
+      "1262304000": 1.0465292
+    },
+    "installationsPerVersion": {
+      "0.1": 1,
+      "0.2": 111,
+      "0.3": 27
+    },
+    "installationsPercentagePerVersion": {
+      "0.1": 0.007528987,
+      "0.2": 0.8357175,
+      "0.3": 0.20328264
+    }
+  },
+  {
+    "name": "ncover",
+    "installations": {
+      "1259625600": 130,
+      "1262304000": 113
+    },
+    "installationsPercentages": {
+      "1259625600": 0.9210713,
+      "1262304000": 0.8507755
+    },
+    "installationsPerVersion": {
+      "0.2.5": 3,
+      "0.2.6": 110
+    },
+    "installationsPercentagePerVersion": {
+      "0.2.5": 0.02258696,
+      "0.2.6": 0.82818854
+    }
+  },
+  {
+    "name": "startup-trigger-plugin",
+    "installations": {
+      "1262304000": 1
+    },
+    "installationsPercentages": {
+      "1262304000": 0.007528987
+    },
+    "installationsPerVersion": {
+      "0.1": 1
+    },
+    "installationsPercentagePerVersion": {
+      "0.1": 0.007528987
+    }
+  },
+  {
+    "name": "jython",
+    "installations": {
+      "1259625600": 49,
+      "1262304000": 35
+    },
+    "installationsPercentages": {
+      "1259625600": 0.347173,
+      "1262304000": 0.26351452
+    },
+    "installationsPerVersion": {
+      "1.0": 26,
+      "1.1": 9
+    },
+    "installationsPercentagePerVersion": {
+      "1.0": 0.19575365,
+      "1.1": 0.06776088
+    }
+  },
+  {
+    "name": "shelve-project-plugin",
+    "installations": {
+      "1262304000": 6
+    },
+    "installationsPercentages": {
+      "1262304000": 0.04517392
+    },
+    "installationsPerVersion": {
+      "0.1": 6
+    },
+    "installationsPercentagePerVersion": {
+      "0.1": 0.04517392
+    }
+  },
+  {
+    "name": "sfee",
+    "installations": {
+      "1259625600": 8,
+      "1262304000": 4
+    },
+    "installationsPercentages": {
+      "1259625600": 0.05668131,
+      "1262304000": 0.030115947
+    },
+    "installationsPerVersion": {
+      "1.0.2": 2,
+      "1.0.3": 2
+    },
+    "installationsPercentagePerVersion": {
+      "1.0.2": 0.015057974,
+      "1.0.3": 0.015057974
+    }
+  },
+  {
+    "name": "job-exporter",
+    "installations": {
+      "1259625600": 26,
+      "1262304000": 25
+    },
+    "installationsPercentages": {
+      "1259625600": 0.18421425,
+      "1262304000": 0.18822466
+    },
+    "installationsPerVersion": {
+      "0.1.0": 25
+    },
+    "installationsPercentagePerVersion": {
+      "0.1.0": 0.18822466
+    }
+  },
+  {
+    "name": "statusmonitor",
+    "installations": {
+      "1259625600": 462,
+      "1262304000": 436
+    },
+    "installationsPercentages": {
+      "1259625600": 3.2733457,
+      "1262304000": 3.282638
+    },
+    "installationsPerVersion": {
+      "1.0": 84,
+      "1.1": 256,
+      "1.2": 96
+    },
+    "installationsPercentagePerVersion": {
+      "1.0": 0.63243484,
+      "1.1": 1.9274206,
+      "1.2": 0.72278273
+    }
+  },
+  {
+    "name": "batch-task",
+    "installations": {
+      "1259625600": 1107,
+      "1262304000": 995
+    },
+    "installationsPercentages": {
+      "1259625600": 7.843276,
+      "1262304000": 7.4913416
+    },
+    "installationsPerVersion": {
+      "1.10": 189,
+      "1.11": 121,
+      "1.3": 58,
+      "1.5": 28,
+      "1.6": 24,
+      "1.7": 195,
+      "1.8": 220,
+      "1.9": 160
+    },
+    "installationsPercentagePerVersion": {
+      "1.10": 1.4229785,
+      "1.11": 0.9110074,
+      "1.3": 0.4366812,
+      "1.5": 0.21081163,
+      "1.6": 0.18069568,
+      "1.7": 1.4681524,
+      "1.8": 1.6563771,
+      "1.9": 1.2046379
+    }
+  },
+  {
+    "name": "email-ext",
+    "installations": {
+      "1259625600": 2198,
+      "1262304000": 2032
+    },
+    "installationsPercentages": {
+      "1259625600": 15.57319,
+      "1262304000": 15.298901
+    },
+    "installationsPerVersion": {
+      "1.0.1.0 (***)": 1,
+      "1.1": 3,
+      "1.13.0": 26,
+      "1.2": 7,
+      "1.9.0": 2,
+      "2.0": 1,
+      "2.1": 60,
+      "2.2": 1,
+      "2.2.1": 1885,
+      "2.2.1 - patched": 1,
+      "2.3": 30,
+      "2.3b": 1,
+      "2.4": 10,
+      "9.9.9": 4
+    },
+    "installationsPercentagePerVersion": {
+      "1.0.1.0 (***)": 0.007528987,
+      "1.1": 0.02258696,
+      "1.13.0": 0.19575365,
+      "1.2": 0.052702907,
+      "1.9.0": 0.015057974,
+      "2.0": 0.007528987,
+      "2.1": 0.4517392,
+      "2.2": 0.007528987,
+      "2.2.1": 14.19214,
+      "2.2.1 - patched": 0.007528987,
+      "2.3": 0.2258696,
+      "2.3b": 0.007528987,
+      "2.4": 0.07528987,
+      "9.9.9": 0.030115947
+    }
+  },
+  {
+    "name": "cobertura",
+    "installations": {
+      "1259625600": 1840,
+      "1262304000": 1751
+    },
+    "installationsPercentages": {
+      "1259625600": 13.036701,
+      "1262304000": 13.183255
+    },
+    "installationsPerVersion": {
+      "0.3": 1,
+      "0.8.2": 1,
+      "0.8.3": 3,
+      "0.8.4": 79,
+      "0.8.4.2": 1,
+      "0.8.5": 131,
+      "0.8.6": 65,
+      "0.8.7": 22,
+      "0.8.8": 48,
+      "0.8.9": 1400
+    },
+    "installationsPercentagePerVersion": {
+      "0.3": 0.007528987,
+      "0.8.2": 0.007528987,
+      "0.8.3": 0.02258696,
+      "0.8.4": 0.5947899,
+      "0.8.4.2": 0.007528987,
+      "0.8.5": 0.98629725,
+      "0.8.6": 0.4893841,
+      "0.8.7": 0.1656377,
+      "0.8.8": 0.36139137,
+      "0.8.9": 10.540582
+    }
+  },
+  {
+    "name": "piwikanalytics",
+    "installations": {
+      "1259625600": 7,
+      "1262304000": 2
+    },
+    "installationsPercentages": {
+      "1259625600": 0.049596146,
+      "1262304000": 0.015057974
+    },
+    "installationsPerVersion": {
+      "1.0": 2
+    },
+    "installationsPercentagePerVersion": {
+      "1.0": 0.015057974
+    }
+  },
+  {
+    "name": "gallio",
+    "installations": {
+      "1259625600": 44,
+      "1262304000": 39
+    },
+    "installationsPercentages": {
+      "1259625600": 0.3117472,
+      "1262304000": 0.29363048
+    },
+    "installationsPerVersion": {
+      "0.52": 39
+    },
+    "installationsPercentagePerVersion": {
+      "0.52": 0.29363048
+    }
+  },
+  {
+    "name": "emotional-hudson",
+    "installations": {
+      "1259625600": 1230,
+      "1262304000": 1144
+    },
+    "installationsPercentages": {
+      "1259625600": 8.714751,
+      "1262304000": 8.613161
+    },
+    "installationsPerVersion": {
+      "1.01": 1144
+    },
+    "installationsPercentagePerVersion": {
+      "1.01": 8.613161
+    }
+  },
+  {
+    "name": "bruceschneier",
+    "installations": {
+      "1259625600": 41,
+      "1262304000": 39
+    },
+    "installationsPercentages": {
+      "1259625600": 0.2904917,
+      "1262304000": 0.29363048
+    },
+    "installationsPerVersion": {
+      "0.1": 39
+    },
+    "installationsPercentagePerVersion": {
+      "0.1": 0.29363048
+    }
+  },
+  {
+    "name": "template-project",
+    "installations": {
+      "1259625600": 271,
+      "1262304000": 247
+    },
+    "installationsPercentages": {
+      "1259625600": 1.9200794,
+      "1262304000": 1.8596597
+    },
+    "installationsPerVersion": {
+      "1.0": 247
+    },
+    "installationsPercentagePerVersion": {
+      "1.0": 1.8596597
+    }
+  },
+  {
+    "name": "port-allocator",
+    "installations": {
+      "1259625600": 172,
+      "1262304000": 148
+    },
+    "installationsPercentages": {
+      "1259625600": 1.2186482,
+      "1262304000": 1.11429
+    },
+    "installationsPerVersion": {
+      "1.1": 1,
+      "1.3": 124,
+      "1.4": 23
+    },
+    "installationsPercentagePerVersion": {
+      "1.1": 0.007528987,
+      "1.3": 0.93359435,
+      "1.4": 0.17316669
+    }
+  },
+  {
+    "name": "svn-tag",
+    "installations": {
+      "1259625600": 1047,
+      "1262304000": 988
+    },
+    "installationsPercentages": {
+      "1259625600": 7.418166,
+      "1262304000": 7.4386387
+    },
+    "installationsPerVersion": {
+      "1.1": 1,
+      "1.10": 350,
+      "1.12": 594,
+      "1.2": 5,
+      "1.3": 3,
+      "1.9": 35
+    },
+    "installationsPercentagePerVersion": {
+      "1.1": 0.007528987,
+      "1.10": 2.6351454,
+      "1.12": 4.472218,
+      "1.2": 0.037644934,
+      "1.3": 0.02258696,
+      "1.9": 0.26351452
+    }
+  },
+  {
+    "name": "tfs",
+    "installations": {
+      "1259625600": 72,
+      "1262304000": 62
+    },
+    "installationsPercentages": {
+      "1259625600": 0.5101318,
+      "1262304000": 0.46679717
+    },
+    "installationsPerVersion": {
+      "1.10": 11,
+      "1.4": 10,
+      "1.5": 2,
+      "1.7": 2,
+      "1.9": 37
+    },
+    "installationsPercentagePerVersion": {
+      "1.10": 0.08281885,
+      "1.4": 0.07528987,
+      "1.5": 0.015057974,
+      "1.7": 0.015057974,
+      "1.9": 0.2785725
+    }
+  },
+  {
+    "name": "phing",
+    "installations": {
+      "1259625600": 97,
+      "1262304000": 71
+    },
+    "installationsPercentages": {
+      "1259625600": 0.68726087,
+      "1262304000": 0.53455806
+    },
+    "installationsPerVersion": {
+      "0.1": 2,
+      "0.3": 18,
+      "0.4": 51
+    },
+    "installationsPercentagePerVersion": {
+      "0.1": 0.015057974,
+      "0.3": 0.13552175,
+      "0.4": 0.3839783
+    }
+  },
+  {
+    "name": "URLSCM",
+    "installations": {
+      "1259625600": 280,
+      "1262304000": 237
+    },
+    "installationsPercentages": {
+      "1259625600": 1.9838458,
+      "1262304000": 1.7843698
+    },
+    "installationsPerVersion": {
+      "1.4": 236,
+      "1.4-SAP": 1
+    },
+    "installationsPercentagePerVersion": {
+      "1.4": 1.7768408,
+      "1.4-SAP": 0.007528987
+    }
+  },
+  {
+    "name": "schedule-failed-builds",
+    "installations": {
+      "1259625600": 128,
+      "1262304000": 108
+    },
+    "installationsPercentages": {
+      "1259625600": 0.90690094,
+      "1262304000": 0.81313056
+    },
+    "installationsPerVersion": {
+      "1.0": 95,
+      "1.1": 12,
+      "1.1-VALEO": 1
+    },
+    "installationsPercentagePerVersion": {
+      "1.0": 0.7152537,
+      "1.1": 0.09034784,
+      "1.1-VALEO": 0.007528987
+    }
+  },
+  {
+    "name": "cygpath",
+    "installations": {
+      "1259625600": 22,
+      "1262304000": 14
+    },
+    "installationsPercentages": {
+      "1259625600": 0.1558736,
+      "1262304000": 0.105405815
+    },
+    "installationsPerVersion": {
+      "1.0": 4,
+      "1.2": 6,
+      "1.3": 4
+    },
+    "installationsPercentagePerVersion": {
+      "1.0": 0.030115947,
+      "1.2": 0.04517392,
+      "1.3": 0.030115947
+    }
+  },
+  {
+    "name": "junit-attachments",
+    "installations": {
+      "1259625600": 60,
+      "1262304000": 44
+    },
+    "installationsPercentages": {
+      "1259625600": 0.42510983,
+      "1262304000": 0.3312754
+    },
+    "installationsPerVersion": {
+      "1.0": 44
+    },
+    "installationsPercentagePerVersion": {
+      "1.0": 0.3312754
+    }
+  },
+  {
+    "name": "tracking-svn",
+    "installations": {
+      "1259625600": 36,
+      "1262304000": 38
+    },
+    "installationsPercentages": {
+      "1259625600": 0.2550659,
+      "1262304000": 0.2861015
+    },
+    "installationsPerVersion": {
+      "1.0": 38
+    },
+    "installationsPercentagePerVersion": {
+      "1.0": 0.2861015
+    }
+  },
+  {
+    "name": "fortify360",
+    "installations": {
+      "1259625600": 3,
+      "1262304000": 1
+    },
+    "installationsPercentages": {
+      "1259625600": 0.021255491,
+      "1262304000": 0.007528987
+    },
+    "installationsPerVersion": {
+      "1.0": 1
+    },
+    "installationsPercentagePerVersion": {
+      "1.0": 0.007528987
+    }
+  },
+  {
+    "name": "zentimestamp",
+    "installations": {
+      "1259625600": 167,
+      "1262304000": 149
+    },
+    "installationsPercentages": {
+      "1259625600": 1.1832223,
+      "1262304000": 1.121819
+    },
+    "installationsPerVersion": {
+      "1.0": 19,
+      "1.1": 130
+    },
+    "installationsPercentagePerVersion": {
+      "1.0": 0.14305075,
+      "1.1": 0.9787682
+    }
+  },
+  {
+    "name": "SCTMExecutor",
+    "installations": {
+      "1259625600": 12,
+      "1262304000": 1
+    },
+    "installationsPercentages": {
+      "1259625600": 0.085021965,
+      "1262304000": 0.007528987
+    },
+    "installationsPerVersion": {
+      "1.2": 1
+    },
+    "installationsPercentagePerVersion": {
+      "1.2": 0.007528987
+    }
+  },
+  {
+    "name": "promoted-builds",
+    "installations": {
+      "1259625600": 418,
+      "1262304000": 390
+    },
+    "installationsPercentages": {
+      "1259625600": 2.9615984,
+      "1262304000": 2.9363048
+    },
+    "installationsPerVersion": {
+      "1.0": 16,
+      "1.1": 6,
+      "1.2": 18,
+      "1.4": 32,
+      "1.5": 239,
+      "1.6": 79
+    },
+    "installationsPercentagePerVersion": {
+      "1.0": 0.12046379,
+      "1.1": 0.04517392,
+      "1.2": 0.13552175,
+      "1.4": 0.24092758,
+      "1.5": 1.7994277,
+      "1.6": 0.5947899
+    }
+  },
+  {
+    "name": "starteam",
+    "installations": {
+      "1259625600": 48,
+      "1262304000": 39
+    },
+    "installationsPercentages": {
+      "1259625600": 0.34008786,
+      "1262304000": 0.29363048
+    },
+    "installationsPerVersion": {
+      "0.1.6": 8,
+      "0.1.7": 28,
+      "0.1.7-SNAPSHOT-MCK-11-18-2009": 3
+    },
+    "installationsPercentagePerVersion": {
+      "0.1.6": 0.060231894,
+      "0.1.7": 0.21081163,
+      "0.1.7-SNAPSHOT-MCK-11-18-2009": 0.02258696
+    }
+  },
+  {
+    "name": "cvs-tag",
+    "installations": {
+      "1259625600": 218,
+      "1262304000": 209
+    },
+    "installationsPercentages": {
+      "1259625600": 1.5445657,
+      "1262304000": 1.5735582
+    },
+    "installationsPerVersion": {
+      "1.1": 3,
+      "1.2": 4,
+      "1.3": 20,
+      "1.4": 182
+    },
+    "installationsPercentagePerVersion": {
+      "1.1": 0.02258696,
+      "1.2": 0.030115947,
+      "1.3": 0.15057974,
+      "1.4": 1.3702756
+    }
+  },
+  {
+    "name": "analysis-core",
+    "installations": {
+      "1259625600": 937,
+      "1262304000": 1023
+    },
+    "installationsPercentages": {
+      "1259625600": 6.638798,
+      "1262304000": 7.702153
+    },
+    "installationsPerVersion": {
+      "1.0": 460,
+      "1.1": 563
+    },
+    "installationsPercentagePerVersion": {
+      "1.0": 3.4633338,
+      "1.1": 4.2388196
+    }
+  },
+  {
+    "name": "postbuild-task",
+    "installations": {
+      "1259625600": 310,
+      "1262304000": 307
+    },
+    "installationsPercentages": {
+      "1259625600": 2.1964006,
+      "1262304000": 2.311399
+    },
+    "installationsPerVersion": {
+      "1.1": 5,
+      "1.4": 5,
+      "1.6": 297
+    },
+    "installationsPercentagePerVersion": {
+      "1.1": 0.037644934,
+      "1.4": 0.037644934,
+      "1.6": 2.236109
+    }
+  },
+  {
+    "name": "cppunit",
+    "installations": {
+      "1259625600": 172,
+      "1262304000": 161
+    },
+    "installationsPercentages": {
+      "1259625600": 1.2186482,
+      "1262304000": 1.2121668
+    },
+    "installationsPerVersion": {
+      "0.2": 1,
+      "0.3": 14,
+      "0.4": 3,
+      "0.5": 1,
+      "0.5.1": 5,
+      "1.0": 2,
+      "1.1": 25,
+      "1.1.1": 110
+    },
+    "installationsPercentagePerVersion": {
+      "0.2": 0.007528987,
+      "0.3": 0.105405815,
+      "0.4": 0.02258696,
+      "0.5": 0.007528987,
+      "0.5.1": 0.037644934,
+      "1.0": 0.015057974,
+      "1.1": 0.18822466,
+      "1.1.1": 0.82818854
+    }
+  },
+  {
+    "name": "copy-to-slave",
+    "installations": {
+      "1259625600": 76,
+      "1262304000": 66
+    },
+    "installationsPercentages": {
+      "1259625600": 0.5384724,
+      "1262304000": 0.4969131
+    },
+    "installationsPerVersion": {
+      "1.0": 66
+    },
+    "installationsPercentagePerVersion": {
+      "1.0": 0.4969131
+    }
+  },
+  {
+    "name": "googlecode",
+    "installations": {
+      "1259625600": 122,
+      "1262304000": 95
+    },
+    "installationsPercentages": {
+      "1259625600": 0.86438996,
+      "1262304000": 0.7152537
+    },
+    "installationsPerVersion": {
+      "1.4": 38,
+      "1.5": 57
+    },
+    "installationsPercentagePerVersion": {
+      "1.4": 0.2861015,
+      "1.5": 0.42915225
+    }
+  },
+  {
+    "name": "redmine",
+    "installations": {
+      "1259625600": 259,
+      "1262304000": 236
+    },
+    "installationsPercentages": {
+      "1259625600": 1.8350574,
+      "1262304000": 1.7768408
+    },
+    "installationsPerVersion": {
+      "0.4": 2,
+      "0.6": 4,
+      "0.7": 180,
+      "0.8": 50
+    },
+    "installationsPercentagePerVersion": {
+      "0.4": 0.015057974,
+      "0.6": 0.030115947,
+      "0.7": 1.3552176,
+      "0.8": 0.37644932
+    }
+  },
+  {
+    "name": "maven-plugin",
+    "installations": {
+      "1259625600": 9384,
+      "1262304000": 8640
+    },
+    "installationsPercentages": {
+      "1259625600": 66.487175,
+      "1262304000": 65.050446
+    },
+    "installationsPerVersion": {
+      "1.296": 12,
+      "1.297": 22,
+      "1.299": 44,
+      "1.300": 59,
+      "1.301": 37,
+      "1.302": 1,
+      "1.303": 96,
+      "1.304": 65,
+      "1.306": 72,
+      "1.307": 69,
+      "1.308": 21,
+      "1.309": 122,
+      "1.310": 88,
+      "1.311": 38,
+      "1.312": 168,
+      "1.313": 69,
+      "1.314": 94,
+      "1.315": 69,
+      "1.316": 102,
+      "1.317": 99,
+      "1.318": 119,
+      "1.319": 95,
+      "1.320": 122,
+      "1.321": 134,
+      "1.322": 144,
+      "1.323": 366,
+      "1.324": 197,
+      "1.325": 22,
+      "1.326": 86,
+      "1.327": 190,
+      "1.328": 242,
+      "1.329": 197,
+      "1.330": 206,
+      "1.331": 62,
+      "1.332": 279,
+      "1.333": 338,
+      "1.334": 221,
+      "1.335": 326,
+      "1.336": 804,
+      "1.337": 589,
+      "1.338": 393,
+      "1.339": 2161
+    },
+    "installationsPercentagePerVersion": {
+      "1.296": 0.09034784,
+      "1.297": 0.1656377,
+      "1.299": 0.3312754,
+      "1.300": 0.4442102,
+      "1.301": 0.2785725,
+      "1.302": 0.007528987,
+      "1.303": 0.72278273,
+      "1.304": 0.4893841,
+      "1.306": 0.542087,
+      "1.307": 0.5195001,
+      "1.308": 0.15810871,
+      "1.309": 0.91853637,
+      "1.310": 0.6625508,
+      "1.311": 0.2861015,
+      "1.312": 1.2648697,
+      "1.313": 0.5195001,
+      "1.314": 0.70772475,
+      "1.315": 0.5195001,
+      "1.316": 0.7679566,
+      "1.317": 0.7453697,
+      "1.318": 0.8959494,
+      "1.319": 0.7152537,
+      "1.320": 0.91853637,
+      "1.321": 1.0088842,
+      "1.322": 1.084174,
+      "1.323": 2.755609,
+      "1.324": 1.4832103,
+      "1.325": 0.1656377,
+      "1.326": 0.6474928,
+      "1.327": 1.4305074,
+      "1.328": 1.8220148,
+      "1.329": 1.4832103,
+      "1.330": 1.5509713,
+      "1.331": 0.46679717,
+      "1.332": 2.1005874,
+      "1.333": 2.5447974,
+      "1.334": 1.6639061,
+      "1.335": 2.4544497,
+      "1.336": 6.053305,
+      "1.337": 4.434573,
+      "1.338": 2.9588916,
+      "1.339": 16.27014
+    }
+  },
+  {
+    "name": "cppcheck",
+    "installations": {
+      "1259625600": 134,
+      "1262304000": 121
+    },
+    "installationsPercentages": {
+      "1259625600": 0.9494119,
+      "1262304000": 0.9110074
+    },
+    "installationsPerVersion": {
+      "0.1": 5,
+      "0.2": 1,
+      "0.5.1": 4,
+      "0.6": 4,
+      "0.8": 4,
+      "0.9": 103
+    },
+    "installationsPercentagePerVersion": {
+      "0.1": 0.037644934,
+      "0.2": 0.007528987,
+      "0.5.1": 0.030115947,
+      "0.6": 0.030115947,
+      "0.8": 0.030115947,
+      "0.9": 0.77548563
+    }
+  },
+  {
+    "name": "hudsontrayapp",
+    "installations": {
+      "1259625600": 188,
+      "1262304000": 189
+    },
+    "installationsPercentages": {
+      "1259625600": 1.3320107,
+      "1262304000": 1.4229785
+    },
+    "installationsPerVersion": {
+      "0.5.1": 1,
+      "0.6.0": 1,
+      "0.6.3": 1,
+      "0.7.2": 150,
+      "0.7.3": 36
+    },
+    "installationsPercentagePerVersion": {
+      "0.5.1": 0.007528987,
+      "0.6.0": 0.007528987,
+      "0.6.3": 0.007528987,
+      "0.7.2": 1.129348,
+      "0.7.3": 0.2710435
+    }
+  },
+  {
+    "name": "crowd",
+    "installations": {
+      "1259625600": 44,
+      "1262304000": 43
+    },
+    "installationsPercentages": {
+      "1259625600": 0.3117472,
+      "1262304000": 0.3237464
+    },
+    "installationsPerVersion": {
+      "1.0": 43
+    },
+    "installationsPercentagePerVersion": {
+      "1.0": 0.3237464
+    }
+  },
+  {
+    "name": "plot",
+    "installations": {
+      "1259625600": 528,
+      "1262304000": 458
+    },
+    "installationsPercentages": {
+      "1259625600": 3.7409663,
+      "1262304000": 3.4482758
+    },
+    "installationsPerVersion": {
+      "1.1": 7,
+      "1.2": 451
+    },
+    "installationsPercentagePerVersion": {
+      "1.1": 0.052702907,
+      "1.2": 3.395573
+    }
+  },
+  {
+    "name": "deploy",
+    "installations": {
+      "1259625600": 1075,
+      "1262304000": 988
+    },
+    "installationsPercentages": {
+      "1259625600": 7.616551,
+      "1262304000": 7.4386387
+    },
+    "installationsPerVersion": {
+      "1.0.0": 1,
+      "1.1": 3,
+      "1.2": 1,
+      "1.3": 835,
+      "1.4": 148
+    },
+    "installationsPercentagePerVersion": {
+      "1.0.0": 0.007528987,
+      "1.1": 0.02258696,
+      "1.2": 0.007528987,
+      "1.3": 6.2867036,
+      "1.4": 1.11429
+    }
+  },
+  {
+    "name": "m2release",
+    "installations": {
+      "1259625600": 712,
+      "1262304000": 663
+    },
+    "installationsPercentages": {
+      "1259625600": 5.0446367,
+      "1262304000": 4.9917183
+    },
+    "installationsPerVersion": {
+      "0.1.0": 3,
+      "0.2.0": 73,
+      "0.3.2": 41,
+      "0.3.3": 424,
+      "0.3.4": 122
+    },
+    "installationsPercentagePerVersion": {
+      "0.1.0": 0.02258696,
+      "0.2.0": 0.54961604,
+      "0.3.2": 0.30868846,
+      "0.3.3": 3.1922903,
+      "0.3.4": 0.91853637
+    }
+  },
+  {
+    "name": "ruby",
+    "installations": {
+      "1259625600": 280,
+      "1262304000": 242
+    },
+    "installationsPercentages": {
+      "1259625600": 1.9838458,
+      "1262304000": 1.8220148
+    },
+    "installationsPerVersion": {
+      "1.1": 242
+    },
+    "installationsPercentagePerVersion": {
+      "1.1": 1.8220148
+    }
+  },
+  {
+    "name": "disk-usage",
+    "installations": {
+      "1259625600": 1598,
+      "1262304000": 1505
+    },
+    "installationsPercentages": {
+      "1259625600": 11.322091,
+      "1262304000": 11.331125
+    },
+    "installationsPerVersion": {
+      "0.4": 1,
+      "0.5": 2,
+      "0.6": 7,
+      "0.7": 24,
+      "0.8": 68,
+      "0.9": 1403
+    },
+    "installationsPercentagePerVersion": {
+      "0.4": 0.007528987,
+      "0.5": 0.015057974,
+      "0.6": 0.052702907,
+      "0.7": 0.18069568,
+      "0.8": 0.5119711,
+      "0.9": 10.563169
+    }
+  },
+  {
+    "name": "pmd",
+    "installations": {
+      "1259625600": 1609,
+      "1262304000": 1487
+    },
+    "installationsPercentages": {
+      "1259625600": 11.400028,
+      "1262304000": 11.195603
+    },
+    "installationsPerVersion": {
+      "1.1": 1,
+      "1.11": 1,
+      "1.13": 1,
+      "1.14": 2,
+      "1.15": 8,
+      "1.16": 4,
+      "1.17": 23,
+      "1.20": 8,
+      "1.3": 2,
+      "1.6": 1,
+      "1.7": 1,
+      "1.8": 1,
+      "2.0": 2,
+      "2.10": 60,
+      "2.11": 21,
+      "2.12": 60,
+      "2.13": 477,
+      "2.2": 7,
+      "2.3": 24,
+      "2.4": 7,
+      "2.5": 36,
+      "2.6": 6,
+      "2.7": 61,
+      "2.8": 141,
+      "2.9": 106,
+      "3.0": 186,
+      "3.1": 240
+    },
+    "installationsPercentagePerVersion": {
+      "1.1": 0.007528987,
+      "1.11": 0.007528987,
+      "1.13": 0.007528987,
+      "1.14": 0.015057974,
+      "1.15": 0.060231894,
+      "1.16": 0.030115947,
+      "1.17": 0.17316669,
+      "1.20": 0.060231894,
+      "1.3": 0.015057974,
+      "1.6": 0.007528987,
+      "1.7": 0.007528987,
+      "1.8": 0.007528987,
+      "2.0": 0.015057974,
+      "2.10": 0.4517392,
+      "2.11": 0.15810871,
+      "2.12": 0.4517392,
+      "2.13": 3.5913267,
+      "2.2": 0.052702907,
+      "2.3": 0.18069568,
+      "2.4": 0.052702907,
+      "2.5": 0.2710435,
+      "2.6": 0.04517392,
+      "2.7": 0.45926818,
+      "2.8": 1.0615871,
+      "2.9": 0.7980726,
+      "3.0": 1.4003915,
+      "3.1": 1.8069568
+    }
+  },
+  {
+    "name": "crap4j",
+    "installations": {
+      "1259625600": 296,
+      "1262304000": 260
+    },
+    "installationsPercentages": {
+      "1259625600": 2.0972085,
+      "1262304000": 1.9575365
+    },
+    "installationsPerVersion": {
+      "0.1": 1,
+      "0.2": 1,
+      "0.4": 8,
+      "0.5": 8,
+      "0.6": 2,
+      "0.6.1": 191,
+      "0.7": 49
+    },
+    "installationsPercentagePerVersion": {
+      "0.1": 0.007528987,
+      "0.2": 0.007528987,
+      "0.4": 0.060231894,
+      "0.5": 0.060231894,
+      "0.6": 0.015057974,
+      "0.6.1": 1.4380364,
+      "0.7": 0.36892036
+    }
+  },
+  {
+    "name": "nunit",
+    "installations": {
+      "1259625600": 461,
+      "1262304000": 449
+    },
+    "installationsPercentages": {
+      "1259625600": 3.2662604,
+      "1262304000": 3.380515
+    },
+    "installationsPerVersion": {
+      "0.5": 1,
+      "0.6": 27,
+      "0.7": 3,
+      "0.8": 418
+    },
+    "installationsPercentagePerVersion": {
+      "0.5": 0.007528987,
+      "0.6": 0.20328264,
+      "0.7": 0.02258696,
+      "0.8": 3.1471164
+    }
+  },
+  {
+    "name": "jabber",
+    "installations": {
+      "1259625600": 406,
+      "1262304000": 399
+    },
+    "installationsPercentages": {
+      "1259625600": 2.8765764,
+      "1262304000": 3.0040658
+    },
+    "installationsPerVersion": {
+      "0.10": 3,
+      "0.11": 53,
+      "0.5": 2,
+      "0.6": 7,
+      "0.7": 8,
+      "0.8": 64,
+      "0.9": 5,
+      "1.0": 7,
+      "1.1": 10,
+      "1.3": 43,
+      "1.4": 80,
+      "1.5": 117
+    },
+    "installationsPercentagePerVersion": {
+      "0.10": 0.02258696,
+      "0.11": 0.3990363,
+      "0.5": 0.015057974,
+      "0.6": 0.052702907,
+      "0.7": 0.060231894,
+      "0.8": 0.48185515,
+      "0.9": 0.037644934,
+      "1.0": 0.052702907,
+      "1.1": 0.07528987,
+      "1.3": 0.3237464,
+      "1.4": 0.60231894,
+      "1.5": 0.88089144
+    }
+  },
+  {
+    "name": "parameterized-trigger",
+    "installations": {
+      "1259625600": 492,
+      "1262304000": 448
+    },
+    "installationsPercentages": {
+      "1259625600": 3.4859006,
+      "1262304000": 3.372986
+    },
+    "installationsPerVersion": {
+      "1.1": 1,
+      "1.3": 40,
+      "1.4": 6,
+      "1.5": 8,
+      "1.6": 21,
+      "2.0": 372
+    },
+    "installationsPercentagePerVersion": {
+      "1.1": 0.007528987,
+      "1.3": 0.30115947,
+      "1.4": 0.04517392,
+      "1.5": 0.060231894,
+      "1.6": 0.15810871,
+      "2.0": 2.800783
+    }
+  },
+  {
+    "name": "serenity",
+    "installations": {
+      "1259625600": 3,
+      "1262304000": 4
+    },
+    "installationsPercentages": {
+      "1259625600": 0.021255491,
+      "1262304000": 0.030115947
+    },
+    "installationsPerVersion": {
+      "1.0": 4
+    },
+    "installationsPercentagePerVersion": {
+      "1.0": 0.030115947
+    }
+  },
+  {
+    "name": "ldapemail",
+    "installations": {
+      "1259625600": 355,
+      "1262304000": 341
+    },
+    "installationsPercentages": {
+      "1259625600": 2.515233,
+      "1262304000": 2.5673845
+    },
+    "installationsPerVersion": {
+      "0.1": 2,
+      "0.4": 13,
+      "0.5": 326
+    },
+    "installationsPercentagePerVersion": {
+      "0.1": 0.015057974,
+      "0.4": 0.097876824,
+      "0.5": 2.4544497
+    }
+  },
+  {
+    "name": "jira",
+    "installations": {
+      "1259625600": 1120,
+      "1262304000": 1082
+    },
+    "installationsPercentages": {
+      "1259625600": 7.9353833,
+      "1262304000": 8.146363
+    },
+    "installationsPerVersion": {
+      "1.0": 1,
+      "1.10": 7,
+      "1.11": 1,
+      "1.12": 3,
+      "1.13": 1,
+      "1.15": 1,
+      "1.16": 1062,
+      "1.5": 1,
+      "1.7": 3,
+      "1.8": 1,
+      "1.9": 1
+    },
+    "installationsPercentagePerVersion": {
+      "1.0": 0.007528987,
+      "1.10": 0.052702907,
+      "1.11": 0.007528987,
+      "1.12": 0.02258696,
+      "1.13": 0.007528987,
+      "1.15": 0.007528987,
+      "1.16": 7.995784,
+      "1.5": 0.007528987,
+      "1.7": 0.02258696,
+      "1.8": 0.007528987,
+      "1.9": 0.007528987
+    }
+  },
+  {
+    "name": "swarm",
+    "installations": {
+      "1259625600": 65,
+      "1262304000": 58
+    },
+    "installationsPercentages": {
+      "1259625600": 0.46053565,
+      "1262304000": 0.4366812
+    },
+    "installationsPerVersion": {
+      "1.1": 38,
+      "1.2": 20
+    },
+    "installationsPercentagePerVersion": {
+      "1.1": 0.2861015,
+      "1.2": 0.15057974
+    }
+  },
+  {
+    "name": "twitter",
+    "installations": {
+      "1259625600": 218,
+      "1262304000": 214
+    },
+    "installationsPercentages": {
+      "1259625600": 1.5445657,
+      "1262304000": 1.6112031
+    },
+    "installationsPerVersion": {
+      "0.2": 76,
+      "0.3": 16,
+      "0.4": 122
+    },
+    "installationsPercentagePerVersion": {
+      "0.2": 0.572203,
+      "0.3": 0.12046379,
+      "0.4": 0.91853637
+    }
+  },
+  {
+    "name": "xfpanel",
+    "installations": {
+      "1259625600": 142,
+      "1262304000": 128
+    },
+    "installationsPercentages": {
+      "1259625600": 1.0060933,
+      "1262304000": 0.9637103
+    },
+    "installationsPerVersion": {
+      "1.0.5": 1,
+      "1.0.6": 127
+    },
+    "installationsPercentagePerVersion": {
+      "1.0.5": 0.007528987,
+      "1.0.6": 0.9561813
+    }
+  },
+  {
+    "name": "gnat",
+    "installations": {
+      "1259625600": 9,
+      "1262304000": 7
+    },
+    "installationsPercentages": {
+      "1259625600": 0.06376647,
+      "1262304000": 0.052702907
+    },
+    "installationsPerVersion": {
+      "0.1": 4,
+      "0.3": 3
+    },
+    "installationsPercentagePerVersion": {
+      "0.1": 0.030115947,
+      "0.3": 0.02258696
+    }
+  },
+  {
+    "name": "buckminster",
+    "installations": {
+      "1259625600": 34,
+      "1262304000": 29
+    },
+    "installationsPercentages": {
+      "1259625600": 0.24089557,
+      "1262304000": 0.2183406
+    },
+    "installationsPerVersion": {
+      "0.6": 1,
+      "0.9": 1,
+      "0.9.1": 15,
+      "0.9.2": 6,
+      "0.9.3": 6
+    },
+    "installationsPercentagePerVersion": {
+      "0.6": 0.007528987,
+      "0.9": 0.007528987,
+      "0.9.1": 0.1129348,
+      "0.9.2": 0.04517392,
+      "0.9.3": 0.04517392
+    }
+  },
+  {
+    "name": "was-builder",
+    "installations": {
+      "1259625600": 8,
+      "1262304000": 5
+    },
+    "installationsPercentages": {
+      "1259625600": 0.05668131,
+      "1262304000": 0.037644934
+    },
+    "installationsPerVersion": {
+      "1.0": 5
+    },
+    "installationsPercentagePerVersion": {
+      "1.0": 0.037644934
+    }
+  },
+  {
+    "name": "trac",
+    "installations": {
+      "1259625600": 677,
+      "1262304000": 639
+    },
+    "installationsPercentages": {
+      "1259625600": 4.7966557,
+      "1262304000": 4.8110223
+    },
+    "installationsPerVersion": {
+      "1.4": 1,
+      "1.5": 7,
+      "1.7": 30,
+      "1.8": 152,
+      "1.9": 449
+    },
+    "installationsPercentagePerVersion": {
+      "1.4": 0.007528987,
+      "1.5": 0.052702907,
+      "1.7": 0.2258696,
+      "1.8": 1.144406,
+      "1.9": 3.380515
+    }
+  },
+  {
+    "name": "locale",
+    "installations": {
+      "1259625600": 314,
+      "1262304000": 276
+    },
+    "installationsPercentages": {
+      "1259625600": 2.2247415,
+      "1262304000": 2.0780003
+    },
+    "installationsPerVersion": {
+      "1.0": 225,
+      "1.1": 51
+    },
+    "installationsPercentagePerVersion": {
+      "1.0": 1.6940219,
+      "1.1": 0.3839783
+    }
+  },
+  {
+    "name": "clover",
+    "installations": {
+      "1259625600": 445,
+      "1262304000": 403
+    },
+    "installationsPercentages": {
+      "1259625600": 3.1528978,
+      "1262304000": 3.0341816
+    },
+    "installationsPerVersion": {
+      "1.5": 3,
+      "1.6": 9,
+      "1.7": 109,
+      "1.7.2": 1,
+      "2.0": 3,
+      "2.1": 2,
+      "2.2": 17,
+      "2.3": 3,
+      "2.5": 256
+    },
+    "installationsPercentagePerVersion": {
+      "1.5": 0.02258696,
+      "1.6": 0.06776088,
+      "1.7": 0.8206595,
+      "1.7.2": 0.007528987,
+      "2.0": 0.02258696,
+      "2.1": 0.015057974,
+      "2.2": 0.12799278,
+      "2.3": 0.02258696,
+      "2.5": 1.9274206
+    }
+  },
+  {
+    "name": "radiatorviewplugin",
+    "installations": {
+      "1259625600": 396,
+      "1262304000": 391
+    },
+    "installationsPercentages": {
+      "1259625600": 2.8057249,
+      "1262304000": 2.9438338
+    },
+    "installationsPerVersion": {
+      "1.1": 1,
+      "1.2": 281,
+      "1.4": 92,
+      "1.5": 17
+    },
+    "installationsPercentagePerVersion": {
+      "1.1": 0.007528987,
+      "1.2": 2.1156452,
+      "1.4": 0.69266677,
+      "1.5": 0.12799278
+    }
+  },
+  {
+    "name": "svncompat13",
+    "installations": {
+      "1259625600": 100,
+      "1262304000": 90
+    },
+    "installationsPercentages": {
+      "1259625600": 0.70851636,
+      "1262304000": 0.6776088
+    },
+    "installationsPerVersion": {
+      "1.0": 2,
+      "1.1": 88
+    },
+    "installationsPercentagePerVersion": {
+      "1.0": 0.015057974,
+      "1.1": 0.6625508
+    }
+  },
+  {
+    "name": "downstream-buildview",
+    "installations": {
+      "1259625600": 2,
+      "1262304000": 27
+    },
+    "installationsPercentages": {
+      "1259625600": 0.014170327,
+      "1262304000": 0.20328264
+    },
+    "installationsPerVersion": {
+      "1.0": 4,
+      "1.1": 4,
+      "1.2": 19
+    },
+    "installationsPercentagePerVersion": {
+      "1.0": 0.030115947,
+      "1.1": 0.030115947,
+      "1.2": 0.14305075
+    }
+  },
+  {
+    "name": "speaks",
+    "installations": {
+      "1259625600": 34,
+      "1262304000": 28
+    },
+    "installationsPercentages": {
+      "1259625600": 0.24089557,
+      "1262304000": 0.21081163
+    },
+    "installationsPerVersion": {
+      "0.1.1": 28
+    },
+    "installationsPercentagePerVersion": {
+      "0.1.1": 0.21081163
+    }
+  },
+  {
+    "name": "text-finder",
+    "installations": {
+      "1259625600": 537,
+      "1262304000": 495
+    },
+    "installationsPercentages": {
+      "1259625600": 3.8047328,
+      "1262304000": 3.7268484
+    },
+    "installationsPerVersion": {
+      "1.2": 17,
+      "1.5": 7,
+      "1.6": 59,
+      "1.7": 412
+    },
+    "installationsPercentagePerVersion": {
+      "1.2": 0.12799278,
+      "1.5": 0.052702907,
+      "1.6": 0.4442102,
+      "1.7": 3.1019425
+    }
+  },
+  {
+    "name": "gcal",
+    "installations": {
+      "1259625600": 180,
+      "1262304000": 157
+    },
+    "installationsPercentages": {
+      "1259625600": 1.2753295,
+      "1262304000": 1.182051
+    },
+    "installationsPerVersion": {
+      "0.1": 1,
+      "0.2": 120,
+      "0.3": 36
+    },
+    "installationsPercentagePerVersion": {
+      "0.1": 0.007528987,
+      "0.2": 0.9034784,
+      "0.3": 0.2710435
+    }
+  },
+  {
+    "name": "bamboo-notifier",
+    "installations": {
+      "1262304000": 2
+    },
+    "installationsPercentages": {
+      "1262304000": 0.015057974
+    },
+    "installationsPerVersion": {
+      "1.0": 2
+    },
+    "installationsPercentagePerVersion": {
+      "1.0": 0.015057974
+    }
+  },
+  {
+    "name": "fitnesse",
+    "installations": {
+      "1259625600": 1,
+      "1262304000": 2
+    },
+    "installationsPercentages": {
+      "1259625600": 0.0070851636,
+      "1262304000": 0.015057974
+    },
+    "installationsPerVersion": {
+      "1.3": 2
+    },
+    "installationsPercentagePerVersion": {
+      "1.3": 0.015057974
+    }
+  },
+  {
+    "name": "url-change-trigger",
+    "installations": {
+      "1259625600": 291,
+      "1262304000": 269
+    },
+    "installationsPercentages": {
+      "1259625600": 2.0617826,
+      "1262304000": 2.0252974
+    },
+    "installationsPerVersion": {
+      "1.0": 16,
+      "1.1": 214,
+      "1.2": 39
+    },
+    "installationsPercentagePerVersion": {
+      "1.0": 0.12046379,
+      "1.1": 1.6112031,
+      "1.2": 0.29363048
+    }
+  },
+  {
+    "name": "validating-string-parameter",
+    "installations": {
+      "1259625600": 47,
+      "1262304000": 38
+    },
+    "installationsPercentages": {
+      "1259625600": 0.3330027,
+      "1262304000": 0.2861015
+    },
+    "installationsPerVersion": {
+      "1.2": 38
+    },
+    "installationsPercentagePerVersion": {
+      "1.2": 0.2861015
+    }
+  },
+  {
+    "name": "screenshot",
+    "installations": {
+      "1259625600": 79,
+      "1262304000": 73
+    },
+    "installationsPercentages": {
+      "1259625600": 0.5597279,
+      "1262304000": 0.54961604
+    },
+    "installationsPerVersion": {
+      "1.1": 73
+    },
+    "installationsPercentagePerVersion": {
+      "1.1": 0.54961604
+    }
+  },
+  {
+    "name": "artifactory",
+    "installations": {
+      "1259625600": 57,
+      "1262304000": 61
+    },
+    "installationsPercentages": {
+      "1259625600": 0.40385434,
+      "1262304000": 0.45926818
+    },
+    "installationsPerVersion": {
+      "1.0": 4,
+      "1.0.1": 7,
+      "1.0.2": 45,
+      "1.0.3": 5
+    },
+    "installationsPercentagePerVersion": {
+      "1.0": 0.030115947,
+      "1.0.1": 0.052702907,
+      "1.0.2": 0.3388044,
+      "1.0.3": 0.037644934
+    }
+  },
+  {
+    "name": "monitoring",
+    "installations": {
+      "1259625600": 202,
+      "1262304000": 181
+    },
+    "installationsPercentages": {
+      "1259625600": 1.431203,
+      "1262304000": 1.3627466
+    },
+    "installationsPerVersion": {
+      "1.10.0": 95,
+      "1.8.1": 15,
+      "1.8.2": 11,
+      "1.9.0": 60
+    },
+    "installationsPercentagePerVersion": {
+      "1.10.0": 0.7152537,
+      "1.8.1": 0.1129348,
+      "1.8.2": 0.08281885,
+      "1.9.0": 0.4517392
+    }
+  },
+  {
+    "name": "mstest",
+    "installations": {
+      "1259625600": 212,
+      "1262304000": 189
+    },
+    "installationsPercentages": {
+      "1259625600": 1.5020547,
+      "1262304000": 1.4229785
+    },
+    "installationsPerVersion": {
+      "0.3": 14,
+      "0.4": 174,
+      "0.5": 1
+    },
+    "installationsPercentagePerVersion": {
+      "0.3": 0.105405815,
+      "0.4": 1.3100437,
+      "0.5": 0.007528987
+    }
+  },
+  {
+    "name": "polarion",
+    "installations": {
+      "1259625600": 240,
+      "1262304000": 225
+    },
+    "installationsPercentages": {
+      "1259625600": 1.7004393,
+      "1262304000": 1.6940219
+    },
+    "installationsPerVersion": {
+      "1.1": 189,
+      "1.2": 36
+    },
+    "installationsPercentagePerVersion": {
+      "1.1": 1.4229785,
+      "1.2": 0.2710435
+    }
+  },
+  {
+    "name": "github",
+    "installations": {
+      "1259625600": 130,
+      "1262304000": 109
+    },
+    "installationsPercentages": {
+      "1259625600": 0.9210713,
+      "1262304000": 0.8206595
+    },
+    "installationsPerVersion": {
+      "0.2": 109
+    },
+    "installationsPercentagePerVersion": {
+      "0.2": 0.8206595
+    }
+  },
+  {
+    "name": "dependencyanalyzer",
+    "installations": {
+      "1259625600": 462,
+      "1262304000": 462
+    },
+    "installationsPercentages": {
+      "1259625600": 3.2733457,
+      "1262304000": 3.478392
+    },
+    "installationsPerVersion": {
+      "0.1": 79,
+      "0.2": 36,
+      "0.3": 17,
+      "0.4": 330
+    },
+    "installationsPercentagePerVersion": {
+      "0.1": 0.5947899,
+      "0.2": 0.2710435,
+      "0.3": 0.12799278,
+      "0.4": 2.4845655
+    }
+  },
+  {
+    "name": "platformlabeler",
+    "installations": {
+      "1259625600": 30,
+      "1262304000": 21
+    },
+    "installationsPercentages": {
+      "1259625600": 0.21255492,
+      "1262304000": 0.15810871
+    },
+    "installationsPerVersion": {
+      "1.0": 5,
+      "1.1": 16
+    },
+    "installationsPercentagePerVersion": {
+      "1.0": 0.037644934,
+      "1.1": 0.12046379
+    }
+  },
+  {
+    "name": "hudson-pview-plugin",
+    "installations": {
+      "1259625600": 178,
+      "1262304000": 161
+    },
+    "installationsPercentages": {
+      "1259625600": 1.2611592,
+      "1262304000": 1.2121668
+    },
+    "installationsPerVersion": {
+      "1.2": 8,
+      "1.5": 153
+    },
+    "installationsPercentagePerVersion": {
+      "1.2": 0.060231894,
+      "1.5": 1.151935
+    }
+  },
+  {
+    "name": "filesystem_scm",
+    "installations": {
+      "1259625600": 87,
+      "1262304000": 67
+    },
+    "installationsPercentages": {
+      "1259625600": 0.61640924,
+      "1262304000": 0.5044421
+    },
+    "installationsPerVersion": {
+      "0.1": 49,
+      "1.5": 18
+    },
+    "installationsPercentagePerVersion": {
+      "0.1": 0.36892036,
+      "1.5": 0.13552175
+    }
+  },
+  {
+    "name": "findbugs",
+    "installations": {
+      "1259625600": 2104,
+      "1262304000": 1992
+    },
+    "installationsPercentages": {
+      "1259625600": 14.907185,
+      "1262304000": 14.997742
+    },
+    "installationsPerVersion": {
+      "0.3": 2,
+      "1.17": 2,
+      "1.18": 6,
+      "1.9": 2,
+      "2.10": 1,
+      "2.11": 4,
+      "2.13": 4,
+      "2.17": 2,
+      "2.18": 15,
+      "2.19": 4,
+      "2.20": 26,
+      "2.21": 1,
+      "2.22": 5,
+      "2.3": 1,
+      "2.4": 1,
+      "2.5": 1,
+      "2.6": 5,
+      "2.7": 3,
+      "2.9": 3,
+      "3.0": 3,
+      "3.1": 8,
+      "3.10": 100,
+      "3.11": 25,
+      "3.12": 75,
+      "3.12.1": 1,
+      "3.13": 643,
+      "3.2": 2,
+      "3.3": 39,
+      "3.4": 7,
+      "3.5": 53,
+      "3.6": 9,
+      "3.7": 77,
+      "3.8": 176,
+      "3.9": 143,
+      "4.0": 285,
+      "4.1": 258
+    },
+    "installationsPercentagePerVersion": {
+      "0.3": 0.015057974,
+      "1.17": 0.015057974,
+      "1.18": 0.04517392,
+      "1.9": 0.015057974,
+      "2.10": 0.007528987,
+      "2.11": 0.030115947,
+      "2.13": 0.030115947,
+      "2.17": 0.015057974,
+      "2.18": 0.1129348,
+      "2.19": 0.030115947,
+      "2.20": 0.19575365,
+      "2.21": 0.007528987,
+      "2.22": 0.037644934,
+      "2.3": 0.007528987,
+      "2.4": 0.007528987,
+      "2.5": 0.007528987,
+      "2.6": 0.037644934,
+      "2.7": 0.02258696,
+      "2.9": 0.02258696,
+      "3.0": 0.02258696,
+      "3.1": 0.060231894,
+      "3.10": 0.75289863,
+      "3.11": 0.18822466,
+      "3.12": 0.564674,
+      "3.12.1": 0.007528987,
+      "3.13": 4.8411384,
+      "3.2": 0.015057974,
+      "3.3": 0.29363048,
+      "3.4": 0.052702907,
+      "3.5": 0.3990363,
+      "3.6": 0.06776088,
+      "3.7": 0.57973194,
+      "3.8": 1.3251016,
+      "3.9": 1.0766451,
+      "4.0": 2.1457613,
+      "4.1": 1.9424785
+    }
+  },
+  {
+    "name": "git",
+    "installations": {
+      "1259625600": 643,
+      "1262304000": 590
+    },
+    "installationsPercentages": {
+      "1259625600": 4.5557604,
+      "1262304000": 4.442102
+    },
+    "installationsPerVersion": {
+      "0.3": 1,
+      "0.5": 20,
+      "0.7.3": 559,
+      "0.7.6-SNAPSHOT-WITH-BETTER-TESTS": 1,
+      "0.8": 9
+    },
+    "installationsPercentagePerVersion": {
+      "0.3": 0.007528987,
+      "0.5": 0.15057974,
+      "0.7.3": 4.2087035,
+      "0.7.6-SNAPSHOT-WITH-BETTER-TESTS": 0.007528987,
+      "0.8": 0.06776088
+    }
+  },
+  {
+    "name": "slave-status",
+    "installations": {
+      "1259625600": 224,
+      "1262304000": 218
+    },
+    "installationsPercentages": {
+      "1259625600": 1.5870767,
+      "1262304000": 1.641319
+    },
+    "installationsPerVersion": {
+      "1.2": 4,
+      "1.3": 214
+    },
+    "installationsPercentagePerVersion": {
+      "1.2": 0.030115947,
+      "1.3": 1.6112031
+    }
+  },
+  {
+    "name": "promoted-builds-simple",
+    "installations": {
+      "1259625600": 104,
+      "1262304000": 97
+    },
+    "installationsPercentages": {
+      "1259625600": 0.736857,
+      "1262304000": 0.7303117
+    },
+    "installationsPerVersion": {
+      "1.0": 4,
+      "1.1": 93
+    },
+    "installationsPercentagePerVersion": {
+      "1.0": 0.030115947,
+      "1.1": 0.7001957
+    }
+  },
+  {
+    "name": "tasks",
+    "installations": {
+      "1259625600": 1348,
+      "1262304000": 1305
+    },
+    "installationsPercentages": {
+      "1259625600": 9.5508,
+      "1262304000": 9.825328
+    },
+    "installationsPerVersion": {
+      "1.14": 7,
+      "1.9": 3,
+      "2.0": 1,
+      "2.1": 1,
+      "2.11": 1,
+      "2.13": 1,
+      "2.15": 1,
+      "2.19": 3,
+      "2.2": 1,
+      "2.20": 3,
+      "2.21": 33,
+      "2.23": 4,
+      "2.6": 3,
+      "2.7": 2,
+      "2.8": 1,
+      "3.0": 3,
+      "3.1": 7,
+      "3.10": 60,
+      "3.11": 50,
+      "3.12": 51,
+      "3.13": 362,
+      "3.2": 28,
+      "3.3": 5,
+      "3.4": 20,
+      "3.5": 26,
+      "3.6": 31,
+      "3.8": 110,
+      "3.9": 98,
+      "4.0": 184,
+      "4.1": 205
+    },
+    "installationsPercentagePerVersion": {
+      "1.14": 0.052702907,
+      "1.9": 0.02258696,
+      "2.0": 0.007528987,
+      "2.1": 0.007528987,
+      "2.11": 0.007528987,
+      "2.13": 0.007528987,
+      "2.15": 0.007528987,
+      "2.19": 0.02258696,
+      "2.2": 0.007528987,
+      "2.20": 0.02258696,
+      "2.21": 0.24845655,
+      "2.23": 0.030115947,
+      "2.6": 0.02258696,
+      "2.7": 0.015057974,
+      "2.8": 0.007528987,
+      "3.0": 0.02258696,
+      "3.1": 0.052702907,
+      "3.10": 0.4517392,
+      "3.11": 0.37644932,
+      "3.12": 0.3839783,
+      "3.13": 2.7254932,
+      "3.2": 0.21081163,
+      "3.3": 0.037644934,
+      "3.4": 0.15057974,
+      "3.5": 0.19575365,
+      "3.6": 0.23339859,
+      "3.8": 0.82818854,
+      "3.9": 0.7378407,
+      "4.0": 1.3853335,
+      "4.1": 1.5434422
+    }
+  },
+  {
+    "name": "subversion",
+    "installations": {
+      "1259625600": 8828,
+      "1262304000": 8173
+    },
+    "installationsPercentages": {
+      "1259625600": 62.547825,
+      "1262304000": 61.53441
+    },
+    "installationsPerVersion": {
+      "1.1": 208,
+      "1.2": 173,
+      "1.3": 1,
+      "1.4": 632,
+      "1.5": 155,
+      "1.6": 147,
+      "1.7": 4560,
+      "1.8": 2297
+    },
+    "installationsPercentagePerVersion": {
+      "1.1": 1.5660292,
+      "1.2": 1.3025147,
+      "1.3": 0.007528987,
+      "1.4": 4.7583194,
+      "1.5": 1.1669929,
+      "1.6": 1.106761,
+      "1.7": 34.33218,
+      "1.8": 17.294083
+    }
+  },
+  {
+    "name": "mercurial",
+    "installations": {
+      "1259625600": 296,
+      "1262304000": 301
+    },
+    "installationsPercentages": {
+      "1259625600": 2.0972085,
+      "1262304000": 2.2662249
+    },
+    "installationsPerVersion": {
+      "1.10": 1,
+      "1.13": 3,
+      "1.14": 1,
+      "1.15": 15,
+      "1.16": 35,
+      "1.18": 1,
+      "1.19": 2,
+      "1.20": 2,
+      "1.22": 28,
+      "1.23": 27,
+      "1.24": 28,
+      "1.25": 155,
+      "1.7": 2,
+      "1.8": 1
+    },
+    "installationsPercentagePerVersion": {
+      "1.10": 0.007528987,
+      "1.13": 0.02258696,
+      "1.14": 0.007528987,
+      "1.15": 0.1129348,
+      "1.16": 0.26351452,
+      "1.18": 0.007528987,
+      "1.19": 0.015057974,
+      "1.20": 0.015057974,
+      "1.22": 0.21081163,
+      "1.23": 0.20328264,
+      "1.24": 0.21081163,
+      "1.25": 1.1669929,
+      "1.7": 0.015057974,
+      "1.8": 0.007528987
+    }
+  },
+  {
+    "name": "scis-ad",
+    "installations": {
+      "1259625600": 7751,
+      "1262304000": 7256
+    },
+    "installationsPercentages": {
+      "1259625600": 54.917103,
+      "1262304000": 54.630325
+    },
+    "installationsPerVersion": {
+      "1.0": 1004,
+      "1.1": 1615,
+      "1.2": 4637
+    },
+    "installationsPercentagePerVersion": {
+      "1.0": 7.5591025,
+      "1.1": 12.159313,
+      "1.2": 34.91191
+    }
+  },
+  {
+    "name": "javanet",
+    "installations": {
+      "1259625600": 70,
+      "1262304000": 58
+    },
+    "installationsPercentages": {
+      "1259625600": 0.49596146,
+      "1262304000": 0.4366812
+    },
+    "installationsPerVersion": {
+      "1.2": 17,
+      "1.3": 41
+    },
+    "installationsPercentagePerVersion": {
+      "1.2": 0.12799278,
+      "1.3": 0.30868846
+    }
+  },
+  {
+    "name": "viewVC",
+    "installations": {
+      "1259625600": 228,
+      "1262304000": 218
+    },
+    "installationsPercentages": {
+      "1259625600": 1.6154174,
+      "1262304000": 1.641319
+    },
+    "installationsPerVersion": {
+      "1.2": 163,
+      "1.3": 55
+    },
+    "installationsPercentagePerVersion": {
+      "1.2": 1.2272248,
+      "1.3": 0.41409427
+    }
+  },
+  {
+    "name": "translation",
+    "installations": {
+      "1259625600": 29,
+      "1262304000": 25
+    },
+    "installationsPercentages": {
+      "1259625600": 0.20546974,
+      "1262304000": 0.18822466
+    },
+    "installationsPerVersion": {
+      "1.1": 25
+    },
+    "installationsPercentagePerVersion": {
+      "1.1": 0.18822466
+    }
+  },
+  {
+    "name": "regexemail",
+    "installations": {
+      "1259625600": 170,
+      "1262304000": 157
+    },
+    "installationsPercentages": {
+      "1259625600": 1.2044778,
+      "1262304000": 1.182051
+    },
+    "installationsPerVersion": {
+      "0.2": 121,
+      "0.3": 36
+    },
+    "installationsPercentagePerVersion": {
+      "0.2": 0.9110074,
+      "0.3": 0.2710435
+    }
+  },
+  {
+    "name": "ircbot",
+    "installations": {
+      "1259625600": 174,
+      "1262304000": 155
+    },
+    "installationsPercentages": {
+      "1259625600": 1.2328185,
+      "1262304000": 1.1669929
+    },
+    "installationsPerVersion": {
+      "1.6": 1,
+      "1.7": 77,
+      "2.0": 33,
+      "2.1": 44
+    },
+    "installationsPercentagePerVersion": {
+      "1.6": 0.007528987,
+      "1.7": 0.57973194,
+      "2.0": 0.24845655,
+      "2.1": 0.3312754
+    }
+  },
+  {
+    "name": "japex",
+    "installations": {
+      "1259625600": 148,
+      "1262304000": 127
+    },
+    "installationsPercentages": {
+      "1259625600": 1.0486042,
+      "1262304000": 0.9561813
+    },
+    "installationsPerVersion": {
+      "1.5": 79,
+      "1.6": 48
+    },
+    "installationsPercentagePerVersion": {
+      "1.5": 0.5947899,
+      "1.6": 0.36139137
+    }
+  },
+  {
+    "name": "googleanalytics",
+    "installations": {
+      "1259625600": 101,
+      "1262304000": 88
+    },
+    "installationsPercentages": {
+      "1259625600": 0.7156015,
+      "1262304000": 0.6625508
+    },
+    "installationsPerVersion": {
+      "1.1": 47,
+      "1.2": 41
+    },
+    "installationsPercentagePerVersion": {
+      "1.1": 0.35386238,
+      "1.2": 0.30868846
+    }
+  },
+  {
+    "name": "accurev",
+    "installations": {
+      "1259625600": 56,
+      "1262304000": 50
+    },
+    "installationsPercentages": {
+      "1259625600": 0.39676917,
+      "1262304000": 0.37644932
+    },
+    "installationsPerVersion": {
+      "0.6.1": 1,
+      "0.6.6": 7,
+      "0.6.7": 1,
+      "0.6.8": 40,
+      "0.6.9-GREG-SPECIAL": 1
+    },
+    "installationsPercentagePerVersion": {
+      "0.6.1": 0.007528987,
+      "0.6.6": 0.052702907,
+      "0.6.7": 0.007528987,
+      "0.6.8": 0.30115947,
+      "0.6.9-GREG-SPECIAL": 0.007528987
+    }
+  },
+  {
+    "name": "grinder",
+    "installations": {
+      "1259625600": 92,
+      "1262304000": 83
+    },
+    "installationsPercentages": {
+      "1259625600": 0.6518351,
+      "1262304000": 0.6249059
+    },
+    "installationsPerVersion": {
+      "1.1": 5,
+      "1.2": 70,
+      "1.3": 8
+    },
+    "installationsPercentagePerVersion": {
+      "1.1": 0.037644934,
+      "1.2": 0.52702904,
+      "1.3": 0.060231894
+    }
+  },
+  {
+    "name": "downstream-ext",
+    "installations": {
+      "1259625600": 61,
+      "1262304000": 52
+    },
+    "installationsPercentages": {
+      "1259625600": 0.43219498,
+      "1262304000": 0.3915073
+    },
+    "installationsPerVersion": {
+      "1.0": 9,
+      "1.1": 43
+    },
+    "installationsPercentagePerVersion": {
+      "1.0": 0.06776088,
+      "1.1": 0.3237464
+    }
+  },
+  {
+    "name": "xvnc",
+    "installations": {
+      "1259625600": 264,
+      "1262304000": 221
+    },
+    "installationsPercentages": {
+      "1259625600": 1.8704832,
+      "1262304000": 1.6639061
+    },
+    "installationsPerVersion": {
+      "1.1": 1,
+      "1.4": 2,
+      "1.5": 23,
+      "1.7": 195
+    },
+    "installationsPercentagePerVersion": {
+      "1.1": 0.007528987,
+      "1.4": 0.015057974,
+      "1.5": 0.17316669,
+      "1.7": 1.4681524
+    }
+  },
+  {
+    "name": "javancss",
+    "installations": {
+      "1259625600": 270,
+      "1262304000": 249
+    },
+    "installationsPercentages": {
+      "1259625600": 1.9129941,
+      "1262304000": 1.8747177
+    },
+    "installationsPerVersion": {
+      "1.0-alpha-1": 249
+    },
+    "installationsPercentagePerVersion": {
+      "1.0-alpha-1": 1.8747177
+    }
+  },
+  {
+    "name": "setenv",
+    "installations": {
+      "1259625600": 355,
+      "1262304000": 327
+    },
+    "installationsPercentages": {
+      "1259625600": 2.515233,
+      "1262304000": 2.4619787
+    },
+    "installationsPerVersion": {
+      "1.0": 239,
+      "1.1": 87,
+      "1.2": 1
+    },
+    "installationsPercentagePerVersion": {
+      "1.0": 1.7994277,
+      "1.1": 0.65502185,
+      "1.2": 0.007528987
+    }
+  },
+  {
+    "name": "cmvc",
+    "installations": {
+      "1259625600": 3,
+      "1262304000": 3
+    },
+    "installationsPercentages": {
+      "1259625600": 0.021255491,
+      "1262304000": 0.02258696
+    },
+    "installationsPerVersion": {
+      "0.2": 3
+    },
+    "installationsPercentagePerVersion": {
+      "0.2": 0.02258696
+    }
+  },
+  {
+    "name": "harvest",
+    "installations": {
+      "1259625600": 19,
+      "1262304000": 12
+    },
+    "installationsPercentages": {
+      "1259625600": 0.1346181,
+      "1262304000": 0.09034784
+    },
+    "installationsPerVersion": {
+      "0.2.1": 1,
+      "0.2.7": 11
+    },
+    "installationsPercentagePerVersion": {
+      "0.2.1": 0.007528987,
+      "0.2.7": 0.08281885
+    }
+  },
+  {
+    "name": "jobtype-column",
+    "installations": {
+      "1259625600": 37,
+      "1262304000": 33
+    },
+    "installationsPercentages": {
+      "1259625600": 0.26215106,
+      "1262304000": 0.24845655
+    },
+    "installationsPerVersion": {
+      "1.0": 33
+    },
+    "installationsPercentagePerVersion": {
+      "1.0": 0.24845655
+    }
+  },
+  {
+    "name": "clearcase",
+    "installations": {
+      "1259625600": 432,
+      "1262304000": 370
+    },
+    "installationsPercentages": {
+      "1259625600": 3.0607908,
+      "1262304000": 2.785725
+    },
+    "installationsPerVersion": {
+      "0.4": 2,
+      "0.5.1": 1,
+      "0.6": 3,
+      "0.6.2": 2,
+      "0.7.1": 3,
+      "0.7.1-VALEO-3": 1,
+      "0.7.2-SolarisFix+CompositeBaselines": 1,
+      "0.8": 2,
+      "0.8.1": 38,
+      "0.8.2": 6,
+      "0.8.3": 5,
+      "0.8.4": 35,
+      "0.9": 50,
+      "0.9.1": 9,
+      "1.0": 4,
+      "1.0.1": 11,
+      "1.0.2": 181,
+      "1.1": 16
+    },
+    "installationsPercentagePerVersion": {
+      "0.4": 0.015057974,
+      "0.5.1": 0.007528987,
+      "0.6": 0.02258696,
+      "0.6.2": 0.015057974,
+      "0.7.1": 0.02258696,
+      "0.7.1-VALEO-3": 0.007528987,
+      "0.7.2-SolarisFix+CompositeBaselines": 0.007528987,
+      "0.8": 0.015057974,
+      "0.8.1": 0.2861015,
+      "0.8.2": 0.04517392,
+      "0.8.3": 0.037644934,
+      "0.8.4": 0.26351452,
+      "0.9": 0.37644932,
+      "0.9.1": 0.06776088,
+      "1.0": 0.030115947,
+      "1.0.1": 0.08281885,
+      "1.0.2": 1.3627466,
+      "1.1": 0.12046379
+    }
+  },
+  {
+    "name": "dimensionsscm",
+    "installations": {
+      "1259625600": 15,
+      "1262304000": 13
+    },
+    "installationsPercentages": {
+      "1259625600": 0.10627746,
+      "1262304000": 0.097876824
+    },
+    "installationsPerVersion": {
+      "0.5.7": 2,
+      "0.5.8": 5,
+      "0.6.0": 1,
+      "0.6.1": 1,
+      "0.6.3": 2,
+      "0.6.6": 2
+    },
+    "installationsPercentagePerVersion": {
+      "0.5.7": 0.015057974,
+      "0.5.8": 0.037644934,
+      "0.6.0": 0.007528987,
+      "0.6.1": 0.007528987,
+      "0.6.3": 0.015057974,
+      "0.6.6": 0.015057974
+    }
+  },
+  {
+    "name": "gradle",
+    "installations": {
+      "1259625600": 61,
+      "1262304000": 67
+    },
+    "installationsPercentages": {
+      "1259625600": 0.43219498,
+      "1262304000": 0.5044421
+    },
+    "installationsPerVersion": {
+      "1.0": 1,
+      "1.1": 1,
+      "1.2": 65
+    },
+    "installationsPercentagePerVersion": {
+      "1.0": 0.007528987,
+      "1.1": 0.007528987,
+      "1.2": 0.4893841
+    }
+  },
+  {
+    "name": "nabaztag",
+    "installations": {
+      "1259625600": 36,
+      "1262304000": 37
+    },
+    "installationsPercentages": {
+      "1259625600": 0.2550659,
+      "1262304000": 0.2785725
+    },
+    "installationsPerVersion": {
+      "1.5": 8,
+      "1.6": 29
+    },
+    "installationsPercentagePerVersion": {
+      "1.5": 0.060231894,
+      "1.6": 0.2183406
+    }
+  },
+  {
+    "name": "chucknorris",
+    "installations": {
+      "1259625600": 785,
+      "1262304000": 790
+    },
+    "installationsPercentages": {
+      "1259625600": 5.5618534,
+      "1262304000": 5.9478993
+    },
+    "installationsPerVersion": {
+      "0.1": 2,
+      "0.2": 611,
+      "0.3": 177
+    },
+    "installationsPercentagePerVersion": {
+      "0.1": 0.015057974,
+      "0.2": 4.6002107,
+      "0.3": 1.3326306
+    }
+  },
+  {
+    "name": "lastfailureversioncolumn",
+    "installations": {
+      "1259625600": 62,
+      "1262304000": 62
+    },
+    "installationsPercentages": {
+      "1259625600": 0.43928015,
+      "1262304000": 0.46679717
+    },
+    "installationsPerVersion": {
+      "1.0": 62
+    },
+    "installationsPercentagePerVersion": {
+      "1.0": 0.46679717
+    }
+  },
+  {
+    "name": "hudson-wsclean-plugin",
+    "installations": {
+      "1259625600": 149,
+      "1262304000": 138
+    },
+    "installationsPercentages": {
+      "1259625600": 1.0556893,
+      "1262304000": 1.0390002
+    },
+    "installationsPerVersion": {
+      "1.0.2": 62,
+      "1.0.3": 67,
+      "1.0.4": 9
+    },
+    "installationsPercentagePerVersion": {
+      "1.0.2": 0.46679717,
+      "1.0.3": 0.5044421,
+      "1.0.4": 0.06776088
+    }
+  },
+  {
+    "name": "ci-game",
+    "installations": {
+      "1259625600": 955,
+      "1262304000": 915
+    },
+    "installationsPercentages": {
+      "1259625600": 6.766331,
+      "1262304000": 6.889023
+    },
+    "installationsPerVersion": {
+      "1.1": 2,
+      "1.11": 52,
+      "1.12": 22,
+      "1.13": 10,
+      "1.14": 7,
+      "1.15": 521,
+      "1.16": 107,
+      "1.6": 5,
+      "1.6.1": 2,
+      "1.7": 187
+    },
+    "installationsPercentagePerVersion": {
+      "1.1": 0.015057974,
+      "1.11": 0.3915073,
+      "1.12": 0.1656377,
+      "1.13": 0.07528987,
+      "1.14": 0.052702907,
+      "1.15": 3.922602,
+      "1.16": 0.80560154,
+      "1.6": 0.037644934,
+      "1.6.1": 0.015057974,
+      "1.7": 1.4079205
+    }
+  },
+  {
+    "name": "sounds",
+    "installations": {
+      "1259625600": 32,
+      "1262304000": 31
+    },
+    "installationsPercentages": {
+      "1259625600": 0.22672524,
+      "1262304000": 0.23339859
+    },
+    "installationsPerVersion": {
+      "0.1": 1,
+      "0.2": 30
+    },
+    "installationsPercentagePerVersion": {
+      "0.1": 0.007528987,
+      "0.2": 0.2258696
+    }
+  },
+  {
+    "name": "next-build-number",
+    "installations": {
+      "1259625600": 112,
+      "1262304000": 113
+    },
+    "installationsPercentages": {
+      "1259625600": 0.79353833,
+      "1262304000": 0.8507755
+    },
+    "installationsPerVersion": {
+      "1.0": 113
+    },
+    "installationsPercentagePerVersion": {
+      "1.0": 0.8507755
+    }
+  },
+  {
+    "name": "hudson-logaction-plugin",
+    "installations": {
+      "1259625600": 130,
+      "1262304000": 107
+    },
+    "installationsPercentages": {
+      "1259625600": 0.9210713,
+      "1262304000": 0.80560154
+    },
+    "installationsPerVersion": {
+      "1.0": 107
+    },
+    "installationsPercentagePerVersion": {
+      "1.0": 0.80560154
+    }
+  },
+  {
+    "name": "jsunit",
+    "installations": {
+      "1259625600": 46,
+      "1262304000": 39
+    },
+    "installationsPercentages": {
+      "1259625600": 0.32591754,
+      "1262304000": 0.29363048
+    },
+    "installationsPerVersion": {
+      "0.2": 5,
+      "0.3": 34
+    },
+    "installationsPercentagePerVersion": {
+      "0.2": 0.037644934,
+      "0.3": 0.25598556
+    }
+  },
+  {
+    "name": "pvcs_scm",
+    "installations": {
+      "1259625600": 13,
+      "1262304000": 12
+    },
+    "installationsPercentages": {
+      "1259625600": 0.092107125,
+      "1262304000": 0.09034784
+    },
+    "installationsPerVersion": {
+      "1.0": 12
+    },
+    "installationsPercentagePerVersion": {
+      "1.0": 0.09034784
+    }
+  },
+  {
+    "name": "locked-files-report",
+    "installations": {
+      "1259625600": 45,
+      "1262304000": 37
+    },
+    "installationsPercentages": {
+      "1259625600": 0.31883237,
+      "1262304000": 0.2785725
+    },
+    "installationsPerVersion": {
+      "1.0": 2,
+      "1.1": 35
+    },
+    "installationsPercentagePerVersion": {
+      "1.0": 0.015057974,
+      "1.1": 0.26351452
+    }
+  },
+  {
+    "name": "naginator",
+    "installations": {
+      "1259625600": 195,
+      "1262304000": 172
+    },
+    "installationsPercentages": {
+      "1259625600": 1.3816069,
+      "1262304000": 1.2949857
+    },
+    "installationsPerVersion": {
+      "1.3": 9,
+      "1.4": 112,
+      "1.5": 51
+    },
+    "installationsPercentagePerVersion": {
+      "1.3": 0.06776088,
+      "1.4": 0.8432465,
+      "1.5": 0.3839783
+    }
+  },
+  {
+    "name": "audit-trail",
+    "installations": {
+      "1259625600": 704,
+      "1262304000": 654
+    },
+    "installationsPercentages": {
+      "1259625600": 4.987955,
+      "1262304000": 4.9239573
+    },
+    "installationsPerVersion": {
+      "1.1": 2,
+      "1.2": 4,
+      "1.3": 354,
+      "1.4": 294
+    },
+    "installationsPercentagePerVersion": {
+      "1.1": 0.015057974,
+      "1.2": 0.030115947,
+      "1.3": 2.6652613,
+      "1.4": 2.213522
+    }
+  },
+  {
+    "name": "svncompat14",
+    "installations": {
+      "1259625600": 113,
+      "1262304000": 101
+    },
+    "installationsPercentages": {
+      "1259625600": 0.8006235,
+      "1262304000": 0.76042765
+    },
+    "installationsPerVersion": {
+      "1.0": 101
+    },
+    "installationsPercentagePerVersion": {
+      "1.0": 0.76042765
+    }
+  },
+  {
+    "name": "campfire",
+    "installations": {
+      "1259625600": 19,
+      "1262304000": 15
+    },
+    "installationsPercentages": {
+      "1259625600": 0.1346181,
+      "1262304000": 0.1129348
+    },
+    "installationsPerVersion": {
+      "1.0": 8,
+      "1.1": 7
+    },
+    "installationsPercentagePerVersion": {
+      "1.0": 0.060231894,
+      "1.1": 0.052702907
+    }
+  },
+  {
+    "name": "xunit",
+    "installations": {
+      "1259625600": 262,
+      "1262304000": 236
+    },
+    "installationsPercentages": {
+      "1259625600": 1.8563129,
+      "1262304000": 1.7768408
+    },
+    "installationsPerVersion": {
+      "0.1": 1,
+      "0.1.3": 8,
+      "0.2": 13,
+      "0.3.1": 21,
+      "0.4": 193
+    },
+    "installationsPercentagePerVersion": {
+      "0.1": 0.007528987,
+      "0.1.3": 0.060231894,
+      "0.2": 0.097876824,
+      "0.3.1": 0.15810871,
+      "0.4": 1.4530944
+    }
+  },
+  {
+    "name": "build-publisher",
+    "installations": {
+      "1259625600": 310,
+      "1262304000": 274
+    },
+    "installationsPercentages": {
+      "1259625600": 2.1964006,
+      "1262304000": 2.0629423
+    },
+    "installationsPerVersion": {
+      "1.0": 1,
+      "1.1": 12,
+      "1.2": 7,
+      "1.4": 29,
+      "1.5": 13,
+      "1.6": 27,
+      "1.7": 148,
+      "1.7.1 b-i version": 1,
+      "1.8": 36
+    },
+    "installationsPercentagePerVersion": {
+      "1.0": 0.007528987,
+      "1.1": 0.09034784,
+      "1.2": 0.052702907,
+      "1.4": 0.2183406,
+      "1.5": 0.097876824,
+      "1.6": 0.20328264,
+      "1.7": 1.11429,
+      "1.7.1 b-i version": 0.007528987,
+      "1.8": 0.2710435
+    }
+  },
+  {
+    "name": "sonar",
+    "installations": {
+      "1259625600": 1110,
+      "1262304000": 1038
+    },
+    "installationsPercentages": {
+      "1259625600": 7.8645315,
+      "1262304000": 7.8150883
+    },
+    "installationsPerVersion": {
+      "0.2": 62,
+      "1.0": 13,
+      "1.0.1": 88,
+      "1.1": 875
+    },
+    "installationsPercentagePerVersion": {
+      "0.2": 0.46679717,
+      "1.0": 0.097876824,
+      "1.0.1": 0.6625508,
+      "1.1": 6.5878634
+    }
+  },
+  {
+    "name": "checkstyle",
+    "installations": {
+      "1259625600": 1748,
+      "1262304000": 1685
+    },
+    "installationsPercentages": {
+      "1259625600": 12.384866,
+      "1262304000": 12.686342
+    },
+    "installationsPerVersion": {
+      "1.0": 2,
+      "1.11": 2,
+      "1.14": 1,
+      "1.15": 12,
+      "1.16": 3,
+      "1.17": 24,
+      "1.18": 1,
+      "1.19": 4,
+      "1.2": 2,
+      "1.5": 3,
+      "1.7": 2,
+      "1.8": 1,
+      "1.9": 2,
+      "2.1": 7,
+      "2.10": 161,
+      "2.11": 117,
+      "2.12": 71,
+      "2.13": 81,
+      "2.14": 501,
+      "2.3": 8,
+      "2.4": 33,
+      "2.5": 8,
+      "2.6": 42,
+      "2.7": 8,
+      "2.8": 29,
+      "2.9": 37,
+      "3.0": 241,
+      "3.1": 282
+    },
+    "installationsPercentagePerVersion": {
+      "1.0": 0.015057974,
+      "1.11": 0.015057974,
+      "1.14": 0.007528987,
+      "1.15": 0.09034784,
+      "1.16": 0.02258696,
+      "1.17": 0.18069568,
+      "1.18": 0.007528987,
+      "1.19": 0.030115947,
+      "1.2": 0.015057974,
+      "1.5": 0.02258696,
+      "1.7": 0.015057974,
+      "1.8": 0.007528987,
+      "1.9": 0.015057974,
+      "2.1": 0.052702907,
+      "2.10": 1.2121668,
+      "2.11": 0.88089144,
+      "2.12": 0.53455806,
+      "2.13": 0.6098479,
+      "2.14": 3.7720222,
+      "2.3": 0.060231894,
+      "2.4": 0.24845655,
+      "2.5": 0.060231894,
+      "2.6": 0.31621742,
+      "2.7": 0.060231894,
+      "2.8": 0.2183406,
+      "2.9": 0.2785725,
+      "3.0": 1.8144858,
+      "3.1": 2.1231742
+    }
+  },
+  {
+    "name": "javatest-report",
+    "installations": {
+      "1259625600": 125,
+      "1262304000": 116
+    },
+    "installationsPercentages": {
+      "1259625600": 0.88564545,
+      "1262304000": 0.8733624
+    },
+    "installationsPerVersion": {
+      "1.1": 5,
+      "1.2": 111
+    },
+    "installationsPercentagePerVersion": {
+      "1.1": 0.037644934,
+      "1.2": 0.8357175
+    }
+  },
+  {
+    "name": "sidebar-link",
+    "installations": {
+      "1259625600": 519,
+      "1262304000": 467
+    },
+    "installationsPercentages": {
+      "1259625600": 3.6771998,
+      "1262304000": 3.5160367
+    },
+    "installationsPerVersion": {
+      "1.1": 33,
+      "1.2": 434
+    },
+    "installationsPercentagePerVersion": {
+      "1.1": 0.24845655,
+      "1.2": 3.2675803
+    }
+  },
+  {
+    "name": "violations",
+    "installations": {
+      "1259625600": 1245,
+      "1262304000": 1184
+    },
+    "installationsPercentages": {
+      "1259625600": 8.821029,
+      "1262304000": 8.91432
+    },
+    "installationsPerVersion": {
+      "0.5": 1,
+      "0.5.3": 10,
+      "0.5.4": 10,
+      "0.5.5": 2,
+      "0.5.6": 1,
+      "0.5.7": 30,
+      "0.5.8": 1,
+      "0.6.0": 17,
+      "0.7.0": 6,
+      "0.7.1": 35,
+      "0.7.3": 67,
+      "0.7.4": 794,
+      "0.7.5": 209,
+      "0.7.5-hci-patch-1": 1
+    },
+    "installationsPercentagePerVersion": {
+      "0.5": 0.007528987,
+      "0.5.3": 0.07528987,
+      "0.5.4": 0.07528987,
+      "0.5.5": 0.015057974,
+      "0.5.6": 0.007528987,
+      "0.5.7": 0.2258696,
+      "0.5.8": 0.007528987,
+      "0.6.0": 0.12799278,
+      "0.7.0": 0.04517392,
+      "0.7.1": 0.26351452,
+      "0.7.3": 0.5044421,
+      "0.7.4": 5.9780154,
+      "0.7.5": 1.5735582,
+      "0.7.5-hci-patch-1": 0.007528987
+    }
+  },
+  {
+    "name": "distfork",
+    "installations": {
+      "1259625600": 50,
+      "1262304000": 37
+    },
+    "installationsPercentages": {
+      "1259625600": 0.35425818,
+      "1262304000": 0.2785725
+    },
+    "installationsPerVersion": {
+      "1.0": 37
+    },
+    "installationsPercentagePerVersion": {
+      "1.0": 0.2785725
+    }
+  },
+  {
+    "name": "join",
+    "installations": {
+      "1259625600": 257,
+      "1262304000": 216
+    },
+    "installationsPercentages": {
+      "1259625600": 1.8208871,
+      "1262304000": 1.6262611
+    },
+    "installationsPerVersion": {
+      "1.0": 2,
+      "1.1": 8,
+      "1.2": 31,
+      "1.3": 2,
+      "1.4": 7,
+      "1.5": 7,
+      "1.6": 159
+    },
+    "installationsPercentagePerVersion": {
+      "1.0": 0.015057974,
+      "1.1": 0.060231894,
+      "1.2": 0.23339859,
+      "1.3": 0.015057974,
+      "1.4": 0.052702907,
+      "1.5": 0.052702907,
+      "1.6": 1.1971089
+    }
+  },
+  {
+    "name": "vmware",
+    "installations": {
+      "1259625600": 185,
+      "1262304000": 178
+    },
+    "installationsPercentages": {
+      "1259625600": 1.3107553,
+      "1262304000": 1.3401597
+    },
+    "installationsPerVersion": {
+      "0.6": 1,
+      "0.8": 177
+    },
+    "installationsPercentagePerVersion": {
+      "0.6": 0.007528987,
+      "0.8": 1.3326306
+    }
+  },
+  {
+    "name": "locks-and-latches",
+    "installations": {
+      "1259625600": 544,
+      "1262304000": 503
+    },
+    "installationsPercentages": {
+      "1259625600": 3.854329,
+      "1262304000": 3.7870803
+    },
+    "installationsPerVersion": {
+      "0.2": 19,
+      "0.3": 2,
+      "0.4": 394,
+      "0.5": 88
+    },
+    "installationsPercentagePerVersion": {
+      "0.2": 0.14305075,
+      "0.3": 0.015057974,
+      "0.4": 2.9664207,
+      "0.5": 0.6625508
+    }
+  },
+  {
+    "name": "backlog",
+    "installations": {
+      "1259625600": 49,
+      "1262304000": 41
+    },
+    "installationsPercentages": {
+      "1259625600": 0.347173,
+      "1262304000": 0.30868846
+    },
+    "installationsPerVersion": {
+      "1.0": 41
+    },
+    "installationsPercentagePerVersion": {
+      "1.0": 0.30868846
+    }
+  },
+  {
+    "name": "nant",
+    "installations": {
+      "1259625600": 296,
+      "1262304000": 290
+    },
+    "installationsPercentages": {
+      "1259625600": 2.0972085,
+      "1262304000": 2.183406
+    },
+    "installationsPerVersion": {
+      "1.0": 1,
+      "1.1": 215,
+      "1.2": 74
+    },
+    "installationsPercentagePerVersion": {
+      "1.0": 0.007528987,
+      "1.1": 1.6187321,
+      "1.2": 0.557145
+    }
+  },
+  {
+    "name": "jobrevision",
+    "installations": {
+      "1259625600": 40,
+      "1262304000": 44
+    },
+    "installationsPercentages": {
+      "1259625600": 0.28340656,
+      "1262304000": 0.3312754
+    },
+    "installationsPerVersion": {
+      "0.2": 44
+    },
+    "installationsPercentagePerVersion": {
+      "0.2": 0.3312754
+    }
+  },
+  {
+    "name": "selenium",
+    "installations": {
+      "1259625600": 177,
+      "1262304000": 154
+    },
+    "installationsPercentages": {
+      "1259625600": 1.254074,
+      "1262304000": 1.1594639
+    },
+    "installationsPerVersion": {
+      "1.0": 24,
+      "1.2": 130
+    },
+    "installationsPercentagePerVersion": {
+      "1.0": 0.18069568,
+      "1.2": 0.9787682
+    }
+  },
+  {
+    "name": "emma",
+    "installations": {
+      "1259625600": 994,
+      "1262304000": 946
+    },
+    "installationsPercentages": {
+      "1259625600": 7.0426526,
+      "1262304000": 7.1224213
+    },
+    "installationsPerVersion": {
+      "1.10": 784,
+      "1.6": 1,
+      "1.7": 1,
+      "1.8": 82,
+      "1.9": 78
+    },
+    "installationsPercentagePerVersion": {
+      "1.10": 5.9027257,
+      "1.6": 0.007528987,
+      "1.7": 0.007528987,
+      "1.8": 0.6173769,
+      "1.9": 0.58726096
+    }
+  },
+  {
+    "name": "extended-read-permission",
+    "installations": {
+      "1259625600": 53,
+      "1262304000": 52
+    },
+    "installationsPercentages": {
+      "1259625600": 0.37551367,
+      "1262304000": 0.3915073
+    },
+    "installationsPerVersion": {
+      "1.0": 52
+    },
+    "installationsPercentagePerVersion": {
+      "1.0": 0.3915073
+    }
+  },
+  {
+    "name": "gant",
+    "installations": {
+      "1259625600": 126,
+      "1262304000": 99
+    },
+    "installationsPercentages": {
+      "1259625600": 0.8927306,
+      "1262304000": 0.7453697
+    },
+    "installationsPerVersion": {
+      "1.1": 99
+    },
+    "installationsPercentagePerVersion": {
+      "1.1": 0.7453697
+    }
+  },
+  {
+    "name": "kagemai",
+    "installations": {
+      "1259625600": 11,
+      "1262304000": 6
+    },
+    "installationsPercentages": {
+      "1259625600": 0.0779368,
+      "1262304000": 0.04517392
+    },
+    "installationsPerVersion": {
+      "1.2": 3,
+      "1.3": 3
+    },
+    "installationsPercentagePerVersion": {
+      "1.2": 0.02258696,
+      "1.3": 0.02258696
+    }
+  },
+  {
+    "name": "instant-messaging",
+    "installations": {
+      "1259625600": 376,
+      "1262304000": 379
+    },
+    "installationsPercentages": {
+      "1259625600": 2.6640215,
+      "1262304000": 2.8534858
+    },
+    "installationsPerVersion": {
+      "1.0": 9,
+      "1.1": 14,
+      "1.2": 52,
+      "1.3": 127,
+      "1.4": 177
+    },
+    "installationsPercentagePerVersion": {
+      "1.0": 0.06776088,
+      "1.1": 0.105405815,
+      "1.2": 0.3915073,
+      "1.3": 0.9561813,
+      "1.4": 1.3326306
+    }
+  },
+  {
+    "name": "description-setter",
+    "installations": {
+      "1259625600": 404,
+      "1262304000": 383
+    },
+    "installationsPercentages": {
+      "1259625600": 2.862406,
+      "1262304000": 2.883602
+    },
+    "installationsPerVersion": {
+      "1.0": 2,
+      "1.2": 1,
+      "1.3": 7,
+      "1.4": 247,
+      "1.5": 7,
+      "1.6": 119
+    },
+    "installationsPercentagePerVersion": {
+      "1.0": 0.015057974,
+      "1.2": 0.007528987,
+      "1.3": 0.052702907,
+      "1.4": 1.8596597,
+      "1.5": 0.052702907,
+      "1.6": 0.8959494
+    }
+  },
+  {
+    "name": "cccc",
+    "installations": {
+      "1259625600": 131,
+      "1262304000": 116
+    },
+    "installationsPercentages": {
+      "1259625600": 0.92815644,
+      "1262304000": 0.8733624
+    },
+    "installationsPerVersion": {
+      "0.2": 116
+    },
+    "installationsPercentagePerVersion": {
+      "0.2": 0.8733624
+    }
+  },
+  {
+    "name": "script-realm",
+    "installations": {
+      "1259625600": 10,
+      "1262304000": 10
+    },
+    "installationsPercentages": {
+      "1259625600": 0.07085164,
+      "1262304000": 0.07528987
+    },
+    "installationsPerVersion": {
+      "1.0": 10
+    },
+    "installationsPercentagePerVersion": {
+      "1.0": 0.07528987
+    }
+  },
+  {
+    "name": "vss",
+    "installations": {
+      "1259625600": 127,
+      "1262304000": 101
+    },
+    "installationsPercentages": {
+      "1259625600": 0.8998158,
+      "1262304000": 0.76042765
+    },
+    "installationsPerVersion": {
+      "1.2": 8,
+      "1.3": 2,
+      "1.4": 3,
+      "1.5": 1,
+      "1.7": 85,
+      "???": 2
+    },
+    "installationsPercentagePerVersion": {
+      "1.2": 0.060231894,
+      "1.3": 0.015057974,
+      "1.4": 0.02258696,
+      "1.5": 0.007528987,
+      "1.7": 0.63996387,
+      "???": 0.015057974
+    }
+  },
+  {
+    "name": "warnings",
+    "installations": {
+      "1259625600": 1563,
+      "1262304000": 1451
+    },
+    "installationsPercentages": {
+      "1259625600": 11.074111,
+      "1262304000": 10.92456
+    },
+    "installationsPerVersion": {
+      "1.10": 2,
+      "1.11": 1,
+      "1.17": 1,
+      "1.18": 3,
+      "1.19": 3,
+      "1.20": 2,
+      "1.23": 10,
+      "1.24": 1,
+      "1.26": 2,
+      "1.27": 12,
+      "1.28": 1,
+      "1.29": 5,
+      "1.3": 3,
+      "1.5": 1,
+      "1.7": 4,
+      "2.0": 2,
+      "2.1": 3,
+      "2.10": 110,
+      "2.11": 59,
+      "2.12": 51,
+      "2.13": 53,
+      "2.14": 431,
+      "2.15": 1,
+      "2.2": 33,
+      "2.3": 6,
+      "2.4": 23,
+      "2.5": 9,
+      "2.6": 20,
+      "2.7": 24,
+      "2.8": 133,
+      "2.9": 1,
+      "3.0": 199,
+      "3.0.1-LBR": 1,
+      "3.1": 241
+    },
+    "installationsPercentagePerVersion": {
+      "1.10": 0.015057974,
+      "1.11": 0.007528987,
+      "1.17": 0.007528987,
+      "1.18": 0.02258696,
+      "1.19": 0.02258696,
+      "1.20": 0.015057974,
+      "1.23": 0.07528987,
+      "1.24": 0.007528987,
+      "1.26": 0.015057974,
+      "1.27": 0.09034784,
+      "1.28": 0.007528987,
+      "1.29": 0.037644934,
+      "1.3": 0.02258696,
+      "1.5": 0.007528987,
+      "1.7": 0.030115947,
+      "2.0": 0.015057974,
+      "2.1": 0.02258696,
+      "2.10": 0.82818854,
+      "2.11": 0.4442102,
+      "2.12": 0.3839783,
+      "2.13": 0.3990363,
+      "2.14": 3.2449932,
+      "2.15": 0.007528987,
+      "2.2": 0.24845655,
+      "2.3": 0.04517392,
+      "2.4": 0.17316669,
+      "2.5": 0.06776088,
+      "2.6": 0.15057974,
+      "2.7": 0.18069568,
+      "2.8": 1.0013552,
+      "2.9": 0.007528987,
+      "3.0": 1.4982684,
+      "3.0.1-LBR": 0.007528987,
+      "3.1": 1.8144858
+    }
+  }
+]

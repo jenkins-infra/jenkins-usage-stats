@@ -2,9 +2,11 @@ package pkg_test
 
 import (
 	"encoding/json"
+	"fmt"
 	"io/ioutil"
 	"os"
 	"path/filepath"
+	"strings"
 	"testing"
 	"time"
 
@@ -37,8 +39,7 @@ func TestReportFuncs(t *testing.T) {
 		ir, err := pkg.GetInstallCountForVersions(db, 2009, 12)
 		require.NoError(t, err)
 
-		goldenFile := filepath.Join("testdata", "reports", "getInstallCountForVersions.json")
-		goldenBytes := readGoldenAndUpdateIfDesired(t, goldenFile, ir)
+		goldenBytes := readGoldenAndUpdateIfDesired(t, ir)
 
 		var goldenIR pkg.InstallationReport
 		require.NoError(t, json.Unmarshal(goldenBytes, &goldenIR))
@@ -50,18 +51,93 @@ func TestReportFuncs(t *testing.T) {
 		pn, err := pkg.GetLatestPluginNumbers(db, 2009, 12)
 		require.NoError(t, err)
 
-		goldenFile := filepath.Join("testdata", "reports", "getLatestPluginNumbers.json")
-		goldenBytes := readGoldenAndUpdateIfDesired(t, goldenFile, pn)
+		goldenBytes := readGoldenAndUpdateIfDesired(t, pn)
 
 		var goldenPN pkg.LatestPluginNumbersReport
 		require.NoError(t, json.Unmarshal(goldenBytes, &goldenPN))
 
 		assert.Equal(t, goldenPN, pn)
+	})
 
+	t.Run("GetCapabilities", func(t *testing.T) {
+		pn, err := pkg.GetCapabilities(db, 2009, 12)
+		require.NoError(t, err)
+
+		goldenBytes := readGoldenAndUpdateIfDesired(t, pn)
+
+		var goldenPN pkg.CapabilitiesReport
+		require.NoError(t, json.Unmarshal(goldenBytes, &goldenPN))
+
+		assert.Equal(t, goldenPN, pn)
+	})
+
+	t.Run("JobCountsForMonth", func(t *testing.T) {
+		pn, err := pkg.JobCountsForMonth(db, 2009, 12)
+		require.NoError(t, err)
+
+		goldenBytes := readGoldenAndUpdateIfDesired(t, pn)
+
+		var goldenPN map[string]uint64
+		require.NoError(t, json.Unmarshal(goldenBytes, &goldenPN))
+
+		assert.Equal(t, goldenPN, pn)
+	})
+
+	t.Run("OSCountsForMonth", func(t *testing.T) {
+		pn, err := pkg.OSCountsForMonth(db, 2009, 12)
+		require.NoError(t, err)
+
+		goldenBytes := readGoldenAndUpdateIfDesired(t, pn)
+
+		var goldenPN map[string]uint64
+		require.NoError(t, json.Unmarshal(goldenBytes, &goldenPN))
+
+		assert.Equal(t, goldenPN, pn)
+	})
+
+	// TODO: This is taking a looooong time just running against 22 days of reports from 2009/2010. It's gonna need a lot of work.
+	t.Run("GetJVMReports", func(t *testing.T) {
+		pn, err := pkg.GetJVMsReport(db)
+		require.NoError(t, err)
+
+		goldenBytes := readGoldenAndUpdateIfDesired(t, pn)
+
+		var goldenPN pkg.JVMReport
+		require.NoError(t, json.Unmarshal(goldenBytes, &goldenPN))
+
+		assert.Equal(t, goldenPN, pn)
+	})
+
+	t.Run("GetPluginReports", func(t *testing.T) {
+		pn, err := pkg.GetPluginReports(db, 2010, 2)
+		require.NoError(t, err)
+
+		goldenBytes := readGoldenAndUpdateIfDesired(t, pn)
+
+		var goldenPN []pkg.PluginReport
+		require.NoError(t, json.Unmarshal(goldenBytes, &goldenPN))
+
+		assert.Equal(t, goldenPN, pn)
+	})
+
+	t.Run("JenkinsVersionsForPluginVersions", func(t *testing.T) {
+		pn, err := pkg.JenkinsVersionsForPluginVersions(db, 2010, 1)
+		require.NoError(t, err)
+
+		goldenBytes := readGoldenAndUpdateIfDesired(t, pn)
+
+		var goldenPN map[string]map[string]map[string]uint64
+		require.NoError(t, json.Unmarshal(goldenBytes, &goldenPN))
+
+		assert.Equal(t, goldenPN, pn)
 	})
 }
 
-func readGoldenAndUpdateIfDesired(t *testing.T, goldenFile string, input interface{}) []byte {
+func readGoldenAndUpdateIfDesired(t *testing.T, input interface{}) []byte {
+	testName := strings.Split(t.Name(), "/")[1]
+
+	goldenFile := filepath.Join("testdata", "reports", fmt.Sprintf("%s.json", testName))
+
 	if os.Getenv("UPDATE_GOLDEN") != "" {
 		jb, err := json.MarshalIndent(input, "", "  ")
 		require.NoError(t, err)

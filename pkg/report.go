@@ -372,17 +372,17 @@ func GetLatestPluginNumbers(db sq.BaseRunner, year, month int) (LatestPluginNumb
 
 // GetCapabilities generates a map of Jenkins versions and install counts for that version and all earlier ones
 // analogous to Groovy version's generateCapabilitiesJson
-func GetCapabilities(db sq.BaseRunner, year, month string) (CapabilitiesReport, error) {
+func GetCapabilities(db sq.BaseRunner, year, month int) (CapabilitiesReport, error) {
 	report := CapabilitiesReport{Installations: map[string]uint64{}}
-	rows, err := PSQL(db).Select("jenkins_versions.version as version", "count(*) as number").
+	rows, err := PSQL(db).Select("jenkins_versions.version as jvv", "count(*) as number").
 		From(InstanceReportsTable).
 		Join("jenkins_versions on instance_reports.version = jenkins_versions.id").
 		Where(sq.Eq{"instance_reports.year": year}).
 		Where(sq.Eq{"instance_reports.month": month}).
 		Where(sq.GtOrEq{"instance_reports.count_for_month": 2}).
 		Where(`jenkins_versions.version ~ '^\d' and jenkins_versions.version not like '%private%'`).
-		GroupBy("version").
-		OrderBy("version DESC").
+		GroupBy("jvv").
+		OrderBy("jvv DESC").
 		Query()
 	if err != nil {
 		return report, err
@@ -408,6 +408,7 @@ func GetCapabilities(db sq.BaseRunner, year, month string) (CapabilitiesReport, 
 
 // GetJVMsReport returns the JVM install counts for all months
 // analogous to Groovy version's generateJvmJson
+// TODO: This is really, really, really slow. It needs optimization. A lot of it.
 func GetJVMsReport(db sq.BaseRunner) (JVMReport, error) {
 	jvr := JVMReport{
 		PerMonth:   map[string]map[string]uint64{},
@@ -433,6 +434,7 @@ func GetJVMsReport(db sq.BaseRunner) (JVMReport, error) {
 		From(InstanceReportsTable).
 		Join(fmt.Sprintf("%s as jv on jv.id = %s.jvm_version_id", JVMVersionsTable, InstanceReportsTable)).
 		Where(sq.Eq{"jv.name": jvmIDs}).
+		Where(sq.GtOrEq{"instance_reports.count_for_month": 2}).
 		GroupBy("name").
 		OrderBy("name")
 
@@ -556,8 +558,7 @@ func JenkinsVersionsForPluginVersions(db sq.BaseRunner, year, month int) (map[st
 	}
 
 	rows, err := PSQL(db).Select("p.name as pn", "p.version as pv", "i.instance_id as iid").
-		From("instance_reports i").
-		From("unnest(i.plugins) pr(id)").
+		From("instance_reports i, unnest(i.plugins) pr(id)").
 		Join("plugins p on p.id = pr.id").
 		Where(sq.Eq{"i.year": year}).
 		Where(sq.Eq{"i.month": month}).
@@ -606,7 +607,7 @@ func JenkinsVersionsForPluginVersions(db sq.BaseRunner, year, month int) (map[st
 func JobCountsForMonth(db sq.BaseRunner, year, month int) (map[string]uint64, error) {
 	rows, err := PSQL(db).Select("j.name", "sum(jr.value::int) as total").
 		From("instance_reports i, jsonb_each_text(i.jobs) jr").
-		Join("jobs j on j.id = jr.key::int").
+		Join("job_types j on j.id = jr.key::int").
 		Where(sq.Eq{"i.year": year}).
 		Where(sq.Eq{"i.month": month}).
 		Where(sq.GtOrEq{"i.count_for_month": 2}).
@@ -875,12 +876,11 @@ func pluginInstallsByMonthForName(db sq.BaseRunner, pluginName string, currentYe
 	monthCount := make(map[string]uint64)
 
 	rows, err := PSQL(db).Select("i.year", "i.month", "count(*)").
-		From("instance_reports i").
-		From("unnest(i.plugins) pr(id)").
+		From("instance_reports i, unnest(i.plugins) pr(id)").
 		Join("plugins p on p.id = pr.id").
 		Where(sq.Eq{"p.name": pluginName}).
 		Where(sq.GtOrEq{"i.count_for_month": 2}).
-		Where("NOT (i.year = $1 and i.month = $2)", currentYear, currentMonth).
+		Where(fmt.Sprintf("NOT (i.year = %d and i.month = %d)", currentYear, currentMonth)).
 		OrderBy("i.year", "i.month").
 		GroupBy("i.year", "i.month").
 		Query()
@@ -912,8 +912,7 @@ func pluginInstallsByVersionForName(db sq.BaseRunner, pluginName string, year, m
 	monthCount := make(map[string]uint64)
 
 	rows, err := PSQL(db).Select("p.version", "count(*)").
-		From("instance_reports i").
-		From("unnest(i.plugins) pr(id)").
+		From("instance_reports i, unnest(i.plugins) pr(id)").
 		Join("plugins p on p.id = pr.id").
 		Where(sq.Eq{"p.name": pluginName}).
 		Where(sq.Eq{"i.year": year}).
@@ -1054,14 +1053,15 @@ func installCountsByMonth(db sq.BaseRunner, currentYear, currentMonth int) (map[
 func maxInstanceVersionForMonth(db sq.BaseRunner, year, month int) (map[string]string, error) {
 	maxVersions := make(map[string]string)
 
-	rows, err := PSQL(db).Select("instance_reports.instance_id", "max(jenkins_versions.version)").
-		From("instance_reports").
-		Join("jenkins_versions on jenkins_versions.id = instance_reports.version").
-		Where(sq.Eq{"instance_reports.year": year}).
-		Where(sq.Eq{"instance_reports.month": month}).
-		Where(sq.GtOrEq{"instance_reports.count_for_month": 2}).
-		Where(`jenkins_versions.version ~ '^\d' and jenkins_versions.version not like '%private%'`).
-		GroupBy("instance_reports.instance_id").
+	rows, err := PSQL(db).Select("i.instance_id", "max(jv.version)").
+		From("instance_reports i").
+		Join("jenkins_versions jv on jv.id = i.version").
+		Where(sq.Eq{"i.year": year}).
+		Where(sq.Eq{"i.month": month}).
+		Where(sq.GtOrEq{"i.count_for_month": 2}).
+		Where(`jv.version not like '%private%'`).
+		Where(`jv.version ~ '^\d'`).
+		GroupBy("i.instance_id").
 		Query()
 	if err != nil {
 		return nil, err
