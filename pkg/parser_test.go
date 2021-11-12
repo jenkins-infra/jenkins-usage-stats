@@ -24,7 +24,7 @@ func TestParseDailyJSON(t *testing.T) {
 
 	ts, err := reports[0].Timestamp()
 	require.NoError(t, err)
-	assert.Equal(t, time.Date(2021, time.October, 30, 23, 59, 54, 0, time.FixedZone("", 0)), ts)
+	assert.Equal(t, time.Date(2021, time.October, 30, 23, 59, 54, 0, time.UTC), ts)
 }
 
 func TestFilterPrivateFromReport(t *testing.T) {
