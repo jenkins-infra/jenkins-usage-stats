@@ -482,21 +482,11 @@ func AddIndividualReport(db sq.BaseRunner, cache *StatsCache, jsonReport *JSONRe
 				report.Version,
 				report.JVMVersionID,
 				report.Executors,
-				1,
+				report.CountForMonth,
 				report.Plugins,
 				report.Jobs,
 				report.Nodes).
 			Exec()
-		if err != nil {
-			return err
-		}
-
-		err = PSQL(db).Select("id").From(InstanceReportsTable).
-			Where(sq.Eq{"instance_id": report.InstanceID}).
-			Where(sq.Eq{"year": ts.Year()}).
-			Where(sq.Eq{"month": ts.Month()}).
-			QueryRow().
-			Scan(&report.ID)
 		if err != nil {
 			return err
 		}

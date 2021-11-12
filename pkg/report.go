@@ -1,9 +1,9 @@
 package pkg
 
 import (
+	"bytes"
 	"encoding/csv"
 	"fmt"
-	"io/ioutil"
 	"math"
 	"sort"
 	"strings"
@@ -15,7 +15,8 @@ import (
 )
 
 var (
-	pieColors = []string{
+	// PieColors is the ordered list of strings to be used for coloring pie wedges.
+	PieColors = []string{
 		"BurlyWood",
 		"CadetBlue",
 		"red",
@@ -671,8 +672,8 @@ func OSCountsForMonth(db sq.BaseRunner, year, month int) (map[string]uint64, err
 	return osMap, nil
 }
 
-// CreateBarSVG takes a dataset and a destination and writes corresponding .csv and .svg files
-func CreateBarSVG(baseFilename string, title string, data map[string]uint64, scaleReduction int, sortByValue bool, filterFunc func(string, uint64) bool) error {
+// CreateBarSVG takes a dataset and returns byte slices for the corresponding .svg and .csv files
+func CreateBarSVG(title string, data map[string]uint64, scaleReduction int, sortByValue bool, filterFunc func(string, uint64) bool) ([]byte, []byte, error) {
 	sortedData, maxVal := asSortedPairsAndMaxValue(data, sortByValue, filterFunc)
 
 	viewWidth := (len(sortedData) * 15) + 50
@@ -721,12 +722,7 @@ func CreateBarSVG(baseFilename string, title string, data map[string]uint64, sca
 	doc.Indent(2)
 	body, err := doc.WriteToBytes()
 	if err != nil {
-		return err
-	}
-
-	err = ioutil.WriteFile(fmt.Sprintf("%s.svg", baseFilename), body, 0644) //nolint:gosec
-	if err != nil {
-		return err
+		return nil, nil, err
 	}
 
 	var records [][]string
@@ -734,17 +730,17 @@ func CreateBarSVG(baseFilename string, title string, data map[string]uint64, sca
 		records = append(records, []string{k, fmt.Sprintf("%d", v)})
 	}
 
-	var builder strings.Builder
+	var builder bytes.Buffer
 	writer := csv.NewWriter(&builder)
 	if err := writer.WriteAll(records); err != nil {
-		return err
+		return nil, nil, err
 	}
 
-	return ioutil.WriteFile(fmt.Sprintf("%s.csv", baseFilename), []byte(builder.String()), 0644) //nolint:gosec
+	return body, builder.Bytes(), nil
 }
 
-// CreatePieSVG takes a dataset and a destination and writes corresponding .csv and .svg files
-func CreatePieSVG(baseFilename string, title string, data []uint64, centerX, centerY, radius, upperLeftX, upperLeftY int, labels []string, colors []string) error {
+// CreatePieSVG takes a dataset and returns byte slices for the corresponding .svg and .csv files
+func CreatePieSVG(title string, data []uint64, centerX, centerY, radius, upperLeftX, upperLeftY int, labels []string, colors []string) ([]byte, []byte, error) {
 
 	totalCount := uint64(0)
 	for _, v := range data {
@@ -820,12 +816,7 @@ func CreatePieSVG(baseFilename string, title string, data []uint64, centerX, cen
 	doc.Indent(2)
 	body, err := doc.WriteToBytes()
 	if err != nil {
-		return err
-	}
-
-	err = ioutil.WriteFile(fmt.Sprintf("%s.svg", baseFilename), body, 0644) //nolint:gosec
-	if err != nil {
-		return err
+		return nil, nil, err
 	}
 
 	var records [][]string
@@ -833,16 +824,17 @@ func CreatePieSVG(baseFilename string, title string, data []uint64, centerX, cen
 		records = append(records, []string{fmt.Sprintf("%d", data[i]), v})
 	}
 
-	var builder strings.Builder
+	var builder bytes.Buffer
 	writer := csv.NewWriter(&builder)
 	if err := writer.WriteAll(records); err != nil {
-		return err
+		return nil, nil, err
 	}
 
-	return ioutil.WriteFile(fmt.Sprintf("%s.csv", baseFilename), []byte(builder.String()), 0644) //nolint:gosec
+	return body, builder.Bytes(), nil
 }
 
-func defaultFilter(_ string, _ uint64) bool {
+// DefaultFilter returns true for all string/uint64 pairs
+func DefaultFilter(_ string, _ uint64) bool {
 	return true
 }
 
