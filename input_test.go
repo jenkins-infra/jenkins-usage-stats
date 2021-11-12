@@ -1,10 +1,11 @@
-package pkg_test
+package stats_test
 
 import (
 	"testing"
 	"time"
 
-	"github.com/abayer/jenkins-usage-stats/pkg"
+	stats "github.com/abayer/jenkins-usage-stats"
+
 	"github.com/stretchr/testify/assert"
 )
 
@@ -29,8 +30,8 @@ func TestTimestampFuncs(t *testing.T) {
 
 	for _, tc := range testCases {
 		t.Run(tc.orig, func(t *testing.T) {
-			assert.Equal(t, tc.reorganized, pkg.JSONTimestampToRFC3339(tc.orig))
-			r := &pkg.JSONReport{TimestampString: tc.orig}
+			assert.Equal(t, tc.reorganized, stats.JSONTimestampToRFC3339(tc.orig))
+			r := &stats.JSONReport{TimestampString: tc.orig}
 			ts, err := r.Timestamp()
 			if tc.err != nil {
 				assert.Equal(t, tc.err, err)

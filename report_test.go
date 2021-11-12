@@ -1,4 +1,4 @@
-package pkg_test
+package stats_test
 
 import (
 	"encoding/json"
@@ -10,10 +10,11 @@ import (
 	"testing"
 	"time"
 
+	stats "github.com/abayer/jenkins-usage-stats"
+	"github.com/abayer/jenkins-usage-stats/testutil"
+	testfixtures "github.com/go-testfixtures/testfixtures/v3"
+
 	sq "github.com/Masterminds/squirrel"
-	"github.com/abayer/jenkins-usage-stats/pkg"
-	"github.com/abayer/jenkins-usage-stats/pkg/testutil"
-	"github.com/go-testfixtures/testfixtures/v3"
 	_ "github.com/golang-migrate/migrate/v4/source/file"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
@@ -28,7 +29,7 @@ func TestReportFuncs(t *testing.T) {
 
 	// Make sure we have the same number of instance reports in the database that we do in the fixtures.
 	var c int
-	require.NoError(t, pkg.PSQL(db).Select("count(*)").From(pkg.InstanceReportsTable).QueryRow().Scan(&c))
+	require.NoError(t, stats.PSQL(db).Select("count(*)").From(stats.InstanceReportsTable).QueryRow().Scan(&c))
 	rawYaml, err := ioutil.ReadFile(filepath.Join("testdata", "fixtures", "instance_reports.yml"))
 	require.NoError(t, err)
 	var allYamlReports []interface{}
@@ -36,43 +37,43 @@ func TestReportFuncs(t *testing.T) {
 	assert.Equal(t, len(allYamlReports), c)
 
 	t.Run("GetInstallCountsForVersions", func(t *testing.T) {
-		ir, err := pkg.GetInstallCountForVersions(db, 2009, 12)
+		ir, err := stats.GetInstallCountForVersions(db, 2009, 12)
 		require.NoError(t, err)
 
 		goldenBytes := readGoldenAndUpdateIfDesired(t, ir)
 
-		var goldenIR pkg.InstallationReport
+		var goldenIR stats.InstallationReport
 		require.NoError(t, json.Unmarshal(goldenBytes, &goldenIR))
 
 		assert.Equal(t, goldenIR, ir)
 	})
 
 	t.Run("GetLatestPluginNumbers", func(t *testing.T) {
-		pn, err := pkg.GetLatestPluginNumbers(db, 2009, 12)
+		pn, err := stats.GetLatestPluginNumbers(db, 2009, 12)
 		require.NoError(t, err)
 
 		goldenBytes := readGoldenAndUpdateIfDesired(t, pn)
 
-		var goldenPN pkg.LatestPluginNumbersReport
+		var goldenPN stats.LatestPluginNumbersReport
 		require.NoError(t, json.Unmarshal(goldenBytes, &goldenPN))
 
 		assert.Equal(t, goldenPN, pn)
 	})
 
 	t.Run("GetCapabilities", func(t *testing.T) {
-		pn, err := pkg.GetCapabilities(db, 2009, 12)
+		pn, err := stats.GetCapabilities(db, 2009, 12)
 		require.NoError(t, err)
 
 		goldenBytes := readGoldenAndUpdateIfDesired(t, pn)
 
-		var goldenPN pkg.CapabilitiesReport
+		var goldenPN stats.CapabilitiesReport
 		require.NoError(t, json.Unmarshal(goldenBytes, &goldenPN))
 
 		assert.Equal(t, goldenPN, pn)
 	})
 
 	t.Run("JobCountsForMonth", func(t *testing.T) {
-		pn, err := pkg.JobCountsForMonth(db, 2009, 12)
+		pn, err := stats.JobCountsForMonth(db, 2009, 12)
 		require.NoError(t, err)
 
 		goldenBytes := readGoldenAndUpdateIfDesired(t, pn)
@@ -84,7 +85,7 @@ func TestReportFuncs(t *testing.T) {
 	})
 
 	t.Run("OSCountsForMonth", func(t *testing.T) {
-		pn, err := pkg.OSCountsForMonth(db, 2009, 12)
+		pn, err := stats.OSCountsForMonth(db, 2009, 12)
 		require.NoError(t, err)
 
 		goldenBytes := readGoldenAndUpdateIfDesired(t, pn)
@@ -97,31 +98,31 @@ func TestReportFuncs(t *testing.T) {
 
 	// TODO: This is taking a looooong time just running against 22 days of reports from 2009/2010. It's gonna need a lot of work.
 	t.Run("GetJVMReports", func(t *testing.T) {
-		pn, err := pkg.GetJVMsReport(db)
+		pn, err := stats.GetJVMsReport(db)
 		require.NoError(t, err)
 
 		goldenBytes := readGoldenAndUpdateIfDesired(t, pn)
 
-		var goldenPN pkg.JVMReport
+		var goldenPN stats.JVMReport
 		require.NoError(t, json.Unmarshal(goldenBytes, &goldenPN))
 
 		assert.Equal(t, goldenPN, pn)
 	})
 
 	t.Run("GetPluginReports", func(t *testing.T) {
-		pn, err := pkg.GetPluginReports(db, 2010, 2)
+		pn, err := stats.GetPluginReports(db, 2010, 2)
 		require.NoError(t, err)
 
 		goldenBytes := readGoldenAndUpdateIfDesired(t, pn)
 
-		var goldenPN []pkg.PluginReport
+		var goldenPN []stats.PluginReport
 		require.NoError(t, json.Unmarshal(goldenBytes, &goldenPN))
 
 		assert.Equal(t, goldenPN, pn)
 	})
 
 	t.Run("JenkinsVersionsForPluginVersions", func(t *testing.T) {
-		pn, err := pkg.JenkinsVersionsForPluginVersions(db, 2010, 1)
+		pn, err := stats.JenkinsVersionsForPluginVersions(db, 2010, 1)
 		require.NoError(t, err)
 
 		goldenBytes := readGoldenAndUpdateIfDesired(t, pn)

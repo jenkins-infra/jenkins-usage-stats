@@ -1,9 +1,6 @@
 NAME := jenkins-usage-stats
 BINARY_NAME := jenkins-usage-stats
 
-# Make does not offer a recursive wildcard function, so here's one:
-rwildcard=$(wildcard $1$2) $(foreach d,$(wildcard $1*),$(call rwildcard,$d/,$2))
-
 DATABASE_URL ?= postgres://postgres@localhost/jenkins_usage_stats?sslmode=disable&timezone=UTC
 IT_DATABASE_URL ?= postgres://postgres@localhost/jenkins_usage_stats_test?sslmode=disable&timezone=UTC
 
@@ -30,8 +27,6 @@ ORG := abayer
 ORG_REPO := $(ORG)/$(NAME)
 RELEASE_ORG_REPO := $(ORG_REPO)
 ROOT_PACKAGE := github.com/$(ORG_REPO)
-
-GO_DEPENDENCIES := $(call rwildcard,pkg/,*.go) $(call rwildcard,cmd/,*.go) $(call rwildcard,internal/,*.go)
 
 BUILD_TARGET=build
 REPORTS_DIR=$(BUILD_TARGET)/reports
@@ -85,7 +80,7 @@ get-testfixture-deps:
 .PHONY: dump-fixtures
 dump-fixtures: get-testfixture-deps
 	@echo "DUMPING FIXTURES FROM DATABASE"
-	testfixtures --dump -d postgres -c "$(DATABASE_URL)" -D pkg/testdata/fixtures --files os_types,job_types,plugins,instance_reports,jenkins_versions,report_files,jvm_versions
+	testfixtures --dump -d postgres -c "$(DATABASE_URL)" -D testdata/fixtures --files os_types,job_types,plugins,instance_reports,jenkins_versions,report_files,jvm_versions
 
 get-fmt-deps:
 	$(GO) install golang.org/x/tools/cmd/goimports@latest
@@ -93,7 +88,7 @@ get-fmt-deps:
 .PHONY: importfmt
 importfmt: get-fmt-deps ## Checks the import format of the Go source files
 	@echo "FORMATTING IMPORTS"
-	@goimports -w $(GO_DEPENDENCIES)
+	@goimports -l -e -w .
 
 .PHONY: fmt ## Checks Go source files are formatted properly
 fmt: importfmt

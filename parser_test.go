@@ -1,11 +1,12 @@
-package pkg_test
+package stats_test
 
 import (
 	"path/filepath"
 	"testing"
 	"time"
 
-	"github.com/abayer/jenkins-usage-stats/pkg"
+	stats "github.com/abayer/jenkins-usage-stats"
+
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 )
@@ -13,7 +14,7 @@ import (
 func TestParseDailyJSON(t *testing.T) {
 	fooFile := filepath.Join("testdata", "base.json.gz")
 
-	reports, err := pkg.ParseDailyJSON(fooFile)
+	reports, err := stats.ParseDailyJSON(fooFile)
 	require.NoError(t, err)
 	assert.Len(t, reports, 2)
 	assert.Equal(t, "32b68faa8644852c4ad79540b4bfeb1caf63284811f4f9d6c2bc511f797218c8", reports[0].Install)
@@ -28,8 +29,8 @@ func TestParseDailyJSON(t *testing.T) {
 }
 
 func TestFilterPrivateFromReport(t *testing.T) {
-	report := &pkg.JSONReport{
-		Plugins: []pkg.JSONPlugin{
+	report := &stats.JSONReport{
+		Plugins: []stats.JSONPlugin{
 			{
 				Name:    "legit-plugin",
 				Version: "1.2.3",
@@ -49,7 +50,7 @@ func TestFilterPrivateFromReport(t *testing.T) {
 		},
 	}
 
-	pkg.FilterPrivateFromReport(report)
+	stats.FilterPrivateFromReport(report)
 
 	assert.Len(t, report.Plugins, 2)
 	assert.Equal(t, report.Plugins[0].Name, "legit-plugin")

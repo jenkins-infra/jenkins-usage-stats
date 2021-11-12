@@ -1,4 +1,4 @@
-package pkg
+package stats
 
 import (
 	"database/sql"
@@ -135,8 +135,8 @@ func (j *JobsForReport) Scan(value interface{}) error {
 	return json.Unmarshal(b, &j)
 }
 
-// StatsCache contains caching for the stats db
-type StatsCache struct {
+// DBCache contains caching for the stats db
+type DBCache struct {
 	jvmVersions     map[string]uint64
 	osTypes         map[string]uint64
 	jobTypes        map[string]uint64
@@ -156,7 +156,7 @@ type StatsCache struct {
 }
 
 // ReportTimes returns a string with function times
-func (sc *StatsCache) ReportTimes() string {
+func (sc *DBCache) ReportTimes() string {
 	return fmt.Sprintf(`GetJVMVersion: %s
 GetOSType: %s
 GetJobType: %s
@@ -171,8 +171,8 @@ InsertNewReports: %s
 }
 
 // NewStatsCache initializes a cache
-func NewStatsCache() *StatsCache {
-	return &StatsCache{
+func NewStatsCache() *DBCache {
+	return &DBCache{
 		jvmVersions:              map[string]uint64{},
 		osTypes:                  map[string]uint64{},
 		jobTypes:                 map[string]uint64{},
@@ -191,7 +191,7 @@ func NewStatsCache() *StatsCache {
 }
 
 // GetJVMVersionID gets the ID for the row of this version if it exists, and creates it and returns the ID if not
-func GetJVMVersionID(db sq.BaseRunner, cache *StatsCache, name string) (uint64, error) {
+func GetJVMVersionID(db sq.BaseRunner, cache *DBCache, name string) (uint64, error) {
 	start := time.Now()
 	defer func() {
 		cache.getJVMVersionTime += time.Since(start)
@@ -222,7 +222,7 @@ func GetJVMVersionID(db sq.BaseRunner, cache *StatsCache, name string) (uint64, 
 }
 
 // GetOSTypeID gets the ID for the row of this OS if it exists, and creates it and returns the ID if not
-func GetOSTypeID(db sq.BaseRunner, cache *StatsCache, name string) (uint64, error) {
+func GetOSTypeID(db sq.BaseRunner, cache *DBCache, name string) (uint64, error) {
 	start := time.Now()
 	defer func() {
 		cache.getOSTypeTime += time.Since(start)
@@ -253,7 +253,7 @@ func GetOSTypeID(db sq.BaseRunner, cache *StatsCache, name string) (uint64, erro
 }
 
 // GetJobTypeID gets the ID for the row of this job type if it exists, and creates it and returns the ID if not
-func GetJobTypeID(db sq.BaseRunner, cache *StatsCache, name string) (uint64, error) {
+func GetJobTypeID(db sq.BaseRunner, cache *DBCache, name string) (uint64, error) {
 	start := time.Now()
 	defer func() {
 		cache.getJobTypeTime += time.Since(start)
@@ -284,7 +284,7 @@ func GetJobTypeID(db sq.BaseRunner, cache *StatsCache, name string) (uint64, err
 }
 
 // GetJenkinsVersionID gets the ID for the row of this version if it exists, and creates it and returns the ID if not
-func GetJenkinsVersionID(db sq.BaseRunner, cache *StatsCache, version string) (uint64, error) {
+func GetJenkinsVersionID(db sq.BaseRunner, cache *DBCache, version string) (uint64, error) {
 	start := time.Now()
 	defer func() {
 		cache.getJenkinsVersionTime += time.Since(start)
@@ -315,7 +315,7 @@ func GetJenkinsVersionID(db sq.BaseRunner, cache *StatsCache, version string) (u
 }
 
 // GetPluginID gets the ID for the row of this plugin/version if it exists, and creates it and returns the ID if not
-func GetPluginID(db sq.BaseRunner, cache *StatsCache, name, version string) (uint64, error) {
+func GetPluginID(db sq.BaseRunner, cache *DBCache, name, version string) (uint64, error) {
 	start := time.Now()
 	defer func() {
 		cache.getPluginTime += time.Since(start)
@@ -351,7 +351,7 @@ func GetPluginID(db sq.BaseRunner, cache *StatsCache, name, version string) (uin
 }
 
 // AddIndividualReport adds/updates the JSON report to the database, along with all related tables.
-func AddIndividualReport(db sq.BaseRunner, cache *StatsCache, jsonReport *JSONReport) error {
+func AddIndividualReport(db sq.BaseRunner, cache *DBCache, jsonReport *JSONReport) error {
 	// Short-circuit for a few weird cases where the instance ID is >64 characters
 	if len(jsonReport.Install) > 64 {
 		return nil
