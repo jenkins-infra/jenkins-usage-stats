@@ -475,10 +475,6 @@ func AddIndividualReport(db sq.BaseRunner, cache *StatsCache, jsonReport *JSONRe
 	}
 	report.Version = jvID
 
-	if err != nil {
-		return err
-	}
-
 	if insertRow {
 		insertStart := time.Now()
 		_, err = PSQL(db).Insert(InstanceReportsTable).
@@ -500,11 +496,10 @@ func AddIndividualReport(db sq.BaseRunner, cache *StatsCache, jsonReport *JSONRe
 		if err != nil {
 			return err
 		}
-		cache.lastReport[report.InstanceID] = report
 	} else {
 		updateStart := time.Now()
 		q := PSQL(db).Update(InstanceReportsTable).
-			Where(sq.Eq{"id": report.ID}).
+			Where(sq.Eq{"id": prevReport.ID}).
 			Set("count_for_month", report.CountForMonth).
 			Set("report_time", report.ReportTime).
 			Set("version", report.Version).

@@ -2,12 +2,12 @@ package pkg_test
 
 import (
 	"database/sql"
-	"fmt"
-	"log"
-	"os"
 	"path/filepath"
 	"testing"
 
+	"github.com/abayer/jenkins-usage-stats/pkg/testutil"
+
+	_ "github.com/golang-migrate/migrate/v4/source/file"
 	_ "github.com/lib/pq"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
@@ -17,7 +17,7 @@ import (
 )
 
 func TestGetJVMVersionID(t *testing.T) {
-	db, closeFunc := DBForTest(t)
+	db, closeFunc := testutil.DBForTest(t)
 	defer closeFunc()
 
 	cache := pkg.NewStatsCache()
@@ -41,7 +41,7 @@ func TestGetJVMVersionID(t *testing.T) {
 }
 
 func TestGetOSTypeID(t *testing.T) {
-	db, closeFunc := DBForTest(t)
+	db, closeFunc := testutil.DBForTest(t)
 	defer closeFunc()
 
 	cache := pkg.NewStatsCache()
@@ -66,7 +66,7 @@ func TestGetOSTypeID(t *testing.T) {
 }
 
 func TestGetJobTypeID(t *testing.T) {
-	db, closeFunc := DBForTest(t)
+	db, closeFunc := testutil.DBForTest(t)
 	defer closeFunc()
 
 	cache := pkg.NewStatsCache()
@@ -91,7 +91,7 @@ func TestGetJobTypeID(t *testing.T) {
 }
 
 func TestGetJenkinsVersionID(t *testing.T) {
-	db, closeFunc := DBForTest(t)
+	db, closeFunc := testutil.DBForTest(t)
 	defer closeFunc()
 
 	cache := pkg.NewStatsCache()
@@ -116,7 +116,7 @@ func TestGetJenkinsVersionID(t *testing.T) {
 }
 
 func TestGetPluginID(t *testing.T) {
-	db, closeFunc := DBForTest(t)
+	db, closeFunc := testutil.DBForTest(t)
 	defer closeFunc()
 
 	cache := pkg.NewStatsCache()
@@ -147,7 +147,7 @@ func TestGetPluginID(t *testing.T) {
 }
 
 func TestAddIndividualReport(t *testing.T) {
-	db, closeFunc := DBForTest(t)
+	db, closeFunc := testutil.DBForTest(t)
 	defer closeFunc()
 
 	cache := pkg.NewStatsCache()
@@ -256,74 +256,4 @@ func TestAddIndividualReport(t *testing.T) {
 	assert.Equal(t, 0, int(updatedSecondReport.Jobs[multiJobID]))
 	// There should be 10 MatrixProjects
 	assert.Equal(t, 10, int(updatedSecondReport.Jobs[matrixJobID]))
-}
-
-// Fataler interface has a single method Fatal, which takes
-// a slice of arguments and is expected to panic.
-type Fataler interface {
-	Fatal(args ...interface{})
-}
-
-// DBForTest connects to a local database for testing
-func DBForTest(f Fataler) (sq.BaseRunner, func()) {
-	databaseURL := os.Getenv("DATABASE_URL")
-	if databaseURL == "" {
-		databaseURL = "postgres://localhost/jenkins_usage_stats?sslmode=disable&timezone=UTC"
-	}
-
-	db, err := sql.Open("postgres", databaseURL)
-	if err != nil {
-		f.Fatal(err)
-	}
-
-	closeFunc := func() {
-		if err := db.Close(); err != nil {
-			f.Fatal(err)
-		}
-	}
-
-	if err := TruncateAll(db); err != nil {
-		f.Fatal(err)
-	}
-	return sq.NewStmtCacheProxy(db), closeFunc
-}
-
-// TruncateAll takes a database connection, lists all the tables which
-// aren't tracking schema_migrations and issues a cascading truncate
-// across each of them.
-func TruncateAll(db *sql.DB) error {
-	rows, err := pkg.PSQL(db).
-		Select("tablename").
-		From("pg_tables").
-		Where(sq.Eq{"schemaname": "public"}).
-		Where(sq.NotEq{"tablename": "schema_migrations"}).
-		Query()
-	if err != nil {
-		return err
-	}
-
-	var tables []string
-	for rows.Next() {
-		var tablename string
-		if err := rows.Scan(&tablename); err != nil {
-			return err
-		}
-
-		tables = append(tables, tablename)
-	}
-
-	if err := rows.Err(); err != nil {
-		return err
-	}
-
-	for _, table := range tables {
-		truncate := fmt.Sprintf(`TRUNCATE TABLE %q CASCADE;`, table)
-		if _, err := db.Exec(truncate); err != nil {
-			return err
-		}
-
-		log.Println(truncate)
-	}
-
-	return nil
 }

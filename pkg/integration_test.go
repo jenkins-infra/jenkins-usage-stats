@@ -11,6 +11,8 @@ import (
 	"testing"
 	"time"
 
+	"github.com/abayer/jenkins-usage-stats/pkg/testutil"
+
 	sq "github.com/Masterminds/squirrel"
 
 	"github.com/abayer/jenkins-usage-stats/pkg"
@@ -23,7 +25,7 @@ func TestDBIntegration(t *testing.T) {
 
 	cache := pkg.NewStatsCache()
 
-	sampleStatsDir := filepath.Join("testdata", "2021-stats")
+	sampleStatsDir := filepath.Join("testdata", "sample-stats")
 	files, err := ioutil.ReadDir(sampleStatsDir)
 	require.NoError(t, err)
 
@@ -56,7 +58,7 @@ func TestDBIntegration(t *testing.T) {
 }
 
 // DBForIntTest connects to a local database for testing
-func DBForIntTest(f Fataler) (sq.BaseRunner, func()) {
+func DBForIntTest(f testutil.Fataler) (sq.BaseRunner, func()) {
 	databaseURL := os.Getenv("IT_DATABASE_URL")
 	if databaseURL == "" {
 		databaseURL = "postgres://localhost/jenkins_usage_stats_test?sslmode=disable&timezone=UTC"
