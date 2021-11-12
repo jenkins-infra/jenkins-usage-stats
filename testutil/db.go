@@ -106,7 +106,7 @@ func NewPgMigrator(db *sql.DB) (*migrate.Migrate, error) {
 		log.Fatalf("failed to get path")
 	}
 
-	sourceURL := "file://" + filepath.Dir(path) + "/../../etc/migrations"
+	sourceURL := "file://" + filepath.Dir(path) + "/../etc/migrations"
 
 	driver, err := postgres.WithInstance(db, &postgres.Config{})
 

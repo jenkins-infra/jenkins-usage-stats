@@ -1,6 +1,7 @@
 package stats_test
 
 import (
+	"database/sql"
 	"encoding/json"
 	"fmt"
 	"io/ioutil"
@@ -10,11 +11,10 @@ import (
 	"testing"
 	"time"
 
+	sq "github.com/Masterminds/squirrel"
 	stats "github.com/abayer/jenkins-usage-stats"
 	"github.com/abayer/jenkins-usage-stats/testutil"
 	testfixtures "github.com/go-testfixtures/testfixtures/v3"
-
-	sq "github.com/Masterminds/squirrel"
 	_ "github.com/golang-migrate/migrate/v4/source/file"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
@@ -22,9 +22,17 @@ import (
 )
 
 func TestReportFuncs(t *testing.T) {
+	var getDBFunc func(*testing.T) (sq.BaseRunner, func())
+
+	getDBFunc = dbWithFixtures
+	// If USE_JENKINS_STATS_IT_DB is set, use the integration test DB rather than testcontainers-go.
+	if os.Getenv("USE_JENKINS_STATS_IT_DB") != "" {
+		getDBFunc = useITDB
+	}
+
 	// Pre-load the database with the fixtures we'll be using for the tests. We only do this once for all report func
 	// tests because it takes ~45s to spin up the postgres container and load the fixtures into it on my beefy MBP.
-	db, closeFunc := dbWithFixtures(t)
+	db, closeFunc := getDBFunc(t)
 	defer closeFunc()
 
 	// Make sure we have the same number of instance reports in the database that we do in the fixtures.
@@ -96,7 +104,6 @@ func TestReportFuncs(t *testing.T) {
 		assert.Equal(t, goldenPN, pn)
 	})
 
-	// TODO: This is taking a looooong time just running against 22 days of reports from 2009/2010. It's gonna need a lot of work.
 	t.Run("GetJVMReports", func(t *testing.T) {
 		pn, err := stats.GetJVMsReport(db)
 		require.NoError(t, err)
@@ -172,5 +179,25 @@ func dbWithFixtures(t *testing.T) (sq.BaseRunner, func()) {
 		t.Fatal(err)
 	}
 
-	return db, closeFunc
+	return sq.NewStmtCacheProxy(db), closeFunc
+}
+
+func useITDB(t *testing.T) (sq.BaseRunner, func()) {
+	databaseURL := os.Getenv("IT_DATABASE_URL")
+	if databaseURL == "" {
+		databaseURL = "postgres://postgres@localhost/jenkins_usage_stats?sslmode=disable&timezone=UTC"
+	}
+
+	db, err := sql.Open("postgres", databaseURL)
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	closeFunc := func() {
+		if err := db.Close(); err != nil {
+			t.Fatal(err)
+		}
+	}
+
+	return sq.NewStmtCacheProxy(db), closeFunc
 }

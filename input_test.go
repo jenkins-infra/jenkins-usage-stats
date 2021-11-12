@@ -5,7 +5,6 @@ import (
 	"time"
 
 	stats "github.com/abayer/jenkins-usage-stats"
-
 	"github.com/stretchr/testify/assert"
 )
 

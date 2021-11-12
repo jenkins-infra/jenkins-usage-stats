@@ -9,9 +9,8 @@ import (
 	"strings"
 	"time"
 
-	"github.com/beevik/etree"
-
 	sq "github.com/Masterminds/squirrel"
+	"github.com/beevik/etree"
 )
 
 var (
@@ -408,7 +407,6 @@ func GetCapabilities(db sq.BaseRunner, year, month int) (CapabilitiesReport, err
 
 // GetJVMsReport returns the JVM install counts for all months
 // analogous to Groovy version's generateJvmJson
-// TODO: This is really, really, really slow. It needs optimization. A lot of it.
 func GetJVMsReport(db sq.BaseRunner) (JVMReport, error) {
 	jvr := JVMReport{
 		PerMonth:   map[string]map[string]uint64{},
@@ -430,20 +428,20 @@ func GetJVMsReport(db sq.BaseRunner) (JVMReport, error) {
 		return jvr, err
 	}
 
-	baseStmt := PSQL(db).Select("jv.name as name", "count(*)").
-		From(InstanceReportsTable).
-		Join(fmt.Sprintf("%s as jv on jv.id = %s.jvm_version_id", JVMVersionsTable, InstanceReportsTable)).
-		Where(sq.Eq{"jv.name": jvmIDs}).
-		Where(sq.GtOrEq{"instance_reports.count_for_month": 2}).
-		GroupBy("name").
-		OrderBy("name")
+	baseStmt := PSQL(db).Select("jv.name as n", "count(*)").
+		From("instance_reports i").
+		Join("jvm_versions jv on jv.id = i.jvm_version_id").
+		Where(sq.Eq{"jv.id": jvmIDs}).
+		Where(sq.GtOrEq{"i.count_for_month": 2}).
+		GroupBy("n").
+		OrderBy("n")
 
 	for _, ym := range months {
 		err = func() error {
 			ts := startDateForYearMonth(ym.year, ym.month)
 			tsStr := fmt.Sprintf("%d", ts.Unix())
 
-			monthStmt := baseStmt.Where(sq.Eq{"instance_reports.year": ym.year}).Where(sq.Eq{"instance_reports.month": ym.month})
+			monthStmt := baseStmt.Where(sq.Eq{"i.year": ym.year}).Where(sq.Eq{"i.month": ym.month})
 			rows, err := monthStmt.Query()
 			if err != nil {
 				return err
@@ -465,7 +463,7 @@ func GetJVMsReport(db sq.BaseRunner) (JVMReport, error) {
 				jvr.PerMonth[tsStr][name] = count
 			}
 
-			rows2x, err := monthStmt.Where(sq.Eq{"version": jenkinsIDs}).Query()
+			rows2x, err := monthStmt.Where(sq.Eq{"i.version": jenkinsIDs}).Query()
 			if err != nil {
 				return err
 			}
@@ -998,6 +996,7 @@ func allOrderedMonths(db sq.BaseRunner, currentYear, currentMonth int) ([]yearMo
 		From(InstanceReportsTable).
 		Where("NOT (year = $1 and month = $2)", currentYear, currentMonth).
 		OrderBy("year", "month").
+		GroupBy("year", "month").
 		Query()
 	defer func() {
 		_ = rows.Close()

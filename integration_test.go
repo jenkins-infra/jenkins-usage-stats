@@ -11,11 +11,9 @@ import (
 	"testing"
 	"time"
 
+	sq "github.com/Masterminds/squirrel"
 	stats "github.com/abayer/jenkins-usage-stats"
 	"github.com/abayer/jenkins-usage-stats/testutil"
-
-	sq "github.com/Masterminds/squirrel"
-
 	"github.com/stretchr/testify/require"
 )
 
@@ -25,7 +23,7 @@ func TestDBIntegration(t *testing.T) {
 
 	cache := stats.NewStatsCache()
 
-	sampleStatsDir := filepath.Join("testdata", "sample-stats")
+	sampleStatsDir := filepath.Join("testdata", "report-stats")
 	files, err := ioutil.ReadDir(sampleStatsDir)
 	require.NoError(t, err)
 
@@ -61,7 +59,7 @@ func TestDBIntegration(t *testing.T) {
 func DBForIntTest(f testutil.Fataler) (sq.BaseRunner, func()) {
 	databaseURL := os.Getenv("IT_DATABASE_URL")
 	if databaseURL == "" {
-		databaseURL = "postgres://localhost/stats_test?sslmode=disable&timezone=UTC"
+		databaseURL = "postgres://postgres@localhost/jenkins_usage_stats?sslmode=disable&timezone=UTC"
 	}
 
 	db, err := sql.Open("postgres", databaseURL)

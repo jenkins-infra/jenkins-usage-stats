@@ -5,15 +5,13 @@ import (
 	"path/filepath"
 	"testing"
 
+	sq "github.com/Masterminds/squirrel"
 	stats "github.com/abayer/jenkins-usage-stats"
 	"github.com/abayer/jenkins-usage-stats/testutil"
-
 	_ "github.com/golang-migrate/migrate/v4/source/file"
 	_ "github.com/lib/pq"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
-
-	sq "github.com/Masterminds/squirrel"
 )
 
 func TestGetJVMVersionID(t *testing.T) {
