@@ -6,10 +6,12 @@ require (
 	github.com/Masterminds/squirrel v1.5.1
 	github.com/beevik/etree v1.1.0
 	github.com/docker/go-connections v0.4.0
+	github.com/go-testfixtures/testfixtures/v3 v3.6.1
 	github.com/golang-migrate/migrate/v4 v4.15.1
 	github.com/lib/pq v1.10.3
 	github.com/stretchr/testify v1.7.0
 	github.com/testcontainers/testcontainers-go v0.11.1
+	gopkg.in/yaml.v2 v2.4.0
 )
 
 require (
@@ -48,6 +50,5 @@ require (
 	google.golang.org/genproto v0.0.0-20211013025323-ce878158c4d4 // indirect
 	google.golang.org/grpc v1.41.0 // indirect
 	google.golang.org/protobuf v1.27.1 // indirect
-	gopkg.in/yaml.v2 v2.4.0 // indirect
 	gopkg.in/yaml.v3 v3.0.0-20200313102051-9f266ea9e77c // indirect
 )

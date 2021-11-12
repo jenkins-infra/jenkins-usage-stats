@@ -9,7 +9,6 @@ import (
 	"runtime"
 	"time"
 
-	sq "github.com/Masterminds/squirrel"
 	"github.com/docker/go-connections/nat"
 	"github.com/golang-migrate/migrate/v4"
 	"github.com/golang-migrate/migrate/v4/database/postgres"
@@ -28,7 +27,7 @@ type Fataler interface {
 }
 
 // DBForTest spins up a postgres container, creates the test database on it, migrates it, and returns the db and a close function
-func DBForTest(f Fataler) (sq.BaseRunner, func()) {
+func DBForTest(f Fataler) (*sql.DB, func()) {
 	ctx := context.Background()
 	// container and database
 	container, db, err := CreateTestContainer(ctx)

@@ -8,6 +8,7 @@ DATABASE_URL ?= postgres://postgres@localhost/jenkins_usage_stats?sslmode=disabl
 IT_DATABASE_URL ?= postgres://postgres@localhost/jenkins_usage_stats_test?sslmode=disable&timezone=UTC
 
 MIGRATE_VERSION := v4.15.1
+TESTFIXTURES_VERSION := v3.6.1
 
 GO := GO111MODULE=on GO15VENDOREXPERIMENT=1 go
 GO_NOMOD := GO111MODULE=off go
@@ -31,8 +32,6 @@ RELEASE_ORG_REPO := $(ORG_REPO)
 ROOT_PACKAGE := github.com/$(ORG_REPO)
 
 GO_DEPENDENCIES := $(call rwildcard,pkg/,*.go) $(call rwildcard,cmd/,*.go) $(call rwildcard,internal/,*.go)
-
-GOMOCK_VERSION ?= v1.5.0
 
 BUILD_TARGET=build
 REPORTS_DIR=$(BUILD_TARGET)/reports
@@ -79,6 +78,14 @@ get-migrate-deps:
 migrate: get-migrate-deps
 	@echo "MIGRATING DB"
 	migrate -database "$(DATABASE_URL)" -source file://etc/migrations up
+
+get-testfixture-deps:
+	$(GO) install github.com/go-testfixtures/testfixtures/v3/cmd/testfixtures@$(TESTFIXTURES_VERSION)
+
+.PHONY: dump-fixtures
+dump-fixtures: get-testfixture-deps
+	@echo "DUMPING FIXTURES FROM DATABASE"
+	testfixtures --dump -d postgres -c "$(DATABASE_URL)" -D pkg/testdata/fixtures --files os_types,job_types,plugins,instance_reports,jenkins_versions,report_files,jvm_versions
 
 get-fmt-deps:
 	$(GO) install golang.org/x/tools/cmd/goimports@latest
