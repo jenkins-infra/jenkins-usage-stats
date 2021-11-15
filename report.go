@@ -205,6 +205,10 @@ var (
 	//go:embed templates/versionDistroIndex.html.tmpl
 	// VersionDistributionIndexTemplate is the Golang template used for generating the plugin version distribution index.
 	VersionDistributionIndexTemplate string
+
+	//go:embed templates/svgs.html.tmpl
+	// SVGsIndexTemplate is the Golang template used for generating the svg directory HTML index.
+	SVGsIndexTemplate string
 )
 
 // PluginReport is written out as JSON for reports for each plugin
@@ -315,9 +319,25 @@ type yearMonth struct {
 	month int
 }
 
+type monthForHTML struct {
+	Year  int
+	Num   string
+	Name  string
+	AsStr string
+}
+
 // GenerateReport creates the JSON, CSV, SVG, and HTML files for a monthly report
-func GenerateReport(db sq.BaseRunner, year, month int, baseDir string) error {
-	installCount, err := GetInstallCountForVersions(db, year, month)
+func GenerateReport(db sq.BaseRunner, currentYear, currentMonth int, baseDir string) error {
+	err := os.MkdirAll(baseDir, 0755) //nolint:gosec
+	if err != nil {
+		return err
+	}
+
+	previousMonth := startDateForYearMonth(currentYear, currentMonth).AddDate(0, -1, 0)
+	prevYear := previousMonth.Year()
+	prevMonth := int(previousMonth.Month())
+
+	installCount, err := GetInstallCountForVersions(db, prevYear, prevMonth)
 	if err != nil {
 		return err
 	}
@@ -326,7 +346,7 @@ func GenerateReport(db sq.BaseRunner, year, month int, baseDir string) error {
 		return err
 	}
 
-	err = ioutil.WriteFile(filepath.Join(baseDir, "installations.json"), icAsJSON, 0644) //nolint:gosec
+	err = writeFile(filepath.Join(baseDir, "installations.json"), icAsJSON)
 	if err != nil {
 		return err
 	}
@@ -334,17 +354,23 @@ func GenerateReport(db sq.BaseRunner, year, month int, baseDir string) error {
 	if err != nil {
 		return err
 	}
-	err = ioutil.WriteFile(filepath.Join(baseDir, "installations.csv"), []byte(icAsCSV), 0644) //nolint:gosec
+	err = writeFile(filepath.Join(baseDir, "installations.csv"), []byte(icAsCSV))
 	if err != nil {
 		return err
 	}
 
-	err = GenerateVersionDistributions(db, year, month, filepath.Join(baseDir, "pluginversions"))
+	pvDir := filepath.Join(baseDir, "pluginversions")
+	err = os.MkdirAll(pvDir, 0755) //nolint:gosec
+	if err != nil {
+		return err
+	}
+	err = GenerateVersionDistributions(db, prevYear, prevMonth, pvDir)
 	if err != nil {
 		return err
 	}
 
-	pluginReports, err := GetPluginReports(db, year, month)
+	// GetPluginReports expects to get the _current_ year/month so it can exclude that from its reports.
+	pluginReports, err := GetPluginReports(db, currentYear, currentMonth)
 	if err != nil {
 		return err
 	}
@@ -353,13 +379,13 @@ func GenerateReport(db sq.BaseRunner, year, month int, baseDir string) error {
 		if err != nil {
 			return err
 		}
-		err = ioutil.WriteFile(filepath.Join(baseDir, fmt.Sprintf("%s.stats.json", pr.Name)), prAsJSON, 0644) //nolint:gosec
+		err = writeFile(filepath.Join(baseDir, fmt.Sprintf("%s.stats.json", pr.Name)), prAsJSON)
 		if err != nil {
 			return err
 		}
 	}
 
-	latestNumbers, err := GetLatestPluginNumbers(db, year, month)
+	latestNumbers, err := GetLatestPluginNumbers(db, prevYear, prevMonth)
 	if err != nil {
 		return err
 	}
@@ -371,16 +397,16 @@ func GenerateReport(db sq.BaseRunner, year, month int, baseDir string) error {
 	if err != nil {
 		return err
 	}
-	err = ioutil.WriteFile(filepath.Join(baseDir, "latestNumbers.json"), lnAsJSON, 0644) //nolint:gosec
+	err = writeFile(filepath.Join(baseDir, "latestNumbers.json"), lnAsJSON)
 	if err != nil {
 		return err
 	}
-	err = ioutil.WriteFile(filepath.Join(baseDir, "latestNumbers.csv"), []byte(lnAsCSV), 0644) //nolint:gosec
+	err = writeFile(filepath.Join(baseDir, "latestNumbers.csv"), []byte(lnAsCSV))
 	if err != nil {
 		return err
 	}
 
-	capabilities, err := GetCapabilities(db, year, month)
+	capabilities, err := GetCapabilities(db, prevYear, prevMonth)
 	if err != nil {
 		return err
 	}
@@ -392,16 +418,17 @@ func GenerateReport(db sq.BaseRunner, year, month int, baseDir string) error {
 	if err != nil {
 		return err
 	}
-	err = ioutil.WriteFile(filepath.Join(baseDir, "capabilities.json"), capAsJSON, 0644) //nolint:gosec
+	err = writeFile(filepath.Join(baseDir, "capabilities.json"), capAsJSON)
 	if err != nil {
 		return err
 	}
-	err = ioutil.WriteFile(filepath.Join(baseDir, "capabilities.csv"), []byte(capAsCSV), 0644) //nolint:gosec
+	err = writeFile(filepath.Join(baseDir, "capabilities.csv"), []byte(capAsCSV))
 	if err != nil {
 		return err
 	}
 
-	jvms, err := GetJVMsReport(db)
+	// GetJVMsReport expects to get the _current_ year/month so that month can be excluded.
+	jvms, err := GetJVMsReport(db, currentYear, currentMonth)
 	if err != nil {
 		return err
 	}
@@ -409,11 +436,244 @@ func GenerateReport(db sq.BaseRunner, year, month int, baseDir string) error {
 	if err != nil {
 		return err
 	}
-	err = ioutil.WriteFile(filepath.Join(baseDir, "jvms.json"), jvmsAsJSON, 0644) //nolint:gosec
+	err = writeFile(filepath.Join(baseDir, "jvms.json"), jvmsAsJSON)
 	if err != nil {
 		return err
 	}
 
+	svgDir := filepath.Join(baseDir, "svgs")
+	err = os.MkdirAll(svgDir, 0755) //nolint:gosec
+	if err != nil {
+		return err
+	}
+
+	allMonths, err := allOrderedMonths(db, currentYear, currentMonth)
+	if err != nil {
+		return err
+	}
+
+	var monthsForHTML []monthForHTML
+
+	installCountByMonth := make(map[string]uint64)
+	jobCountByMonth := make(map[string]uint64)
+	nodeCountByMonth := make(map[string]uint64)
+	pluginCountByMonth := make(map[string]uint64)
+
+	for _, ym := range allMonths {
+		monthStr := fmt.Sprintf("%d%02d", ym.year, ym.month)
+		monthsForHTML = append(monthsForHTML, monthForHTML{
+			Year:  ym.year,
+			Num:   fmt.Sprintf("%02d", ym.month),
+			Name:  time.Month(ym.month).String(),
+			AsStr: monthStr,
+		})
+
+		installCountByMonth[monthStr] = 0
+		jobCountByMonth[monthStr] = 0
+		nodeCountByMonth[monthStr] = 0
+		pluginCountByMonth[monthStr] = 0
+
+		ir, err := GetInstallCountForVersions(db, ym.year, ym.month)
+		if err != nil {
+			return err
+		}
+
+		for _, c := range ir.Installations {
+			installCountByMonth[monthStr] += c
+		}
+
+		irSVG, irCSV, err := CreateBarSVG(fmt.Sprintf("Jenkins installations (total: %d)", installCountByMonth[monthStr]), ir.Installations, 10, false, DefaultFilter)
+		if err != nil {
+			return err
+		}
+
+		if err := writeFile(filepath.Join(svgDir, fmt.Sprintf("%s-jenkins.svg", monthStr)), irSVG); err != nil {
+			return err
+		}
+		if err := writeFile(filepath.Join(svgDir, fmt.Sprintf("%s-jenkins.csv", monthStr)), irCSV); err != nil {
+			return err
+		}
+
+		pr, err := GetLatestPluginNumbers(db, ym.year, ym.month)
+		if err != nil {
+			return err
+		}
+		for _, c := range pr.Plugins {
+			pluginCountByMonth[monthStr] += c
+		}
+
+		prSVG, prCSV, err := CreateBarSVG(fmt.Sprintf("Plugin installations (total: %d)", pluginCountByMonth[monthStr]), pr.Plugins, 100, true, DefaultFilter)
+		if err != nil {
+			return err
+		}
+		if err := writeFile(filepath.Join(svgDir, fmt.Sprintf("%s-plugins.svg", monthStr)), prSVG); err != nil {
+			return err
+		}
+		if err := writeFile(filepath.Join(svgDir, fmt.Sprintf("%s-plugins.csv", monthStr)), prCSV); err != nil {
+			return err
+		}
+
+		for _, topNum := range []uint64{500, 100, 2500} {
+			topPRSVG, topPRCSV, err := CreateBarSVG(fmt.Sprintf("Plugin installations (installations > %d)", topNum), pr.Plugins, 100, true, func(s string, u uint64) bool {
+				return u > topNum
+			})
+			if err != nil {
+				return err
+			}
+			if err := writeFile(filepath.Join(svgDir, fmt.Sprintf("%s-top-plugins%d.svg", monthStr, topNum)), topPRSVG); err != nil {
+				return err
+			}
+			if err := writeFile(filepath.Join(svgDir, fmt.Sprintf("%s-top-plugins%d.csv", monthStr, topNum)), topPRCSV); err != nil {
+				return err
+			}
+		}
+
+		osR, err := OSCountsForMonth(db, ym.year, ym.month)
+		if err != nil {
+			return err
+		}
+
+		var osNames []string
+		var osNumbers []uint64
+
+		for n := range osR {
+			osNames = append(osNames, n)
+		}
+
+		sort.Strings(osNames)
+
+		for _, n := range osNames {
+			nodeCountByMonth[monthStr] += osR[n]
+			osNumbers = append(osNumbers, osR[n])
+		}
+
+		osBarSVG, osBarCSV, err := CreateBarSVG(fmt.Sprintf("Nodes (total: %d)", nodeCountByMonth[monthStr]), osR, 10, true, DefaultFilter)
+		if err != nil {
+			return err
+		}
+		if err := writeFile(filepath.Join(svgDir, fmt.Sprintf("%s-nodes.svg", monthStr)), osBarSVG); err != nil {
+			return err
+		}
+		if err := writeFile(filepath.Join(svgDir, fmt.Sprintf("%s-nodes.csv", monthStr)), osBarCSV); err != nil {
+			return err
+		}
+
+		osPieSVG, osPieCSV, err := CreatePieSVG("Nodes", osNumbers, 200, 300, 150, 370, 20, osNames, PieColors)
+		if err != nil {
+			return err
+		}
+		if err := writeFile(filepath.Join(svgDir, fmt.Sprintf("%s-nodesPie.svg", monthStr)), osPieSVG); err != nil {
+			return err
+		}
+		if err := writeFile(filepath.Join(svgDir, fmt.Sprintf("%s-nodesPie.csv", monthStr)), osPieCSV); err != nil {
+			return err
+		}
+
+		jr, err := JobCountsForMonth(db, ym.year, ym.month)
+		if err != nil {
+			return err
+		}
+
+		for _, c := range jr {
+			jobCountByMonth[monthStr] += c
+		}
+
+		jobsSVG, jobsCSV, err := CreateBarSVG(fmt.Sprintf("Jobs (total: %d)", jobCountByMonth[monthStr]), jr, 1000, true, DefaultFilter)
+		if err != nil {
+			return err
+		}
+		if err := writeFile(filepath.Join(svgDir, fmt.Sprintf("%s-jobs.svg", monthStr)), jobsSVG); err != nil {
+			return err
+		}
+		if err := writeFile(filepath.Join(svgDir, fmt.Sprintf("%s-jobs.csv", monthStr)), jobsCSV); err != nil {
+			return err
+		}
+
+		execR, err := ExecutorCountsForMonth(db, ym.year, ym.month)
+		if err != nil {
+			return err
+		}
+
+		totalExecs := uint64(0)
+		for _, c := range execR {
+			totalExecs += c
+		}
+
+		execSVG, execCSV, err := CreateBarSVG(fmt.Sprintf("Executors per install (total: %d)", totalExecs), execR, 25, false, DefaultFilter)
+		if err != nil {
+			return err
+		}
+		if err := writeFile(filepath.Join(svgDir, fmt.Sprintf("%s-total-executors.svg", monthStr)), execSVG); err != nil {
+			return err
+		}
+		if err := writeFile(filepath.Join(svgDir, fmt.Sprintf("%s-total-executors.csv", monthStr)), execCSV); err != nil {
+			return err
+		}
+	}
+
+	totalJenkinsSVG, totalJenkinsCSV, err := CreateBarSVG("Total Jenkins installations", installCountByMonth, 100, false, DefaultFilter)
+	if err != nil {
+		return err
+	}
+	if err := writeFile(filepath.Join(svgDir, "total-jenkins.svg"), totalJenkinsSVG); err != nil {
+		return err
+	}
+	if err := writeFile(filepath.Join(svgDir, "total-jenkins.csv"), totalJenkinsCSV); err != nil {
+		return err
+	}
+
+	totalJobsSVG, totalJobsCSV, err := CreateBarSVG("Total jobs", jobCountByMonth, 1000, false, DefaultFilter)
+	if err != nil {
+		return err
+	}
+	if err := writeFile(filepath.Join(svgDir, "total-jobs.svg"), totalJobsSVG); err != nil {
+		return err
+	}
+	if err := writeFile(filepath.Join(svgDir, "total-jobs.csv"), totalJobsCSV); err != nil {
+		return err
+	}
+
+	totalNodesSVG, totalNodesCSV, err := CreateBarSVG("Total nodes", nodeCountByMonth, 100, false, DefaultFilter)
+	if err != nil {
+		return err
+	}
+	if err := writeFile(filepath.Join(svgDir, "total-nodes.svg"), totalNodesSVG); err != nil {
+		return err
+	}
+	if err := writeFile(filepath.Join(svgDir, "total-nodes.csv"), totalNodesCSV); err != nil {
+		return err
+	}
+
+	totalPluginsSVG, totalPluginsCSV, err := CreateBarSVG("Total Plugin installations", pluginCountByMonth, 1000, false, DefaultFilter)
+	if err != nil {
+		return err
+	}
+	if err := writeFile(filepath.Join(svgDir, "total-plugins.svg"), totalPluginsSVG); err != nil {
+		return err
+	}
+	if err := writeFile(filepath.Join(svgDir, "total-plugins.csv"), totalPluginsCSV); err != nil {
+		return err
+	}
+
+	totalFiles := []string{"total-plugins", "total-jobs", "total-jenkins", "total-nodes"}
+
+	idxTmpl, err := template.New("svgs-index").Parse(SVGsIndexTemplate)
+	if err != nil {
+		return err
+	}
+
+	idxFile, err := os.OpenFile(filepath.Join(svgDir, "svgs.html"), os.O_RDWR|os.O_CREATE|os.O_TRUNC, 0644) //nolint:gosec
+	if err != nil {
+		return err
+	}
+	defer func() {
+		_ = idxFile.Close()
+	}()
+
+	return idxTmpl.Execute(idxFile, map[string]interface{}{
+		"totalFiles": totalFiles,
+		"months":     monthsForHTML,
+	})
 }
 
 // GetInstallCountForVersions generates a map of Jenkins versions to install counts
@@ -522,15 +782,13 @@ func GetCapabilities(db sq.BaseRunner, year, month int) (CapabilitiesReport, err
 
 // GetJVMsReport returns the JVM install counts for all months
 // analogous to Groovy version's generateJvmJson
-func GetJVMsReport(db sq.BaseRunner) (JVMReport, error) {
+func GetJVMsReport(db sq.BaseRunner, year, month int) (JVMReport, error) {
 	jvr := JVMReport{
 		PerMonth:   map[string]map[string]uint64{},
 		PerMonth2x: map[string]map[string]uint64{},
 	}
 
-	now := time.Now()
-
-	months, err := allOrderedMonths(db, now.Year(), int(now.Month()))
+	months, err := allOrderedMonths(db, year, month)
 	if err != nil {
 		return jvr, err
 	}
@@ -805,6 +1063,41 @@ func JobCountsForMonth(db sq.BaseRunner, year, month int) (map[string]uint64, er
 	}
 
 	return jobMap, nil
+}
+
+// ExecutorCountsForMonth gets the total number of executors for each Jenkins version in a month
+// analogous to executorCount2Number in generateStats.groovy
+func ExecutorCountsForMonth(db sq.BaseRunner, year, month int) (map[string]uint64, error) {
+	rows, err := PSQL(db).Select("jv.version", "sum(i.executors) as total").
+		From("instance_reports i").
+		Join("jenkins_versions jv on jv.id = i.version").
+		Where(sq.Eq{"i.year": year}).
+		Where(sq.Eq{"i.month": month}).
+		Where(sq.GtOrEq{"i.count_for_month": 2}).
+		GroupBy("jv.version").
+		OrderBy("jv.version").
+		Query()
+	if err != nil {
+		return nil, err
+	}
+	defer func() {
+		_ = rows.Close()
+	}()
+
+	versionMap := make(map[string]uint64)
+
+	for rows.Next() {
+		var name string
+		var count uint64
+
+		err = rows.Scan(&name, &count)
+		if err != nil {
+			return nil, err
+		}
+		versionMap[name] = count
+	}
+
+	return versionMap, nil
 }
 
 // OSCountsForMonth gets the total number of each known OS type in a month
@@ -1195,6 +1488,7 @@ func installCountsByMonth(db sq.BaseRunner, currentYear, currentMonth int) (map[
 	rows, err := PSQL(db).Select("year", "month", "count(*)").
 		From(InstanceReportsTable).
 		Where("NOT (year = $1 and month = $2)", currentYear, currentMonth).
+		Where(sq.GtOrEq{"count_for_month": 2}).
 		GroupBy("year", "month").
 		OrderBy("year", "month").
 		Query()
@@ -1276,4 +1570,8 @@ func allPluginNames(db sq.BaseRunner) ([]string, error) {
 	}
 
 	return names, nil
+}
+
+func writeFile(filename string, data []byte) error {
+	return ioutil.WriteFile(filename, data, 0644) //nolint:gosec
 }

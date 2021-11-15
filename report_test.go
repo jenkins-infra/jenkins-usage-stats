@@ -105,7 +105,7 @@ func TestReportFuncs(t *testing.T) {
 	})
 
 	t.Run("GetJVMReports", func(t *testing.T) {
-		pn, err := stats.GetJVMsReport(db)
+		pn, err := stats.GetJVMsReport(db, 2009, 12)
 		require.NoError(t, err)
 
 		goldenBytes := readGoldenAndUpdateIfDesired(t, pn)
