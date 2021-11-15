@@ -109,7 +109,7 @@ func (io *ImportOptions) runImport(ctx context.Context) error {
 			if err := stats.MarkReportRead(db, fi.Name()); err != nil {
 				return err
 			}
-			fmt.Printf("imported in %s", time.Since(startedAt))
+			fmt.Printf("imported in %s\n", time.Since(startedAt))
 		}
 	}
 

@@ -4,33 +4,12 @@ import (
 	"context"
 	"fmt"
 	"os"
-	"os/signal"
-	"syscall"
 
 	"github.com/spf13/cobra"
 )
 
 func main() {
-	// capture SIGINT and SIGTERM for graceful shutdown
-	kill := make(chan os.Signal, 1)
-	signal.Notify(kill, syscall.SIGINT, syscall.SIGTERM)
-
-	defer func() {
-		signal.Stop(kill)
-		close(kill)
-	}()
-
-	ctx, cancel := context.WithCancel(context.Background())
-	defer cancel()
-
-	go func() {
-		// wait for kill signal and cancel context
-		<-kill
-		fmt.Println("exiting...")
-		cancel()
-	}()
-
-	if err := run(ctx); err != nil {
+	if err := run(context.Background()); err != nil {
 		fmt.Println(err)
 		os.Exit(1)
 	}
