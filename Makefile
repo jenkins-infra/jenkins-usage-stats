@@ -63,7 +63,9 @@ ifdef DEBUG
 BUILDFLAGS += -gcflags "all=-N -l"
 endif
 
-PACKAGE_DIRS = $(shell $(GO) list ./... | grep -v /vendor/ | grep -v e2e)
+.PHONY: build
+build:
+	CGO_ENABLED=$(CGO_ENABLED) $(GO) build $(BUILDFLAGS) -o $(BUILD_TARGET)/$(BINARY_NAME) ./cmd/jenkins-usage-stats/...
 
 get-migrate-deps:
 	$(GO) install -tags 'postgres' github.com/golang-migrate/migrate/v4/cmd/migrate@$(MIGRATE_VERSION)
