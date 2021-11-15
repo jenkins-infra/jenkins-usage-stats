@@ -83,6 +83,8 @@ func (io *ImportOptions) runImport(ctx context.Context) error {
 
 	cache := stats.NewStatsCache()
 
+	importStart := time.Now()
+
 	for _, fi := range files {
 		if !fi.IsDir() && !strings.Contains(fi.Name(), "fudged") && strings.HasSuffix(fi.Name(), ".gz") {
 			startedAt := time.Now()
@@ -114,7 +116,7 @@ func (io *ImportOptions) runImport(ctx context.Context) error {
 	}
 
 	fmt.Println(cache.ReportTimes())
-	fmt.Printf("total reports: %d\n", totalReports)
+	fmt.Printf("total reports: %d (time to import: %s)\n", totalReports, time.Since(importStart))
 
 	return nil
 }
