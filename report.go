@@ -237,8 +237,6 @@ type InstallationReport struct {
 
 // ToCSV returns a CSV representation of the InstallationReport
 func (i InstallationReport) ToCSV() (string, error) {
-	var records [][]string
-
 	keys := make([]string, len(i.Installations))
 
 	for k := range i.Installations {
@@ -246,14 +244,13 @@ func (i InstallationReport) ToCSV() (string, error) {
 	}
 	sort.Strings(keys)
 
-	for _, k := range keys {
-		records = append(records, []string{k, fmt.Sprintf("%d", i.Installations[k])})
-	}
-
 	var builder strings.Builder
-	writer := csv.NewWriter(&builder)
-	if err := writer.WriteAll(records); err != nil {
-		return "", err
+
+	for _, k := range keys {
+		_, err := builder.Write([]byte(fmt.Sprintf(`"%s","%d"\n`, k, i.Installations[k])))
+		if err != nil {
+			return "", err
+		}
 	}
 
 	return builder.String(), nil
@@ -267,8 +264,6 @@ type LatestPluginNumbersReport struct {
 
 // ToCSV returns a CSV representation of the LatestPluginNumbersReport
 func (l LatestPluginNumbersReport) ToCSV() (string, error) {
-	var records [][]string
-
 	keys := make([]string, len(l.Plugins))
 
 	for k := range l.Plugins {
@@ -276,14 +271,13 @@ func (l LatestPluginNumbersReport) ToCSV() (string, error) {
 	}
 	sort.Strings(keys)
 
-	for _, k := range keys {
-		records = append(records, []string{k, fmt.Sprintf("%d", l.Plugins[k])})
-	}
-
 	var builder strings.Builder
-	writer := csv.NewWriter(&builder)
-	if err := writer.WriteAll(records); err != nil {
-		return "", err
+
+	for _, k := range keys {
+		_, err := builder.Write([]byte(fmt.Sprintf(`"%s","%d"\n`, k, l.Plugins[k])))
+		if err != nil {
+			return "", err
+		}
 	}
 
 	return builder.String(), nil
@@ -296,8 +290,6 @@ type CapabilitiesReport struct {
 
 // ToCSV returns a CSV representation of the CapabilitiesReport
 func (i CapabilitiesReport) ToCSV() (string, error) {
-	var records [][]string
-
 	keys := make([]string, len(i.Installations))
 
 	for k := range i.Installations {
@@ -305,14 +297,13 @@ func (i CapabilitiesReport) ToCSV() (string, error) {
 	}
 	sort.Strings(keys)
 
-	for _, k := range keys {
-		records = append(records, []string{k, fmt.Sprintf("%d", i.Installations[k])})
-	}
-
 	var builder strings.Builder
-	writer := csv.NewWriter(&builder)
-	if err := writer.WriteAll(records); err != nil {
-		return "", err
+
+	for _, k := range keys {
+		_, err := builder.Write([]byte(fmt.Sprintf(`"%s","%d"\n`, k, i.Installations[k])))
+		if err != nil {
+			return "", err
+		}
 	}
 
 	return builder.String(), nil
@@ -331,6 +322,7 @@ type monthForHTML struct {
 }
 
 // GenerateReport creates the JSON, CSV, SVG, and HTML files for a monthly report
+// TODO: Data sets don't seem to be complete compared to original, but that could just be a filtering thing? I've only compared 2009/2010 data so far.
 func GenerateReport(db sq.BaseRunner, currentYear, currentMonth int, baseDir string) error {
 	err := os.MkdirAll(baseDir, 0755) //nolint:gosec
 	if err != nil {
@@ -1196,6 +1188,7 @@ func OSCountsForMonth(db sq.BaseRunner, year, month int) (map[string]uint64, err
 }
 
 // CreateBarSVG takes a dataset and returns byte slices for the corresponding .svg and .csv files
+// TODO: Something's awry in ordering here.
 func CreateBarSVG(title string, data map[string]uint64, scaleReduction int, sortByValue bool, filterFunc func(string, uint64) bool) ([]byte, []byte, error) {
 	sortedData, maxVal := asSortedPairsAndMaxValue(data, sortByValue, filterFunc)
 
@@ -1248,15 +1241,12 @@ func CreateBarSVG(title string, data map[string]uint64, scaleReduction int, sort
 		return nil, nil, err
 	}
 
-	var records [][]string
-	for k, v := range data {
-		records = append(records, []string{k, fmt.Sprintf("%d", v)})
-	}
-
 	var builder bytes.Buffer
-	writer := csv.NewWriter(&builder)
-	if err := writer.WriteAll(records); err != nil {
-		return nil, nil, err
+	for k, v := range data {
+		_, err = builder.Write([]byte(fmt.Sprintf(`"%s","%d"\n`, k, v)))
+		if err != nil {
+			return nil, nil, err
+		}
 	}
 
 	return body, builder.Bytes(), nil
