@@ -7,6 +7,8 @@ import (
 	"io/ioutil"
 	"os"
 	"path/filepath"
+	"regexp"
+	"sort"
 	"strings"
 	"testing"
 	"time"
@@ -29,8 +31,24 @@ func TestDBIntegration(t *testing.T) {
 
 	totalReports := 0
 
+	dateRe := regexp.MustCompile(`.*\.(\d\d\d\d\d\d).*`)
+
+	sort.Slice(files, func(i, j int) bool {
+		iMatch := dateRe.FindStringSubmatch(files[i].Name())
+		iDate := iMatch[1]
+		if iDate == "" {
+			return true
+		}
+		jMatch := dateRe.FindStringSubmatch(files[j].Name())
+		jDate := jMatch[1]
+		if jDate == "" {
+			return true
+		}
+		return iDate < jDate
+	})
+
 	for _, fi := range files {
-		if !fi.IsDir() && strings.HasSuffix(fi.Name(), ".gz") { // && strings.Contains(fi.Name(), ".201001") {
+		if !fi.IsDir() && !strings.Contains(fi.Name(), "fudged") && strings.HasSuffix(fi.Name(), ".gz") { // && strings.Contains(fi.Name(), ".201001") {
 			startedAt := time.Now()
 			alreadyRead, err := stats.ReportAlreadyRead(db, fi.Name())
 			require.NoError(t, err)
