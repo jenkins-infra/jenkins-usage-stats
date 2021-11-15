@@ -352,8 +352,8 @@ func GetPluginID(db sq.BaseRunner, cache *DBCache, name, version string) (uint64
 
 // AddIndividualReport adds/updates the JSON report to the database, along with all related tables.
 func AddIndividualReport(db sq.BaseRunner, cache *DBCache, jsonReport *JSONReport) error {
-	// Short-circuit for a few weird cases where the instance ID is >64 characters
-	if len(jsonReport.Install) > 64 {
+	// Short-circuit for a few weird cases where the instance ID is >64 characters or the Jenkins version is >32 characters
+	if len(jsonReport.Install) > 64 || len(jsonReport.Version) > 32 {
 		return nil
 	}
 
