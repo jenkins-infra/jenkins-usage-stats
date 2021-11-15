@@ -7,6 +7,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"html/template"
+	"io/ioutil"
 	"math"
 	"os"
 	"path/filepath"
@@ -314,6 +315,107 @@ type yearMonth struct {
 	month int
 }
 
+// GenerateReport creates the JSON, CSV, SVG, and HTML files for a monthly report
+func GenerateReport(db sq.BaseRunner, year, month int, baseDir string) error {
+	installCount, err := GetInstallCountForVersions(db, year, month)
+	if err != nil {
+		return err
+	}
+	icAsJSON, err := json.MarshalIndent(installCount, "", "  ")
+	if err != nil {
+		return err
+	}
+
+	err = ioutil.WriteFile(filepath.Join(baseDir, "installations.json"), icAsJSON, 0644) //nolint:gosec
+	if err != nil {
+		return err
+	}
+	icAsCSV, err := installCount.ToCSV()
+	if err != nil {
+		return err
+	}
+	err = ioutil.WriteFile(filepath.Join(baseDir, "installations.csv"), []byte(icAsCSV), 0644) //nolint:gosec
+	if err != nil {
+		return err
+	}
+
+	err = GenerateVersionDistributions(db, year, month, filepath.Join(baseDir, "pluginversions"))
+	if err != nil {
+		return err
+	}
+
+	pluginReports, err := GetPluginReports(db, year, month)
+	if err != nil {
+		return err
+	}
+	for _, pr := range pluginReports {
+		prAsJSON, err := json.MarshalIndent(pr, "", "  ")
+		if err != nil {
+			return err
+		}
+		err = ioutil.WriteFile(filepath.Join(baseDir, fmt.Sprintf("%s.stats.json", pr.Name)), prAsJSON, 0644) //nolint:gosec
+		if err != nil {
+			return err
+		}
+	}
+
+	latestNumbers, err := GetLatestPluginNumbers(db, year, month)
+	if err != nil {
+		return err
+	}
+	lnAsJSON, err := json.MarshalIndent(latestNumbers, "", "  ")
+	if err != nil {
+		return err
+	}
+	lnAsCSV, err := latestNumbers.ToCSV()
+	if err != nil {
+		return err
+	}
+	err = ioutil.WriteFile(filepath.Join(baseDir, "latestNumbers.json"), lnAsJSON, 0644) //nolint:gosec
+	if err != nil {
+		return err
+	}
+	err = ioutil.WriteFile(filepath.Join(baseDir, "latestNumbers.csv"), []byte(lnAsCSV), 0644) //nolint:gosec
+	if err != nil {
+		return err
+	}
+
+	capabilities, err := GetCapabilities(db, year, month)
+	if err != nil {
+		return err
+	}
+	capAsJSON, err := json.MarshalIndent(capabilities, "", "  ")
+	if err != nil {
+		return err
+	}
+	capAsCSV, err := capabilities.ToCSV()
+	if err != nil {
+		return err
+	}
+	err = ioutil.WriteFile(filepath.Join(baseDir, "capabilities.json"), capAsJSON, 0644) //nolint:gosec
+	if err != nil {
+		return err
+	}
+	err = ioutil.WriteFile(filepath.Join(baseDir, "capabilities.csv"), []byte(capAsCSV), 0644) //nolint:gosec
+	if err != nil {
+		return err
+	}
+
+	jvms, err := GetJVMsReport(db)
+	if err != nil {
+		return err
+	}
+	jvmsAsJSON, err := json.MarshalIndent(jvms, "", "  ")
+	if err != nil {
+		return err
+	}
+	err = ioutil.WriteFile(filepath.Join(baseDir, "jvms.json"), jvmsAsJSON, 0644) //nolint:gosec
+	if err != nil {
+		return err
+	}
+
+}
+
 // GetInstallCountForVersions generates a map of Jenkins versions to install counts
 // analogous to Groovy version's generateInstallationsJson
 func GetInstallCountForVersions(db sq.BaseRunner, year, month int) (InstallationReport, error) {
@@ -575,7 +677,7 @@ func GenerateVersionDistributions(db sq.BaseRunner, year, month int, outputDir s
 	var pluginNames []string
 
 	for k, v := range jvpv {
-		versionInfo, err := json.Marshal(v)
+		versionInfo, err := json.MarshalIndent(v, "", "  ")
 		if err != nil {
 			return err
 		}
