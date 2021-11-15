@@ -343,7 +343,7 @@ func GenerateReport(db sq.BaseRunner, currentYear, currentMonth int, baseDir str
 		return err
 	}
 
-	svgDir := filepath.Join(baseDir, "jenkins-stats/svgs")
+	svgDir := filepath.Join(baseDir, "jenkins-stats/svg")
 	err = os.MkdirAll(svgDir, 0755) //nolint:gosec
 	if err != nil {
 		return err
@@ -359,6 +359,7 @@ func GenerateReport(db sq.BaseRunner, currentYear, currentMonth int, baseDir str
 	prevYear := previousMonth.Year()
 	prevMonth := int(previousMonth.Month())
 
+	icStart := time.Now()
 	installCount, err := GetInstallCountForVersions(db, prevYear, prevMonth)
 	if err != nil {
 		return err
@@ -380,12 +381,16 @@ func GenerateReport(db sq.BaseRunner, currentYear, currentMonth int, baseDir str
 	if err != nil {
 		return err
 	}
+	fmt.Printf("installCount time: %s\n", time.Since(icStart))
 
+	vdStart := time.Now()
 	jvpv, err := GenerateVersionDistributions(db, prevYear, prevMonth, pvDir)
 	if err != nil {
 		return err
 	}
+	fmt.Printf("versionDistribution time: %s\n", time.Since(vdStart))
 
+	prStart := time.Now()
 	// GetPluginReports expects to get the _current_ year/month so it can exclude that from its reports.
 	pluginReports, err := GetPluginReports(db, currentYear, currentMonth)
 	if err != nil {
@@ -401,7 +406,9 @@ func GenerateReport(db sq.BaseRunner, currentYear, currentMonth int, baseDir str
 			return err
 		}
 	}
+	fmt.Printf("pluginReport time: %s\n", time.Since(prStart))
 
+	lnStart := time.Now()
 	latestNumbers, err := GetLatestPluginNumbers(db, prevYear, prevMonth)
 	if err != nil {
 		return err
@@ -422,7 +429,9 @@ func GenerateReport(db sq.BaseRunner, currentYear, currentMonth int, baseDir str
 	if err != nil {
 		return err
 	}
+	fmt.Printf("latestNumbers time: %s\n", time.Since(lnStart))
 
+	capStart := time.Now()
 	capabilities, err := GetCapabilities(db, prevYear, prevMonth)
 	if err != nil {
 		return err
@@ -435,15 +444,17 @@ func GenerateReport(db sq.BaseRunner, currentYear, currentMonth int, baseDir str
 	if err != nil {
 		return err
 	}
-	err = writeFile(filepath.Join(baseDir, "capabilities.json"), capAsJSON)
+	err = writeFile(filepath.Join(pitDir, "capabilities.json"), capAsJSON)
 	if err != nil {
 		return err
 	}
-	err = writeFile(filepath.Join(baseDir, "capabilities.csv"), []byte(capAsCSV))
+	err = writeFile(filepath.Join(pitDir, "capabilities.csv"), []byte(capAsCSV))
 	if err != nil {
 		return err
 	}
+	fmt.Printf("capabilities time: %s\n", time.Since(capStart))
 
+	jvmStart := time.Now()
 	// GetJVMsReport expects to get the _current_ year/month so that month can be excluded.
 	jvms, err := GetJVMsReport(db, currentYear, currentMonth)
 	if err != nil {
@@ -453,10 +464,11 @@ func GenerateReport(db sq.BaseRunner, currentYear, currentMonth int, baseDir str
 	if err != nil {
 		return err
 	}
-	err = writeFile(filepath.Join(baseDir, "jvms.json"), jvmsAsJSON)
+	err = writeFile(filepath.Join(pitDir, "jvms.json"), jvmsAsJSON)
 	if err != nil {
 		return err
 	}
+	fmt.Printf("jvms time: %s\n", time.Since(jvmStart))
 
 	allMonths, err := allOrderedMonths(db, currentYear, currentMonth)
 	if err != nil {
@@ -470,6 +482,7 @@ func GenerateReport(db sq.BaseRunner, currentYear, currentMonth int, baseDir str
 	nodeCountByMonth := make(map[string]uint64)
 	pluginCountByMonth := make(map[string]uint64)
 
+	svgStart := time.Now()
 	for _, ym := range allMonths {
 		monthStr := fmt.Sprintf("%d%02d", ym.year, ym.month)
 		monthsForHTML = append(monthsForHTML, monthForHTML{
@@ -688,6 +701,7 @@ func GenerateReport(db sq.BaseRunner, currentYear, currentMonth int, baseDir str
 	if err != nil {
 		return err
 	}
+	fmt.Printf("svgs time: %s\n", time.Since(svgStart))
 
 	jvpvJSON, err := json.MarshalIndent(jvpv, "", "  ")
 	if err != nil {
@@ -931,6 +945,16 @@ func GetPluginReports(db sq.BaseRunner, currentYear, currentMonth int) ([]Plugin
 		return nil, err
 	}
 
+	installsByMonth, err := pluginInstallsByMonthForName(db, currentYear, currentMonth)
+	if err != nil {
+		return nil, err
+	}
+
+	installsByVersion, err := pluginInstallsByVersionForName(db, previousMonth.Year(), int(previousMonth.Month()))
+	if err != nil {
+		return nil, err
+	}
+
 	for _, pn := range pluginNames {
 		report := PluginReport{
 			Name:               pn,
@@ -940,24 +964,14 @@ func GetPluginReports(db sq.BaseRunner, currentYear, currentMonth int) ([]Plugin
 			VersionPercentages: map[string]float32{},
 		}
 
-		installsByMonth, err := pluginInstallsByMonthForName(db, pn, currentYear, currentMonth)
-		if err != nil {
-			return nil, err
-		}
-
-		for monthStr, monthCount := range installsByMonth {
-			report.Installations[monthStr] = monthCount
-			report.MonthPercentages[monthStr] = float32(monthCount) * 100 / float32(totalInstalls[monthStr])
-		}
-
-		installsByVersion, err := pluginInstallsByVersionForName(db, pn, previousMonth.Year(), int(previousMonth.Month()))
-		if err != nil {
-			return nil, err
-		}
-
-		for versionStr, versionCount := range installsByVersion {
+		for versionStr, versionCount := range installsByVersion[pn] {
 			report.PerVersion[versionStr] = versionCount
 			report.VersionPercentages[versionStr] = float32(versionCount) * 100 / float32(totalInstalls[prevMonthStr])
+		}
+
+		for monthStr, monthCount := range installsByMonth[pn] {
+			report.Installations[monthStr] = monthCount
+			report.MonthPercentages[monthStr] = float32(monthCount) * 100 / float32(totalInstalls[monthStr])
 		}
 
 		reports = append(reports, report)
@@ -1256,7 +1270,7 @@ func CreatePieSVG(title string, data []uint64, centerX, centerY, radius, upperLe
 		totalCount += v
 	}
 
-	var angles []float64
+	angles := make([]float64, len(data))
 	for i := range data {
 		angles[i] = float64(data[i]) / float64(totalCount) * math.Pi * 2
 	}
@@ -1381,17 +1395,16 @@ func asSortedPairsAndMaxValue(data map[string]uint64, byValue bool, filterFunc f
 	return sp, maxVal
 }
 
-func pluginInstallsByMonthForName(db sq.BaseRunner, pluginName string, currentYear, currentMonth int) (map[string]uint64, error) {
-	monthCount := make(map[string]uint64)
+func pluginInstallsByMonthForName(db sq.BaseRunner, currentYear, currentMonth int) (map[string]map[string]uint64, error) {
+	monthCount := make(map[string]map[string]uint64)
 
-	rows, err := PSQL(db).Select("i.year", "i.month", "count(*)").
+	rows, err := PSQL(db).Select("p.name", "i.year", "i.month", "count(*)").
 		From("instance_reports i, unnest(i.plugins) pr(id)").
 		Join("plugins p on p.id = pr.id").
-		Where(sq.Eq{"p.name": pluginName}).
 		Where(sq.GtOrEq{"i.count_for_month": 2}).
 		Where(fmt.Sprintf("NOT (i.year = %d and i.month = %d)", currentYear, currentMonth)).
-		OrderBy("i.year", "i.month").
-		GroupBy("i.year", "i.month").
+		OrderBy("p.name", "i.year", "i.month").
+		GroupBy("p.name", "i.year", "i.month").
 		Query()
 	if err != nil {
 		return nil, err
@@ -1401,34 +1414,36 @@ func pluginInstallsByMonthForName(db sq.BaseRunner, pluginName string, currentYe
 	}()
 
 	for rows.Next() {
+		var pn string
 		var y, m int
 		var c uint64
 
-		err = rows.Scan(&y, &m, &c)
+		err = rows.Scan(&pn, &y, &m, &c)
 		if err != nil {
 			return nil, err
 		}
 
 		monthTS := startDateForYearMonth(y, m)
-
-		monthCount[fmt.Sprintf("%d", monthTS.Unix())] = c
+		if _, ok := monthCount[pn]; !ok {
+			monthCount[pn] = make(map[string]uint64)
+		}
+		monthCount[pn][fmt.Sprintf("%d", monthTS.Unix())] = c
 	}
 
 	return monthCount, nil
 }
 
-func pluginInstallsByVersionForName(db sq.BaseRunner, pluginName string, year, month int) (map[string]uint64, error) {
-	monthCount := make(map[string]uint64)
+func pluginInstallsByVersionForName(db sq.BaseRunner, year, month int) (map[string]map[string]uint64, error) {
+	monthCount := make(map[string]map[string]uint64)
 
-	rows, err := PSQL(db).Select("p.version", "count(*)").
+	rows, err := PSQL(db).Select("p.name", "p.version", "count(*)").
 		From("instance_reports i, unnest(i.plugins) pr(id)").
 		Join("plugins p on p.id = pr.id").
-		Where(sq.Eq{"p.name": pluginName}).
 		Where(sq.Eq{"i.year": year}).
 		Where(sq.Eq{"i.month": month}).
 		Where(sq.GtOrEq{"i.count_for_month": 2}).
-		OrderBy("p.version").
-		GroupBy("p.version").
+		OrderBy("p.name", "p.version").
+		GroupBy("p.name", "p.version").
 		Query()
 	if err != nil {
 		return nil, err
@@ -1438,15 +1453,19 @@ func pluginInstallsByVersionForName(db sq.BaseRunner, pluginName string, year, m
 	}()
 
 	for rows.Next() {
+		var pn string
 		var v string
 		var c uint64
 
-		err = rows.Scan(&v, &c)
+		err = rows.Scan(&pn, &v, &c)
 		if err != nil {
 			return nil, err
 		}
 
-		monthCount[v] = c
+		if _, ok := monthCount[pn]; !ok {
+			monthCount[pn] = make(map[string]uint64)
+		}
+		monthCount[pn][v] = c
 	}
 
 	return monthCount, nil
@@ -1505,7 +1524,7 @@ func allOrderedMonths(db sq.BaseRunner, currentYear, currentMonth int) ([]yearMo
 	var yearMonths []yearMonth
 	rows, err := PSQL(db).Select("year", "month").
 		From(InstanceReportsTable).
-		Where("NOT (year = $1 and month = $2)", currentYear, currentMonth).
+		Where(fmt.Sprintf("NOT (year = %d and month = %d)", currentYear, currentMonth)).
 		OrderBy("year", "month").
 		GroupBy("year", "month").
 		Query()
@@ -1533,17 +1552,17 @@ func installCountsByMonth(db sq.BaseRunner, currentYear, currentMonth int) (map[
 
 	rows, err := PSQL(db).Select("year", "month", "count(*)").
 		From(InstanceReportsTable).
-		Where("NOT (year = $1 and month = $2)", currentYear, currentMonth).
+		Where(fmt.Sprintf("NOT (year = %d and month = %d)", currentYear, currentMonth)).
 		Where(sq.GtOrEq{"count_for_month": 2}).
 		GroupBy("year", "month").
 		OrderBy("year", "month").
 		Query()
-	defer func() {
-		_ = rows.Close()
-	}()
 	if err != nil {
 		return nil, err
 	}
+	defer func() {
+		_ = rows.Close()
+	}()
 
 	for rows.Next() {
 		var y, m int

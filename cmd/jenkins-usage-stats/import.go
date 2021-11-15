@@ -68,17 +68,24 @@ func (io *ImportOptions) runImport(ctx context.Context) error {
 	dateRe := regexp.MustCompile(`.*\.(\d\d\d\d\d\d\d\d).*`)
 
 	sort.Slice(files, func(i, j int) bool {
-		iMatch := dateRe.FindStringSubmatch(files[i].Name())
-		iDate := iMatch[1]
-		if iDate == "" {
-			return true
+		if !files[i].IsDir() && strings.HasSuffix(files[i].Name(), ".gz") && !files[j].IsDir() && strings.HasSuffix(files[j].Name(), ".gz") {
+			iMatch := dateRe.FindStringSubmatch(files[i].Name())
+			if len(iMatch) > 1 {
+				iDate := iMatch[1]
+				if iDate == "" {
+					return true
+				}
+				jMatch := dateRe.FindStringSubmatch(files[j].Name())
+				if len(jMatch) > 1 {
+					jDate := jMatch[1]
+					if jDate == "" {
+						return true
+					}
+					return iDate < jDate
+				}
+			}
 		}
-		jMatch := dateRe.FindStringSubmatch(files[j].Name())
-		jDate := jMatch[1]
-		if jDate == "" {
-			return true
-		}
-		return iDate < jDate
+		return true
 	})
 
 	cache := stats.NewStatsCache()

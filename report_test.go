@@ -105,7 +105,7 @@ func TestReportFuncs(t *testing.T) {
 	})
 
 	t.Run("GetJVMReports", func(t *testing.T) {
-		pn, err := stats.GetJVMsReport(db, 2009, 12)
+		pn, err := stats.GetJVMsReport(db, 2010, 2)
 		require.NoError(t, err)
 
 		goldenBytes := readGoldenAndUpdateIfDesired(t, pn)
@@ -138,6 +138,16 @@ func TestReportFuncs(t *testing.T) {
 		require.NoError(t, json.Unmarshal(goldenBytes, &goldenPN))
 
 		assert.Equal(t, goldenPN, pn)
+	})
+
+	t.Run("GenerateReport", func(t *testing.T) {
+		tmpOut, err := os.MkdirTemp("", "out-dir-")
+		require.NoError(t, err)
+		defer func() {
+			_ = os.RemoveAll(tmpOut)
+		}()
+
+		require.NoError(t, stats.GenerateReport(db, 2010, 2, tmpOut))
 	})
 }
 
@@ -185,7 +195,7 @@ func dbWithFixtures(t *testing.T) (sq.BaseRunner, func()) {
 func useITDB(t *testing.T) (sq.BaseRunner, func()) {
 	databaseURL := os.Getenv("DATABASE_URL")
 	if databaseURL == "" {
-		databaseURL = "postgres://postgres@localhost/jenkins_usage_stats?sslmode=disable&timezone=UTC"
+		databaseURL = "postgres://postgres@localhost/jenkins_usage_stats_test?sslmode=disable&timezone=UTC"
 	}
 
 	db, err := sql.Open("postgres", databaseURL)

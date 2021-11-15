@@ -55,5 +55,12 @@ func (ro *ReportOptions) runReport(ctx context.Context) error {
 
 	now := time.Now()
 
-	return stats.GenerateReport(db, now.Year(), int(now.Month()), ro.Directory)
+	startTime := time.Now()
+	err = stats.GenerateReport(db, now.Year(), int(now.Month()), ro.Directory)
+	if err != nil {
+		return err
+	}
+
+	fmt.Printf("Reports generated to %s, in %s\n", ro.Directory, time.Since(startTime))
+	return nil
 }
