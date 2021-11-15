@@ -65,7 +65,7 @@ func (io *ImportOptions) runImport(ctx context.Context) error {
 
 	totalReports := 0
 
-	dateRe := regexp.MustCompile(`.*\.(\d\d\d\d\d\d).*`)
+	dateRe := regexp.MustCompile(`.*\.(\d\d\d\d\d\d\d\d).*`)
 
 	sort.Slice(files, func(i, j int) bool {
 		iMatch := dateRe.FindStringSubmatch(files[i].Name())
