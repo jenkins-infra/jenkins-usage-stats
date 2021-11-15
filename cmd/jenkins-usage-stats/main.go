@@ -26,6 +26,7 @@ func run(ctx context.Context) error {
 	}
 
 	rootCmd.AddCommand(NewImportCmd(ctx))
+	rootCmd.AddCommand(NewReportCmd(ctx))
 
 	return rootCmd.Execute()
 }

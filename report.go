@@ -209,6 +209,10 @@ var (
 	//go:embed templates/svgs.html.tmpl
 	// SVGsIndexTemplate is the Golang template used for generating the svg directory HTML index.
 	SVGsIndexTemplate string
+
+	//go:embed templates/pitIndex.html.tmpl
+	// PITIndexTemplate is the Golang template used for generating the plugin-installation-trend HTML index.
+	PITIndexTemplate string
 )
 
 // PluginReport is written out as JSON for reports for each plugin
@@ -333,6 +337,24 @@ func GenerateReport(db sq.BaseRunner, currentYear, currentMonth int, baseDir str
 		return err
 	}
 
+	pitDir := filepath.Join(baseDir, "plugin-installation-trend")
+	err = os.MkdirAll(pitDir, 0755) //nolint:gosec
+	if err != nil {
+		return err
+	}
+
+	svgDir := filepath.Join(baseDir, "jenkins-stats/svgs")
+	err = os.MkdirAll(svgDir, 0755) //nolint:gosec
+	if err != nil {
+		return err
+	}
+
+	pvDir := filepath.Join(baseDir, "pluginversions")
+	err = os.MkdirAll(pvDir, 0755) //nolint:gosec
+	if err != nil {
+		return err
+	}
+
 	previousMonth := startDateForYearMonth(currentYear, currentMonth).AddDate(0, -1, 0)
 	prevYear := previousMonth.Year()
 	prevMonth := int(previousMonth.Month())
@@ -346,7 +368,7 @@ func GenerateReport(db sq.BaseRunner, currentYear, currentMonth int, baseDir str
 		return err
 	}
 
-	err = writeFile(filepath.Join(baseDir, "installations.json"), icAsJSON)
+	err = writeFile(filepath.Join(pitDir, "installations.json"), icAsJSON)
 	if err != nil {
 		return err
 	}
@@ -354,17 +376,12 @@ func GenerateReport(db sq.BaseRunner, currentYear, currentMonth int, baseDir str
 	if err != nil {
 		return err
 	}
-	err = writeFile(filepath.Join(baseDir, "installations.csv"), []byte(icAsCSV))
+	err = writeFile(filepath.Join(pitDir, "installations.csv"), []byte(icAsCSV))
 	if err != nil {
 		return err
 	}
 
-	pvDir := filepath.Join(baseDir, "pluginversions")
-	err = os.MkdirAll(pvDir, 0755) //nolint:gosec
-	if err != nil {
-		return err
-	}
-	err = GenerateVersionDistributions(db, prevYear, prevMonth, pvDir)
+	jvpv, err := GenerateVersionDistributions(db, prevYear, prevMonth, pvDir)
 	if err != nil {
 		return err
 	}
@@ -379,7 +396,7 @@ func GenerateReport(db sq.BaseRunner, currentYear, currentMonth int, baseDir str
 		if err != nil {
 			return err
 		}
-		err = writeFile(filepath.Join(baseDir, fmt.Sprintf("%s.stats.json", pr.Name)), prAsJSON)
+		err = writeFile(filepath.Join(pitDir, fmt.Sprintf("%s.stats.json", pr.Name)), prAsJSON)
 		if err != nil {
 			return err
 		}
@@ -397,11 +414,11 @@ func GenerateReport(db sq.BaseRunner, currentYear, currentMonth int, baseDir str
 	if err != nil {
 		return err
 	}
-	err = writeFile(filepath.Join(baseDir, "latestNumbers.json"), lnAsJSON)
+	err = writeFile(filepath.Join(pitDir, "latestNumbers.json"), lnAsJSON)
 	if err != nil {
 		return err
 	}
-	err = writeFile(filepath.Join(baseDir, "latestNumbers.csv"), []byte(lnAsCSV))
+	err = writeFile(filepath.Join(pitDir, "latestNumbers.csv"), []byte(lnAsCSV))
 	if err != nil {
 		return err
 	}
@@ -437,12 +454,6 @@ func GenerateReport(db sq.BaseRunner, currentYear, currentMonth int, baseDir str
 		return err
 	}
 	err = writeFile(filepath.Join(baseDir, "jvms.json"), jvmsAsJSON)
-	if err != nil {
-		return err
-	}
-
-	svgDir := filepath.Join(baseDir, "svgs")
-	err = os.MkdirAll(svgDir, 0755) //nolint:gosec
 	if err != nil {
 		return err
 	}
@@ -670,9 +681,44 @@ func GenerateReport(db sq.BaseRunner, currentYear, currentMonth int, baseDir str
 		_ = idxFile.Close()
 	}()
 
-	return idxTmpl.Execute(idxFile, map[string]interface{}{
+	err = idxTmpl.Execute(idxFile, map[string]interface{}{
 		"totalFiles": totalFiles,
 		"months":     monthsForHTML,
+	})
+	if err != nil {
+		return err
+	}
+
+	jvpvJSON, err := json.MarshalIndent(jvpv, "", "  ")
+	if err != nil {
+		return err
+	}
+	if err := writeFile(filepath.Join(pitDir, "jenkins-versions-per-plugin-version.json"), jvpvJSON); err != nil {
+		return err
+	}
+
+	var pluginNames []string
+	for pn := range latestNumbers.Plugins {
+		pluginNames = append(pluginNames, pn)
+	}
+	sort.Strings(pluginNames)
+
+	pitTmpl, err := template.New("pit-index").Parse(PITIndexTemplate)
+	if err != nil {
+		return err
+	}
+
+	pitFile, err := os.OpenFile(filepath.Join(pitDir, "index.html"), os.O_RDWR|os.O_CREATE|os.O_TRUNC, 0644) //nolint:gosec
+	if err != nil {
+		return err
+	}
+	defer func() {
+		_ = pitFile.Close()
+	}()
+
+	return pitTmpl.Execute(pitFile, map[string]interface{}{
+		"jsonFiles":   []string{"installations", "latestNumbers", "capabilities", "jenkins-version-per-plugin-version", "jvms"},
+		"pluginNames": pluginNames,
 	})
 }
 
@@ -921,15 +967,15 @@ func GetPluginReports(db sq.BaseRunner, currentYear, currentMonth int) ([]Plugin
 }
 
 // GenerateVersionDistributions writes out HTML files for each plugin's version distribution
-func GenerateVersionDistributions(db sq.BaseRunner, year, month int, outputDir string) error {
+func GenerateVersionDistributions(db sq.BaseRunner, year, month int, outputDir string) (map[string]map[string]map[string]uint64, error) {
 	jvpv, err := JenkinsVersionsForPluginVersions(db, year, month)
 	if err != nil {
-		return err
+		return nil, err
 	}
 
 	tmpl, err := template.New("versionDistribution").Parse(VersionDistributionTemplate)
 	if err != nil {
-		return err
+		return nil, err
 	}
 
 	var pluginNames []string
@@ -937,22 +983,22 @@ func GenerateVersionDistributions(db sq.BaseRunner, year, month int, outputDir s
 	for k, v := range jvpv {
 		versionInfo, err := json.MarshalIndent(v, "", "  ")
 		if err != nil {
-			return err
+			return nil, err
 		}
 		outFile, err := os.OpenFile(filepath.Join(outputDir, fmt.Sprintf("%s.html", k)), os.O_RDWR|os.O_CREATE|os.O_TRUNC, 0644) //nolint:gosec
 		if err != nil {
-			return err
+			return nil, err
 		}
 		err = tmpl.Execute(outFile, map[string]interface{}{
 			"pluginName":        k,
 			"pluginVersionData": versionInfo,
 		})
 		if err != nil {
-			return err
+			return nil, err
 		}
 		err = outFile.Close()
 		if err != nil {
-			return err
+			return nil, err
 		}
 
 		pluginNames = append(pluginNames, k)
@@ -962,19 +1008,19 @@ func GenerateVersionDistributions(db sq.BaseRunner, year, month int, outputDir s
 
 	indexTmpl, err := template.New("versionDistributionIndex").Parse(VersionDistributionIndexTemplate)
 	if err != nil {
-		return err
+		return nil, err
 	}
 
 	indexFile, err := os.OpenFile(filepath.Join(outputDir, "index.html"), os.O_RDWR|os.O_CREATE|os.O_TRUNC, 0644) //nolint:gosec
 	if err != nil {
-		return err
+		return nil, err
 	}
 
 	defer func() {
 		_ = indexFile.Close()
 	}()
 
-	return indexTmpl.Execute(indexFile, map[string]interface{}{"pluginNames": pluginNames})
+	return jvpv, indexTmpl.Execute(indexFile, map[string]interface{}{"pluginNames": pluginNames})
 }
 
 // JenkinsVersionsForPluginVersions generates a report for each plugin's version, with a count of installs for each Jenkins version
