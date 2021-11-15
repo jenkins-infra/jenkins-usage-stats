@@ -2,9 +2,14 @@ package stats
 
 import (
 	"bytes"
+	_ "embed"
 	"encoding/csv"
+	"encoding/json"
 	"fmt"
+	"html/template"
 	"math"
+	"os"
+	"path/filepath"
 	"sort"
 	"strings"
 	"time"
@@ -191,6 +196,14 @@ var (
 		"PowderBlue",
 		"YellowGreen",
 	}
+
+	//go:embed templates/versionDistroPlugin.html.tmpl
+	// VersionDistributionTemplate is the Golang template used for generating plugin version distribution HTML.
+	VersionDistributionTemplate string
+
+	//go:embed templates/versionDistroIndex.html.tmpl
+	// VersionDistributionIndexTemplate is the Golang template used for generating the plugin version distribution index.
+	VersionDistributionIndexTemplate string
 )
 
 // PluginReport is written out as JSON for reports for each plugin
@@ -545,6 +558,63 @@ func GetPluginReports(db sq.BaseRunner, currentYear, currentMonth int) ([]Plugin
 	}
 
 	return reports, nil
+}
+
+// GenerateVersionDistributions writes out HTML files for each plugin's version distribution
+func GenerateVersionDistributions(db sq.BaseRunner, year, month int, outputDir string) error {
+	jvpv, err := JenkinsVersionsForPluginVersions(db, year, month)
+	if err != nil {
+		return err
+	}
+
+	tmpl, err := template.New("versionDistribution").Parse(VersionDistributionTemplate)
+	if err != nil {
+		return err
+	}
+
+	var pluginNames []string
+
+	for k, v := range jvpv {
+		versionInfo, err := json.Marshal(v)
+		if err != nil {
+			return err
+		}
+		outFile, err := os.OpenFile(filepath.Join(outputDir, fmt.Sprintf("%s.html", k)), os.O_RDWR|os.O_CREATE|os.O_TRUNC, 0644) //nolint:gosec
+		if err != nil {
+			return err
+		}
+		err = tmpl.Execute(outFile, map[string]interface{}{
+			"pluginName":        k,
+			"pluginVersionData": versionInfo,
+		})
+		if err != nil {
+			return err
+		}
+		err = outFile.Close()
+		if err != nil {
+			return err
+		}
+
+		pluginNames = append(pluginNames, k)
+	}
+
+	sort.Strings(pluginNames)
+
+	indexTmpl, err := template.New("versionDistributionIndex").Parse(VersionDistributionIndexTemplate)
+	if err != nil {
+		return err
+	}
+
+	indexFile, err := os.OpenFile(filepath.Join(outputDir, "index.html"), os.O_RDWR|os.O_CREATE|os.O_TRUNC, 0644) //nolint:gosec
+	if err != nil {
+		return err
+	}
+
+	defer func() {
+		_ = indexFile.Close()
+	}()
+
+	return indexTmpl.Execute(indexFile, map[string]interface{}{"pluginNames": pluginNames})
 }
 
 // JenkinsVersionsForPluginVersions generates a report for each plugin's version, with a count of installs for each Jenkins version
