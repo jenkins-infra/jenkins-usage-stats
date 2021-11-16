@@ -28,6 +28,13 @@ func ParseDailyJSON(filename string) ([]*JSONReport, error) {
 		var r *JSONReport
 		err = json.Unmarshal(scanner.Bytes(), &r)
 		if err != nil {
+			// If the error is a "cannot unmarshal number...", just skip this record. This is to deal with the range of
+			// possible weird executor count values we see, ranging from -4 to 2147483655 - i.e., 8 more than the max 32
+			// bit number. We're opting to just pay attention to positive values, and we don't really want to deal with
+			// bad data anyway.
+			if strings.Contains(err.Error(), "cannot unmarshal number") {
+				continue
+			}
 			return nil, err
 		}
 		FilterPrivateFromReport(r)
