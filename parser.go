@@ -35,6 +35,11 @@ func ParseDailyJSON(filename string) ([]*JSONReport, error) {
 			if strings.Contains(err.Error(), "cannot unmarshal number") {
 				continue
 			}
+			// If the error is "cannot unmarshal array into Go struct field JSONReport.jobs of type uint64", we hit a
+			// weird case of the value for a job count being an array, so let's just ignore that record.
+			if strings.Contains(err.Error(), "cannot unmarshal array into Go struct field JSONReport.jobs of type uint64") {
+				continue
+			}
 			return nil, err
 		}
 		FilterPrivateFromReport(r)
