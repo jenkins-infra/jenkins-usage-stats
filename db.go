@@ -153,6 +153,11 @@ type DBCache struct {
 	insertInstanceReportTime time.Duration
 	updateInstanceReportTime time.Duration
 	insertNewReportsTime     time.Duration
+
+	skippedForInstall int
+	skippedForVersion int
+	skippedForTime    int
+	skippedForJobs    int
 }
 
 // ReportTimes returns a string with function times
@@ -166,8 +171,13 @@ GetInstanceReport: %s
 InsertInstanceReport: %s
 UpdateInstanceReport: %s
 InsertNewReports: %s
+SkippedForInstall: %d
+SkippedForVersion: %d
+SkippedForTime: %d
+SkippedForJobs: %d
 `, sc.getJVMVersionTime.String(), sc.getOSTypeTime.String(), sc.getJobTypeTime.String(), sc.getJenkinsVersionTime.String(),
-		sc.getPluginTime.String(), sc.getInstanceReportTime.String(), sc.insertInstanceReportTime.String(), sc.updateInstanceReportTime.String(), sc.insertNewReportsTime.String())
+		sc.getPluginTime.String(), sc.getInstanceReportTime.String(), sc.insertInstanceReportTime.String(), sc.updateInstanceReportTime.String(), sc.insertNewReportsTime.String(),
+		sc.skippedForInstall, sc.skippedForVersion, sc.skippedForTime, sc.skippedForJobs)
 }
 
 // NewStatsCache initializes a cache
@@ -227,6 +237,9 @@ func GetOSTypeID(db sq.BaseRunner, cache *DBCache, name string) (uint64, error) 
 	defer func() {
 		cache.getOSTypeTime += time.Since(start)
 	}()
+	if name == "" {
+		name = "N/A"
+	}
 	if cached, ok := cache.osTypes[name]; ok {
 		return cached, nil
 	}
@@ -353,7 +366,17 @@ func GetPluginID(db sq.BaseRunner, cache *DBCache, name, version string) (uint64
 // AddIndividualReport adds/updates the JSON report to the database, along with all related tables.
 func AddIndividualReport(db sq.BaseRunner, cache *DBCache, jsonReport *JSONReport) error {
 	// Short-circuit for a few weird cases where the instance ID is >64 characters or the Jenkins version is >32 characters
-	if len(jsonReport.Install) > 64 || len(jsonReport.Version) > 32 {
+	if len(jsonReport.Install) > 64 {
+		cache.skippedForInstall++
+		return nil
+	}
+	if len(jsonReport.Version) > 32 {
+		cache.skippedForVersion++
+		return nil
+	}
+	// Skip SNAPSHOT Jenkins versions
+	if strings.Contains(jsonReport.Version, "SNAPSHOT") {
+		cache.skippedForVersion++
 		return nil
 	}
 
@@ -404,6 +427,19 @@ func AddIndividualReport(db sq.BaseRunner, cache *DBCache, jsonReport *JSONRepor
 
 	// If we already have a report for this install at this time, skip it.
 	if prevReport.ReportTime == ts || ts.Before(prevReport.ReportTime) {
+		cache.skippedForTime++
+
+		if prevReport.CountForMonth == 1 {
+			q := PSQL(db).Update(InstanceReportsTable).
+				Where(sq.Eq{"id": prevReport.ID}).
+				Set("count_for_month", report.CountForMonth)
+
+			_, err = q.Exec()
+			if err != nil {
+				return err
+			}
+
+		}
 		return nil
 	}
 
@@ -434,9 +470,12 @@ func AddIndividualReport(db sq.BaseRunner, cache *DBCache, jsonReport *JSONRepor
 	}
 	report.Nodes = nodes
 
-	// If we don't have any plugins or a controller, skip.
-	if len(jsonReport.Plugins) == 0 || report.JVMVersionID == 0 {
-		return nil
+	if report.JVMVersionID == 0 {
+		jvmVersionID, err := GetJVMVersionID(db, cache, "N/A")
+		if err != nil {
+			return err
+		}
+		report.JVMVersionID = jvmVersionID
 	}
 
 	var pluginIDs pq.Int64Array
@@ -450,6 +489,7 @@ func AddIndividualReport(db sq.BaseRunner, cache *DBCache, jsonReport *JSONRepor
 	report.Plugins = pluginIDs
 
 	jobs := JobsForReport{}
+	jobCount := uint64(0)
 	for jobType, count := range jsonReport.Jobs {
 		if count != 0 && !strings.HasPrefix(jobType, "private") {
 			jobTypeID, err := GetJobTypeID(db, cache, jobType)
@@ -457,7 +497,12 @@ func AddIndividualReport(db sq.BaseRunner, cache *DBCache, jsonReport *JSONRepor
 				return err
 			}
 			jobs[jobTypeID] = count
+			jobCount += count
 		}
+	}
+	if jobCount == 0 {
+		cache.skippedForJobs++
+		return nil
 	}
 	report.Jobs = jobs
 	cache.insertNewReportsTime += time.Since(newReportsStart)

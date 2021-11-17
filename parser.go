@@ -23,6 +23,8 @@ func ParseDailyJSON(filename string) ([]*JSONReport, error) {
 	var reports []*JSONReport
 
 	scanner := bufio.NewScanner(zReader)
+	sBuffer := make([]byte, 0, bufio.MaxScanTokenSize)
+	scanner.Buffer(sBuffer, bufio.MaxScanTokenSize*50) // Otherwise long lines crash the scanner.
 
 	for scanner.Scan() {
 		var r *JSONReport
@@ -46,6 +48,9 @@ func ParseDailyJSON(filename string) ([]*JSONReport, error) {
 		standardizeJVMVersions(r)
 		reports = append(reports, r)
 	}
+	if err := scanner.Err(); err != nil {
+		return nil, err
+	}
 
 	return reports, nil
 }
@@ -65,7 +70,9 @@ func standardizeJVMVersions(r *JSONReport) {
 	var nodes []JSONNode
 	for _, n := range r.Nodes {
 		fullVersion := n.JVMVersion
-		if strings.HasPrefix(fullVersion, "1.") {
+		if fullVersion == "" {
+			n.JVMVersion = "N/A"
+		} else if strings.HasPrefix(fullVersion, "1.") {
 			n.JVMVersion = fullVersion[0:3]
 		} else {
 			splitVersion := strings.Split(fullVersion, ".")

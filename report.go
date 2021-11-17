@@ -3,7 +3,6 @@ package stats
 import (
 	"bytes"
 	_ "embed"
-	"encoding/csv"
 	"encoding/json"
 	"fmt"
 	"html/template"
@@ -237,7 +236,7 @@ type InstallationReport struct {
 
 // ToCSV returns a CSV representation of the InstallationReport
 func (i InstallationReport) ToCSV() (string, error) {
-	keys := make([]string, len(i.Installations))
+	var keys []string
 
 	for k := range i.Installations {
 		keys = append(keys, k)
@@ -247,7 +246,7 @@ func (i InstallationReport) ToCSV() (string, error) {
 	var builder strings.Builder
 
 	for _, k := range keys {
-		_, err := builder.Write([]byte(fmt.Sprintf(`"%s","%d"\n`, k, i.Installations[k])))
+		_, err := builder.Write([]byte(fmt.Sprintf(`"%s","%d"`+"\n", k, i.Installations[k])))
 		if err != nil {
 			return "", err
 		}
@@ -264,7 +263,7 @@ type LatestPluginNumbersReport struct {
 
 // ToCSV returns a CSV representation of the LatestPluginNumbersReport
 func (l LatestPluginNumbersReport) ToCSV() (string, error) {
-	keys := make([]string, len(l.Plugins))
+	var keys []string
 
 	for k := range l.Plugins {
 		keys = append(keys, k)
@@ -274,7 +273,7 @@ func (l LatestPluginNumbersReport) ToCSV() (string, error) {
 	var builder strings.Builder
 
 	for _, k := range keys {
-		_, err := builder.Write([]byte(fmt.Sprintf(`"%s","%d"\n`, k, l.Plugins[k])))
+		_, err := builder.Write([]byte(fmt.Sprintf(`"%s","%d"`+"\n", k, l.Plugins[k])))
 		if err != nil {
 			return "", err
 		}
@@ -290,7 +289,7 @@ type CapabilitiesReport struct {
 
 // ToCSV returns a CSV representation of the CapabilitiesReport
 func (i CapabilitiesReport) ToCSV() (string, error) {
-	keys := make([]string, len(i.Installations))
+	var keys []string
 
 	for k := range i.Installations {
 		keys = append(keys, k)
@@ -300,7 +299,7 @@ func (i CapabilitiesReport) ToCSV() (string, error) {
 	var builder strings.Builder
 
 	for _, k := range keys {
-		_, err := builder.Write([]byte(fmt.Sprintf(`"%s","%d"\n`, k, i.Installations[k])))
+		_, err := builder.Write([]byte(fmt.Sprintf(`"%s","%d"`+"\n", k, i.Installations[k])))
 		if err != nil {
 			return "", err
 		}
@@ -732,14 +731,15 @@ func GenerateReport(db sq.BaseRunner, currentYear, currentMonth int, baseDir str
 // analogous to Groovy version's generateInstallationsJson
 func GetInstallCountForVersions(db sq.BaseRunner, year, month int) (InstallationReport, error) {
 	report := InstallationReport{Installations: map[string]uint64{}}
-	rows, err := PSQL(db).Select("jenkins_versions.version as jvv", "count(*) as number").
-		From(InstanceReportsTable).
-		Join("jenkins_versions on instance_reports.version = jenkins_versions.id").
-		Where(sq.Eq{"instance_reports.year": year}).
-		Where(sq.Eq{"instance_reports.month": month}).
-		Where(sq.GtOrEq{"instance_reports.count_for_month": 2}).
-		Where(`jenkins_versions.version ~ '^\d' and jenkins_versions.version not like '%private%'`).
+	rows, err := PSQL(db).Select("jv.version as jvv", "count(*) as number").
+		From("instance_reports i").
+		Join("jenkins_versions jv on i.version = jv.id").
+		Where(sq.Eq{"i.year": year}).
+		Where(sq.Eq{"i.month": month}).
+		Where(sq.GtOrEq{"i.count_for_month": 2}).
+		Where("jv.version ~ '^\\d'").
 		GroupBy("jvv").
+		OrderBy("jvv").
 		Query()
 	if err != nil {
 		return report, err
@@ -800,13 +800,13 @@ func GetLatestPluginNumbers(db sq.BaseRunner, year, month int) (LatestPluginNumb
 // analogous to Groovy version's generateCapabilitiesJson
 func GetCapabilities(db sq.BaseRunner, year, month int) (CapabilitiesReport, error) {
 	report := CapabilitiesReport{Installations: map[string]uint64{}}
-	rows, err := PSQL(db).Select("jenkins_versions.version as jvv", "count(*) as number").
-		From(InstanceReportsTable).
-		Join("jenkins_versions on instance_reports.version = jenkins_versions.id").
-		Where(sq.Eq{"instance_reports.year": year}).
-		Where(sq.Eq{"instance_reports.month": month}).
-		Where(sq.GtOrEq{"instance_reports.count_for_month": 2}).
-		Where(`jenkins_versions.version ~ '^\d' and jenkins_versions.version not like '%private%'`).
+	rows, err := PSQL(db).Select("jv.version as jvv", "count(*) as number").
+		From("instance_reports i").
+		Join("jenkins_versions jv on i.version = jv.id").
+		Where(sq.Eq{"i.year": year}).
+		Where(sq.Eq{"i.month": month}).
+		Where(sq.GtOrEq{"i.count_for_month": 2}).
+		Where("jv.version ~ '^\\d'").
 		GroupBy("jvv").
 		OrderBy("jvv DESC").
 		Query()
@@ -1126,6 +1126,7 @@ func ExecutorCountsForMonth(db sq.BaseRunner, year, month int) (map[string]uint6
 		Where(sq.Eq{"i.year": year}).
 		Where(sq.Eq{"i.month": month}).
 		Where(sq.GtOrEq{"i.count_for_month": 2}).
+		Where("jv.version ~ '^\\d'").
 		GroupBy("jv.version").
 		OrderBy("jv.version").
 		Query()
@@ -1242,8 +1243,8 @@ func CreateBarSVG(title string, data map[string]uint64, scaleReduction int, sort
 	}
 
 	var builder bytes.Buffer
-	for k, v := range data {
-		_, err = builder.Write([]byte(fmt.Sprintf(`"%s","%d"\n`, k, v)))
+	for _, v := range sortedData {
+		_, err = builder.Write([]byte(fmt.Sprintf(`"%s","%d"`+"\n", v.key, v.value)))
 		if err != nil {
 			return nil, nil, err
 		}
@@ -1332,15 +1333,12 @@ func CreatePieSVG(title string, data []uint64, centerX, centerY, radius, upperLe
 		return nil, nil, err
 	}
 
-	var records [][]string
-	for i, v := range labels {
-		records = append(records, []string{fmt.Sprintf("%d", data[i]), v})
-	}
-
 	var builder bytes.Buffer
-	writer := csv.NewWriter(&builder)
-	if err := writer.WriteAll(records); err != nil {
-		return nil, nil, err
+	for i, v := range labels {
+		_, err = builder.Write([]byte(fmt.Sprintf(`"%d","%s"`+"\n", data[i], v)))
+		if err != nil {
+			return nil, nil, err
+		}
 	}
 
 	return body, builder.Bytes(), nil
@@ -1579,7 +1577,6 @@ func maxInstanceVersionForMonth(db sq.BaseRunner, year, month int) (map[string]s
 		Where(sq.Eq{"i.year": year}).
 		Where(sq.Eq{"i.month": month}).
 		Where(sq.GtOrEq{"i.count_for_month": 2}).
-		Where(`jv.version not like '%private%'`).
 		Where(`jv.version ~ '^\d'`).
 		GroupBy("i.instance_id").
 		Query()
