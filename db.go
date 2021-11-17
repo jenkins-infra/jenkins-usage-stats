@@ -374,8 +374,8 @@ func AddIndividualReport(db sq.BaseRunner, cache *DBCache, jsonReport *JSONRepor
 		cache.skippedForVersion++
 		return nil
 	}
-	// Skip SNAPSHOT Jenkins versions
-	if strings.Contains(jsonReport.Version, "SNAPSHOT") {
+	// Skip SNAPSHOT and weird ***/? Jenkins versions
+	if strings.Contains(jsonReport.Version, "SNAPSHOT") || strings.Contains(jsonReport.Version, "***") || strings.Contains(jsonReport.Version, "?") {
 		cache.skippedForVersion++
 		return nil
 	}
