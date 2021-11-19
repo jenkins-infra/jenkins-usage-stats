@@ -11,6 +11,7 @@ import (
 	"os"
 	"path/filepath"
 	"sort"
+	"strconv"
 	"strings"
 	"time"
 
@@ -497,7 +498,7 @@ func GenerateReport(db sq.BaseRunner, currentYear, currentMonth int, baseDir str
 			installCountByMonth[monthStr] += c
 		}
 
-		irSVG, irCSV, err := CreateBarSVG(fmt.Sprintf("Jenkins installations (total: %d)", installCountByMonth[monthStr]), ir.Installations, 10, false, true, DefaultFilter)
+		irSVG, irCSV, err := CreateBarSVG(fmt.Sprintf("Jenkins installations (total: %d)", installCountByMonth[monthStr]), ir.Installations, 10, false, true, false, DefaultFilter)
 		if err != nil {
 			return err
 		}
@@ -517,7 +518,7 @@ func GenerateReport(db sq.BaseRunner, currentYear, currentMonth int, baseDir str
 			pluginCountByMonth[monthStr] += c
 		}
 
-		prSVG, prCSV, err := CreateBarSVG(fmt.Sprintf("Plugin installations (total: %d)", pluginCountByMonth[monthStr]), pr.Plugins, 100, true, false, DefaultFilter)
+		prSVG, prCSV, err := CreateBarSVG(fmt.Sprintf("Plugin installations (total: %d)", pluginCountByMonth[monthStr]), pr.Plugins, 100, true, false, false, DefaultFilter)
 		if err != nil {
 			return err
 		}
@@ -529,7 +530,7 @@ func GenerateReport(db sq.BaseRunner, currentYear, currentMonth int, baseDir str
 		}
 
 		for _, topNum := range []uint64{500, 100, 2500} {
-			topPRSVG, topPRCSV, err := CreateBarSVG(fmt.Sprintf("Plugin installations (installations > %d)", topNum), pr.Plugins, 100, true, false, func(s string, u uint64) bool {
+			topPRSVG, topPRCSV, err := CreateBarSVG(fmt.Sprintf("Plugin installations (installations > %d)", topNum), pr.Plugins, 100, true, false, false, func(s string, u uint64) bool {
 				return u > topNum
 			})
 			if err != nil {
@@ -562,7 +563,7 @@ func GenerateReport(db sq.BaseRunner, currentYear, currentMonth int, baseDir str
 			osNumbers = append(osNumbers, osR[n])
 		}
 
-		osBarSVG, osBarCSV, err := CreateBarSVG(fmt.Sprintf("Nodes (total: %d)", nodeCountByMonth[monthStr]), osR, 10, true, false, DefaultFilter)
+		osBarSVG, osBarCSV, err := CreateBarSVG(fmt.Sprintf("Nodes (total: %d)", nodeCountByMonth[monthStr]), osR, 10, true, false, false, DefaultFilter)
 		if err != nil {
 			return err
 		}
@@ -593,7 +594,7 @@ func GenerateReport(db sq.BaseRunner, currentYear, currentMonth int, baseDir str
 			jobCountByMonth[monthStr] += c
 		}
 
-		jobsSVG, jobsCSV, err := CreateBarSVG(fmt.Sprintf("Jobs (total: %d)", jobCountByMonth[monthStr]), jr, 1000, true, false, DefaultFilter)
+		jobsSVG, jobsCSV, err := CreateBarSVG(fmt.Sprintf("Jobs (total: %d)", jobCountByMonth[monthStr]), jr, 1000, true, false, false, DefaultFilter)
 		if err != nil {
 			return err
 		}
@@ -614,7 +615,7 @@ func GenerateReport(db sq.BaseRunner, currentYear, currentMonth int, baseDir str
 			totalExecs += c
 		}
 
-		execSVG, execCSV, err := CreateBarSVG(fmt.Sprintf("Executors per install (total: %d)", totalExecs), execR, 25, false, false, DefaultFilter)
+		execSVG, execCSV, err := CreateBarSVG(fmt.Sprintf("Executors per install (total: %d)", totalExecs), execR, 25, false, false, false, DefaultFilter)
 		if err != nil {
 			return err
 		}
@@ -626,7 +627,7 @@ func GenerateReport(db sq.BaseRunner, currentYear, currentMonth int, baseDir str
 		}
 	}
 
-	totalJenkinsSVG, totalJenkinsCSV, err := CreateBarSVG("Total Jenkins installations", installCountByMonth, 100, false, false, DefaultFilter)
+	totalJenkinsSVG, totalJenkinsCSV, err := CreateBarSVG("Total Jenkins installations", installCountByMonth, 100, false, false, false, DefaultFilter)
 	if err != nil {
 		return err
 	}
@@ -637,7 +638,7 @@ func GenerateReport(db sq.BaseRunner, currentYear, currentMonth int, baseDir str
 		return err
 	}
 
-	totalJobsSVG, totalJobsCSV, err := CreateBarSVG("Total jobs", jobCountByMonth, 1000, false, false, DefaultFilter)
+	totalJobsSVG, totalJobsCSV, err := CreateBarSVG("Total jobs", jobCountByMonth, 1000, false, false, false, DefaultFilter)
 	if err != nil {
 		return err
 	}
@@ -648,7 +649,7 @@ func GenerateReport(db sq.BaseRunner, currentYear, currentMonth int, baseDir str
 		return err
 	}
 
-	totalNodesSVG, totalNodesCSV, err := CreateBarSVG("Total nodes", nodeCountByMonth, 100, false, false, DefaultFilter)
+	totalNodesSVG, totalNodesCSV, err := CreateBarSVG("Total nodes", nodeCountByMonth, 100, false, false, false, DefaultFilter)
 	if err != nil {
 		return err
 	}
@@ -659,7 +660,7 @@ func GenerateReport(db sq.BaseRunner, currentYear, currentMonth int, baseDir str
 		return err
 	}
 
-	totalPluginsSVG, totalPluginsCSV, err := CreateBarSVG("Total Plugin installations", pluginCountByMonth, 1000, false, false, DefaultFilter)
+	totalPluginsSVG, totalPluginsCSV, err := CreateBarSVG("Total Plugin installations", pluginCountByMonth, 1000, false, false, false, DefaultFilter)
 	if err != nil {
 		return err
 	}
@@ -738,6 +739,7 @@ func GetInstallCountForVersions(db sq.BaseRunner, year, month int) (Installation
 		Where(sq.Eq{"i.month": month}).
 		Where(sq.GtOrEq{"i.count_for_month": 2}).
 		Where("jv.version ~ '^\\d'").
+		Where("jv.version not like '%private%'").
 		GroupBy("jvv").
 		OrderBy("jvv").
 		Query()
@@ -807,6 +809,7 @@ func GetCapabilities(db sq.BaseRunner, year, month int) (CapabilitiesReport, err
 		Where(sq.Eq{"i.month": month}).
 		Where(sq.GtOrEq{"i.count_for_month": 2}).
 		Where("jv.version ~ '^\\d'").
+		Where("jv.version not like '%private%'").
 		GroupBy("jvv").
 		OrderBy("jvv DESC").
 		Query()
@@ -1124,18 +1127,14 @@ func JobCountsForMonth(db sq.BaseRunner, year, month int) (map[string]uint64, er
 	return jobMap, nil
 }
 
-// ExecutorCountsForMonth gets the total number of executors for each Jenkins version in a month
+// ExecutorCountsForMonth gets a map of executor count to number of instances with that many executors in a month
 // analogous to executorCount2Number in generateStats.groovy
 func ExecutorCountsForMonth(db sq.BaseRunner, year, month int) (map[string]uint64, error) {
-	rows, err := PSQL(db).Select("jv.version", "sum(i.executors) as total").
-		From("instance_reports i").
-		Join("jenkins_versions jv on jv.id = i.version").
-		Where(sq.Eq{"i.year": year}).
-		Where(sq.Eq{"i.month": month}).
-		Where(sq.GtOrEq{"i.count_for_month": 2}).
-		Where("jv.version ~ '^\\d'").
-		GroupBy("jv.version").
-		OrderBy("jv.version").
+	rows, err := PSQL(db).Select("executors").
+		From("instance_reports").
+		Where(sq.Eq{"year": year}).
+		Where(sq.Eq{"month": month}).
+		Where(sq.GtOrEq{"count_for_month": 2}).
 		Query()
 	if err != nil {
 		return nil, err
@@ -1144,20 +1143,23 @@ func ExecutorCountsForMonth(db sq.BaseRunner, year, month int) (map[string]uint6
 		_ = rows.Close()
 	}()
 
-	versionMap := make(map[string]uint64)
+	countMap := make(map[string]uint64)
 
 	for rows.Next() {
-		var name string
 		var count uint64
 
-		err = rows.Scan(&name, &count)
+		err = rows.Scan(&count)
 		if err != nil {
 			return nil, err
 		}
-		versionMap[name] = count
+		cStr := fmt.Sprintf("%d", count)
+		if _, ok := countMap[cStr]; !ok {
+			countMap[cStr] = 0
+		}
+		countMap[cStr]++
 	}
 
-	return versionMap, nil
+	return countMap, nil
 }
 
 // OSCountsForMonth gets the total number of each known OS type in a month
@@ -1197,8 +1199,8 @@ func OSCountsForMonth(db sq.BaseRunner, year, month int) (map[string]uint64, err
 
 // CreateBarSVG takes a dataset and returns byte slices for the corresponding .svg and .csv files
 // TODO: Something's awry in ordering here.
-func CreateBarSVG(title string, data map[string]uint64, scaleReduction int, sortByValue, asVersion bool, filterFunc func(string, uint64) bool) ([]byte, []byte, error) {
-	sortedData, maxVal := asSortedPairsAndMaxValue(data, sortByValue, asVersion, filterFunc)
+func CreateBarSVG(title string, data map[string]uint64, scaleReduction int, sortByValue, asVersion, asNumber bool, filterFunc func(string, uint64) bool) ([]byte, []byte, error) {
+	sortedData, maxVal := asSortedPairsAndMaxValue(data, sortByValue, asVersion, asNumber, filterFunc)
 
 	viewWidth := (len(sortedData) * 15) + 50
 
@@ -1361,7 +1363,7 @@ type kvPair struct {
 	value uint64
 }
 
-func asSortedPairsAndMaxValue(data map[string]uint64, byValue bool, asVersion bool, filterFunc func(string, uint64) bool) ([]kvPair, uint64) {
+func asSortedPairsAndMaxValue(data map[string]uint64, byValue, asVersion, asNumber bool, filterFunc func(string, uint64) bool) ([]kvPair, uint64) {
 	maxVal := uint64(0)
 
 	var sp []kvPair
@@ -1393,6 +1395,19 @@ func asSortedPairsAndMaxValue(data map[string]uint64, byValue bool, asVersion bo
 			}
 
 			return svI.LessThan(svJ)
+		})
+	} else if asNumber {
+		sort.Slice(sp, func(i, j int) bool {
+			nI, err := strconv.Atoi(sp[i].key)
+			if err != nil {
+				return sp[i].key < sp[j].key
+			}
+			nJ, err := strconv.Atoi(sp[j].key)
+			if err != nil {
+				return sp[i].key < sp[j].key
+			}
+
+			return nI < nJ
 		})
 	} else {
 		sort.Slice(sp, func(i, j int) bool {
@@ -1494,7 +1509,7 @@ func jvmIDsForJSON(db sq.BaseRunner) ([]uint64, error) {
 	var jvmIDs []uint64
 	rows, err := PSQL(db).Select("id").
 		From(JVMVersionsTable).
-		Where(`name ~ '^(\d\d|\d\.\d)$'`).
+		Where(`name ~ '^(\d+|\d\.\d)$'`).
 		Query()
 	defer func() {
 		_ = rows.Close()
@@ -1608,6 +1623,7 @@ func maxInstanceVersionForMonth(db sq.BaseRunner, year, month int) (map[string]s
 		Where(sq.Eq{"i.month": month}).
 		Where(sq.GtOrEq{"i.count_for_month": 2}).
 		Where(`jv.version ~ '^\d'`).
+		Where("jv.version not like '%private%'").
 		GroupBy("i.instance_id").
 		Query()
 	if err != nil {

@@ -9,6 +9,54 @@ import (
 	"strings"
 )
 
+var (
+	hotspotAndMisc16Versions = []string{
+		// Until sometime in 2010, HotSpot and some other JVMs reported _their_ version number, not the Java version.
+		// So for those cases, we're just going to map them all to 1.6.
+
+		// HotSpot versions
+		"10.0-b19",
+		"10.0-b22",
+		"10.0-b23",
+		"10.0-b25",
+		"11.0-b11",
+		"11.0-b12",
+		"11.0-b15",
+		"11.0-b16",
+		"11.0-b17",
+		"11.2-b01",
+		"11.3-b02",
+		"13.0-b04",
+		"14.0-b01",
+		"14.0-b05",
+		"14.0-b08",
+		"14.0-b09",
+		"14.0-b10",
+		"14.0-b12",
+		"14.0-b15",
+		"14.0-b16",
+		"14.1-b02",
+		"14.2-b01",
+		"14.3-b01",
+		"16.0-b03",
+		"16.0-b08",
+		"16.0-b13",
+		"16.2-b04",
+		"16.3-b01",
+		"17.0-b14",
+		"17.0-b15",
+		"17.0-b16",
+		"17.0-b17",
+		"17.1-b03",
+		// IBM JVM
+		"2.3",
+		"2.4",
+		// SAP JVM
+		"5.1.0844",
+		"5.1.0909",
+	}
+)
+
 // ParseDailyJSON parses an individual day's gzipped JSON reports
 func ParseDailyJSON(filename string) ([]*JSONReport, error) {
 	gzippedJSON, err := ioutil.ReadFile(filename) // #nosec
@@ -69,11 +117,16 @@ func FilterPrivateFromReport(r *JSONReport) {
 func standardizeJVMVersions(r *JSONReport) {
 	var nodes []JSONNode
 	for _, n := range r.Nodes {
-		fullVersion := n.JVMVersion
+		fullVersion := hotspotJVMVersionToJavaVersion(n.JVMVersion)
 		if fullVersion == "" {
 			n.JVMVersion = "N/A"
+		} else if fullVersion == "8" {
+			n.JVMVersion = "1.8"
 		} else if strings.HasPrefix(fullVersion, "1.") {
 			n.JVMVersion = fullVersion[0:3]
+			if n.JVMVersion == "1.9" {
+				n.JVMVersion = "9"
+			}
 		} else {
 			splitVersion := strings.Split(fullVersion, ".")
 			n.JVMVersion = splitVersion[0]
@@ -81,4 +134,13 @@ func standardizeJVMVersions(r *JSONReport) {
 		nodes = append(nodes, n)
 	}
 	r.Nodes = nodes
+}
+
+func hotspotJVMVersionToJavaVersion(input string) string {
+	for _, hv := range hotspotAndMisc16Versions {
+		if input == hv {
+			return "1.6"
+		}
+	}
+	return input
 }

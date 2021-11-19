@@ -8,3 +8,5 @@
   name: hudson-model-ExternalJob
 - id: 5
   name: hudson-drools-DroolsProject
+- id: 6
+  name: hudson-plugins-BranchMonitor

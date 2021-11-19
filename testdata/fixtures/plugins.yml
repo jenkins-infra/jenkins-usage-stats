@@ -551,710 +551,710 @@
   name: bazaar
   version: "1.0"
 - id: 185
-  name: perforce
-  version: 1.0.15
-- id: 186
-  name: subversion
-  version: "1.6"
-- id: 187
   name: versionnumber
   version: "1.2"
-- id: 188
+- id: 186
   name: hudson-wsclean-plugin
   version: 1.0.3
-- id: 189
+- id: 187
   name: perforce
   version: 1.0.14
-- id: 190
+- id: 188
   name: clearcase
   version: 0.9.1
-- id: 191
+- id: 189
   name: cobertura
   version: 0.8.8
-- id: 192
+- id: 190
   name: findbugs
   version: "3.8"
-- id: 193
+- id: 191
   name: tasks
   version: "3.8"
-- id: 194
+- id: 192
   name: maven-plugin
   version: "1.313"
-- id: 195
+- id: 193
   name: subversion
   version: "1.5"
-- id: 196
+- id: 194
   name: pmd
   version: "2.10"
-- id: 197
-  name: audit-trail
-  version: "1.4"
-- id: 198
-  name: gradle
-  version: "1.2"
-- id: 199
-  name: maven-plugin
-  version: "1.334"
-- id: 200
-  name: release
-  version: "1.4"
-- id: 201
-  name: maven-plugin
-  version: "1.327"
-- id: 202
-  name: jabber
-  version: "0.8"
-- id: 203
-  name: trac
-  version: "1.5"
-- id: 204
-  name: statusmonitor
-  version: "1.0"
-- id: 205
-  name: monitoring
-  version: 1.8.1
-- id: 206
-  name: jabber
-  version: "1.4"
-- id: 207
-  name: maven-plugin
-  version: "1.338"
-- id: 208
-  name: xunit
-  version: "0.4"
-- id: 209
+- id: 195
   name: jdepend
   version: 1.2.2
-- id: 210
+- id: 196
+  name: audit-trail
+  version: "1.4"
+- id: 197
+  name: gradle
+  version: "1.2"
+- id: 198
+  name: maven-plugin
+  version: "1.334"
+- id: 199
+  name: release
+  version: "1.4"
+- id: 200
+  name: maven-plugin
+  version: "1.327"
+- id: 201
+  name: jabber
+  version: "0.8"
+- id: 202
+  name: trac
+  version: "1.5"
+- id: 203
+  name: statusmonitor
+  version: "1.0"
+- id: 204
+  name: monitoring
+  version: 1.8.1
+- id: 205
+  name: jabber
+  version: "1.4"
+- id: 206
+  name: maven-plugin
+  version: "1.338"
+- id: 207
+  name: xunit
+  version: "0.4"
+- id: 208
   name: phing
   version: "0.4"
-- id: 211
+- id: 209
   name: jsunit
   version: "0.3"
-- id: 212
+- id: 210
   name: maven-plugin
   version: "1.312"
-- id: 213
+- id: 211
   name: subversion
   version: "1.1"
-- id: 214
-  name: extended-read-permission
-  version: "1.0"
-- id: 215
-  name: powershell
-  version: "1.2"
-- id: 216
-  name: rake
-  version: 1.6.1
-- id: 217
-  name: selenium
-  version: "1.2"
-- id: 218
-  name: svn-release-mgr
-  version: "1.0"
-- id: 219
-  name: windmill
-  version: "1.4"
-- id: 220
-  name: gallio
-  version: "0.52"
-- id: 221
-  name: maven-plugin
-  version: "1.328"
-- id: 222
-  name: tfs
-  version: "1.9"
-- id: 223
-  name: clearcase
-  version: 1.0.2
-- id: 224
-  name: warnings
-  version: "2.8"
-- id: 225
-  name: findbugs
-  version: "3.3"
-- id: 226
-  name: cppunit
-  version: "0.3"
-- id: 227
-  name: maven-plugin
-  version: "1.335"
-- id: 228
-  name: jobrevision
-  version: "0.2"
-- id: 229
-  name: createjobadvanced
-  version: "1.2"
-- id: 230
-  name: maven-plugin
-  version: "1.316"
-- id: 231
-  name: jswidgets
-  version: "1.2"
-- id: 232
-  name: lastfailureversioncolumn
-  version: "1.0"
-- id: 233
-  name: lastsuccessversioncolumn
-  version: "1.0"
-- id: 234
-  name: platformlabeler
-  version: "1.0"
-- id: 235
-  name: dbCharts
-  version: 0.2.1
-- id: 236
-  name: slave-status
-  version: "1.3"
-- id: 237
-  name: maven-plugin
-  version: "1.311"
-- id: 238
-  name: maven-plugin
-  version: "1.297"
-- id: 239
-  name: javatest-report
-  version: "1.2"
-- id: 240
-  name: crap4j
-  version: 0.6.1
-- id: 241
-  name: sectioned-view
-  version: "1.5"
-- id: 242
-  name: github
-  version: "0.2"
-- id: 243
-  name: googlecode
-  version: "1.5"
-- id: 244
-  name: clearcase
-  version: "0.9"
-- id: 245
-  name: maven-plugin
-  version: "1.321"
-- id: 246
-  name: warnings
-  version: "2.10"
-- id: 247
-  name: buckminster
-  version: 0.9.1
-- id: 248
-  name: instant-messaging
-  version: "1.2"
-- id: 249
-  name: jabber
-  version: "1.3"
-- id: 250
-  name: pmd
-  version: "1.15"
-- id: 251
-  name: cobertura
-  version: 0.8.4
-- id: 252
-  name: violations
-  version: 0.7.1
-- id: 253
-  name: findbugs
-  version: "2.18"
-- id: 254
-  name: checkstyle
-  version: "1.15"
-- id: 255
-  name: naginator
-  version: "1.5"
-- id: 256
-  name: dependencyanalyzer
-  version: "0.4"
-- id: 257
-  name: nabaztag
-  version: "1.6"
-- id: 258
-  name: jobtype-column
-  version: "1.0"
-- id: 259
-  name: configurationslicing
-  version: "1.10"
-- id: 260
-  name: maven-info
-  version: 0.0.2
-- id: 261
-  name: ec2
-  version: "1.5"
-- id: 262
-  name: ci-game
-  version: "1.12"
-- id: 263
-  name: ncover
-  version: 0.2.6
-- id: 264
-  name: twitter
-  version: "0.3"
-- id: 265
-  name: rubyMetrics
-  version: 1.2.8
-- id: 266
-  name: mantis
-  version: 0.8.3
-- id: 267
-  name: batch-task
-  version: "1.9"
-- id: 268
-  name: vss
-  version: "1.7"
-- id: 269
-  name: maven-plugin
-  version: "1.306"
-- id: 270
-  name: maven-plugin
-  version: "1.299"
-- id: 271
-  name: mstest
-  version: "0.3"
-- id: 272
-  name: filesystem_scm
-  version: "0.1"
-- id: 273
-  name: sonar
-  version: 1.0.1
-- id: 274
-  name: chucknorris
-  version: "0.1"
-- id: 275
-  name: warnings
-  version: "2.11"
-- id: 276
-  name: dry
-  version: "2.0"
-- id: 277
-  name: swarm
-  version: "1.1"
-- id: 278
-  name: xunit
-  version: "0.2"
-- id: 279
-  name: speaks
-  version: 0.1.1
-- id: 280
-  name: phing
-  version: 0.5-DEBUG
-- id: 281
-  name: release
-  version: "1.7"
-- id: 282
-  name: emma
-  version: "1.8"
-- id: 283
-  name: maven-plugin
-  version: "1.322"
-- id: 284
-  name: googlecode
-  version: "1.4"
-- id: 285
-  name: pmd
-  version: "2.9"
-- id: 286
-  name: sectioned-view
-  version: "1.0"
-- id: 287
-  name: join
-  version: "1.2"
-- id: 288
-  name: ec2
-  version: "1.2"
-- id: 289
-  name: googleanalytics
-  version: "1.1"
-- id: 290
-  name: postbuild-task
-  version: "1.4"
-- id: 291
-  name: instant-messaging
-  version: "1.1"
-- id: 292
-  name: jabber
-  version: "1.1"
-- id: 293
-  name: maven-plugin
-  version: "1.317"
-- id: 294
-  name: ssh-slaves
-  version: "0.6"
-- id: 295
-  name: checkstyle
-  version: "2.11"
-- id: 296
-  name: dry
-  version: "1.9"
-- id: 297
-  name: ci-game
-  version: "1.11"
-- id: 298
-  name: tasks
-  version: "3.1"
-- id: 299
-  name: cobertura
-  version: 0.8.5
-- id: 300
-  name: checkstyle
-  version: "2.8"
-- id: 301
-  name: clearcase
-  version: 0.8.1
-- id: 302
-  name: dry
-  version: "1.7"
-- id: 303
-  name: findbugs
-  version: "3.7"
-- id: 304
-  name: pmd
-  version: "2.7"
-- id: 305
-  name: violations
-  version: 0.7.3
-- id: 306
-  name: warnings
-  version: "2.6"
-- id: 307
-  name: hudson-logaction-plugin
-  version: "1.0"
-- id: 308
-  name: maven-plugin
-  version: "1.318"
-- id: 309
-  name: backlog
-  version: "1.0"
-- id: 310
-  name: build-publisher
-  version: "1.6"
-- id: 311
-  name: dependencyanalyzer
-  version: "0.2"
-- id: 312
-  name: cvs-tag
-  version: "1.4"
-- id: 313
-  name: maven-plugin
-  version: "1.304"
-- id: 314
-  name: ssh-slaves
-  version: "0.4"
-- id: 315
-  name: dry
-  version: "1.8"
-- id: 316
-  name: batch-task
-  version: "1.3"
-- id: 317
-  name: jira
-  version: "1.10"
-- id: 318
-  name: pmd
-  version: "2.8"
-- id: 319
-  name: batch-task
-  version: "1.5"
-- id: 320
-  name: text-finder
-  version: "1.6"
-- id: 321
-  name: findbugs
-  version: "2.20"
-- id: 322
-  name: perforce
-  version: 1.0.12
-- id: 323
-  name: nunit
-  version: "0.6"
-- id: 324
-  name: email-ext
-  version: "2.1"
-- id: 325
-  name: mercurial
-  version: "1.16"
-- id: 326
-  name: disk-usage
-  version: "0.7"
-- id: 327
-  name: maven-plugin
-  version: "1.326"
-- id: 328
-  name: clover
-  version: "2.2"
-- id: 329
-  name: mercurial
-  version: "1.25"
-- id: 330
-  name: gradle
-  version: "1.0"
-- id: 331
-  name: maven-plugin
-  version: "1.325"
-- id: 332
-  name: translation
-  version: "1.1"
-- id: 333
-  name: maven-plugin
-  version: "1.303"
-- id: 334
-  name: regexemail
-  version: "0.2"
-- id: 335
-  name: speaks
-  version: "0.1"
-- id: 336
-  name: maven-plugin
-  version: "1.302"
-- id: 337
-  name: ci-game
-  version: "1.14"
-- id: 338
-  name: join
-  version: "1.4"
-- id: 339
-  name: findbugs
-  version: "3.12"
-- id: 340
-  name: checkstyle
-  version: "2.13"
-- id: 341
-  name: mantis
-  version: 0.8.1
-- id: 342
-  name: sloccount
-  version: "1.2"
-- id: 343
-  name: m2-repo-reaper
-  version: "1.0"
-- id: 344
-  name: dry
-  version: "1.12"
-- id: 345
-  name: hudson-wsclean-plugin
-  version: 1.0.2
-- id: 346
-  name: checkstyle
-  version: "2.6"
-- id: 347
-  name: findbugs
-  version: "3.5"
-- id: 348
-  name: pmd
-  version: "2.5"
-- id: 349
+- id: 212
   name: mercurial
   version: "1.24"
-- id: 350
-  name: ci-game
-  version: "1.13"
-- id: 351
-  name: msbuild
-  version: "1.1"
-- id: 352
-  name: phing
-  version: "0.3"
-- id: 353
-  name: pmd
-  version: "2.11"
-- id: 354
-  name: tasks
-  version: "3.11"
-- id: 355
-  name: versionnumber
-  version: "1.1"
-- id: 356
-  name: cmakebuilder
+- id: 213
+  name: extended-read-permission
   version: "1.0"
-- id: 357
-  name: crowd
-  version: "1.0"
-- id: 358
-  name: scons
-  version: "0.1"
-- id: 359
-  name: downstream-ext
-  version: "1.0"
-- id: 360
+- id: 214
   name: powershell
-  version: "1.1"
-- id: 361
-  name: ldapemail
-  version: "0.4"
-- id: 362
-  name: xvnc
-  version: "1.5"
-- id: 363
-  name: active-directory
-  version: "1.12"
-- id: 364
-  name: maven-plugin
-  version: "1.296"
-- id: 365
-  name: perforce
-  version: 1.0.13
-- id: 366
-  name: active-directory
-  version: "1.8"
-- id: 367
-  name: claim
-  version: "1.0"
-- id: 368
-  name: parameterized-trigger
-  version: "1.3"
-- id: 369
-  name: sidebar-link
-  version: "1.1"
-- id: 370
-  name: tasks
-  version: "2.21"
-- id: 371
-  name: warnings
-  version: "2.7"
-- id: 372
-  name: clearcase
-  version: 0.8.4
-- id: 373
-  name: copyarchiver
-  version: "0.1"
-- id: 374
-  name: build-timeout
-  version: "1.3"
-- id: 375
-  name: email-ext
-  version: "1.1"
-- id: 376
-  name: findbugs
-  version: "1.18"
-- id: 377
-  name: javanet-uploader
-  version: "1.5"
-- id: 378
-  name: javatest-report
-  version: "1.1"
-- id: 379
-  name: jira
-  version: "1.7"
-- id: 380
-  name: violations
-  version: 0.6.0
-- id: 381
-  name: maven-plugin
-  version: "1.300"
-- id: 382
-  name: svn-tag
-  version: "1.9"
-- id: 383
-  name: scp
-  version: "1.3"
-- id: 384
-  name: findbugs
-  version: "1.17"
-- id: 385
-  name: instant-messaging
-  version: "1.0"
-- id: 386
-  name: twitter
-  version: "0.2"
-- id: 387
-  name: jabber
-  version: "1.0"
-- id: 388
-  name: findbugs
-  version: "3.11"
-- id: 389
-  name: svn-tag
   version: "1.2"
-- id: 390
+- id: 215
+  name: rake
+  version: 1.6.1
+- id: 216
+  name: selenium
+  version: "1.2"
+- id: 217
+  name: svn-release-mgr
+  version: "1.0"
+- id: 218
+  name: windmill
+  version: "1.4"
+- id: 219
+  name: gallio
+  version: "0.52"
+- id: 220
+  name: maven-plugin
+  version: "1.328"
+- id: 221
+  name: tfs
+  version: "1.9"
+- id: 222
+  name: clearcase
+  version: 1.0.2
+- id: 223
+  name: warnings
+  version: "2.8"
+- id: 224
+  name: findbugs
+  version: "3.3"
+- id: 225
+  name: cppunit
+  version: "0.3"
+- id: 226
+  name: maven-plugin
+  version: "1.335"
+- id: 227
+  name: jobrevision
+  version: "0.2"
+- id: 228
+  name: createjobadvanced
+  version: "1.2"
+- id: 229
+  name: maven-plugin
+  version: "1.316"
+- id: 230
+  name: jswidgets
+  version: "1.2"
+- id: 231
+  name: lastfailureversioncolumn
+  version: "1.0"
+- id: 232
+  name: lastsuccessversioncolumn
+  version: "1.0"
+- id: 233
+  name: platformlabeler
+  version: "1.0"
+- id: 234
+  name: dbCharts
+  version: 0.2.1
+- id: 235
+  name: slave-status
+  version: "1.3"
+- id: 236
+  name: maven-plugin
+  version: "1.311"
+- id: 237
+  name: maven-plugin
+  version: "1.297"
+- id: 238
+  name: javatest-report
+  version: "1.2"
+- id: 239
+  name: crap4j
+  version: 0.6.1
+- id: 240
+  name: sectioned-view
+  version: "1.5"
+- id: 241
+  name: github
+  version: "0.2"
+- id: 242
+  name: googlecode
+  version: "1.5"
+- id: 243
+  name: clearcase
+  version: "0.9"
+- id: 244
+  name: maven-plugin
+  version: "1.321"
+- id: 245
+  name: m2release
+  version: 0.3.2
+- id: 246
+  name: join
+  version: "1.2"
+- id: 247
+  name: checkstyle
+  version: "2.11"
+- id: 248
+  name: warnings
+  version: "2.10"
+- id: 249
+  name: changelog-history
+  version: "1.0"
+- id: 250
+  name: ci-game
+  version: "1.11"
+- id: 251
+  name: pmd
+  version: "2.9"
+- id: 252
+  name: dependencyanalyzer
+  version: "0.2"
+- id: 253
+  name: buckminster
+  version: 0.9.1
+- id: 254
+  name: instant-messaging
+  version: "1.2"
+- id: 255
+  name: jabber
+  version: "1.3"
+- id: 256
+  name: pmd
+  version: "1.15"
+- id: 257
+  name: cobertura
+  version: 0.8.4
+- id: 258
+  name: violations
+  version: 0.7.1
+- id: 259
+  name: findbugs
+  version: "2.18"
+- id: 260
+  name: checkstyle
+  version: "1.15"
+- id: 261
+  name: naginator
+  version: "1.5"
+- id: 262
+  name: dependencyanalyzer
+  version: "0.4"
+- id: 263
+  name: nabaztag
+  version: "1.6"
+- id: 264
+  name: jobtype-column
+  version: "1.0"
+- id: 265
+  name: configurationslicing
+  version: "1.10"
+- id: 266
+  name: maven-info
+  version: 0.0.2
+- id: 267
+  name: ec2
+  version: "1.5"
+- id: 268
+  name: ci-game
+  version: "1.12"
+- id: 269
+  name: ncover
+  version: 0.2.6
+- id: 270
+  name: twitter
+  version: "0.3"
+- id: 271
+  name: rubyMetrics
+  version: 1.2.8
+- id: 272
+  name: release
+  version: "1.1"
+- id: 273
+  name: dry
+  version: "2.0"
+- id: 274
+  name: mantis
+  version: 0.8.3
+- id: 275
+  name: batch-task
+  version: "1.9"
+- id: 276
+  name: vss
+  version: "1.7"
+- id: 277
+  name: maven-plugin
+  version: "1.306"
+- id: 278
+  name: maven-plugin
+  version: "1.299"
+- id: 279
+  name: mstest
+  version: "0.3"
+- id: 280
+  name: filesystem_scm
+  version: "0.1"
+- id: 281
+  name: sonar
+  version: 1.0.1
+- id: 282
+  name: chucknorris
+  version: "0.1"
+- id: 283
+  name: warnings
+  version: "2.11"
+- id: 284
+  name: swarm
+  version: "1.1"
+- id: 285
+  name: perforce
+  version: 1.0.15
+- id: 286
+  name: translation
+  version: "1.1"
+- id: 287
+  name: monitoring
+  version: 1.10.0
+- id: 288
+  name: xunit
+  version: "0.2"
+- id: 289
+  name: release
+  version: "1.7"
+- id: 290
+  name: emma
+  version: "1.8"
+- id: 291
+  name: subversion
+  version: "1.6"
+- id: 292
+  name: maven-plugin
+  version: "1.322"
+- id: 293
+  name: googlecode
+  version: "1.4"
+- id: 294
+  name: sectioned-view
+  version: "1.0"
+- id: 295
+  name: ec2
+  version: "1.2"
+- id: 296
+  name: googleanalytics
+  version: "1.1"
+- id: 297
+  name: postbuild-task
+  version: "1.4"
+- id: 298
+  name: instant-messaging
+  version: "1.1"
+- id: 299
+  name: jabber
+  version: "1.1"
+- id: 300
+  name: maven-plugin
+  version: "1.317"
+- id: 301
+  name: ssh-slaves
+  version: "0.6"
+- id: 302
+  name: dry
+  version: "1.9"
+- id: 303
+  name: tasks
+  version: "3.1"
+- id: 304
+  name: cobertura
+  version: 0.8.5
+- id: 305
+  name: checkstyle
+  version: "2.8"
+- id: 306
+  name: clearcase
+  version: 0.8.1
+- id: 307
+  name: dry
+  version: "1.7"
+- id: 308
+  name: findbugs
+  version: "3.7"
+- id: 309
+  name: pmd
+  version: "2.7"
+- id: 310
+  name: violations
+  version: 0.7.3
+- id: 311
+  name: warnings
+  version: "2.6"
+- id: 312
+  name: hudson-logaction-plugin
+  version: "1.0"
+- id: 313
+  name: maven-plugin
+  version: "1.318"
+- id: 314
+  name: backlog
+  version: "1.0"
+- id: 315
+  name: build-publisher
+  version: "1.6"
+- id: 316
+  name: cvs-tag
+  version: "1.4"
+- id: 317
+  name: maven-plugin
+  version: "1.304"
+- id: 318
+  name: ssh-slaves
+  version: "0.4"
+- id: 319
+  name: dry
+  version: "1.8"
+- id: 320
+  name: batch-task
+  version: "1.3"
+- id: 321
+  name: jira
+  version: "1.10"
+- id: 322
+  name: pmd
+  version: "2.8"
+- id: 323
+  name: batch-task
+  version: "1.5"
+- id: 324
+  name: text-finder
+  version: "1.6"
+- id: 325
+  name: findbugs
+  version: "2.20"
+- id: 326
+  name: perforce
+  version: 1.0.12
+- id: 327
+  name: nunit
+  version: "0.6"
+- id: 328
+  name: email-ext
+  version: "2.1"
+- id: 329
+  name: mercurial
+  version: "1.16"
+- id: 330
+  name: disk-usage
+  version: "0.7"
+- id: 331
+  name: maven-plugin
+  version: "1.326"
+- id: 332
+  name: clover
+  version: "2.2"
+- id: 333
   name: hgca
   version: "1.0"
+- id: 334
+  name: xunit
+  version: 0.3.1
+- id: 335
+  name: instant-messaging
+  version: "1.0"
+- id: 336
+  name: jabber
+  version: "1.0"
+- id: 337
+  name: regexemail
+  version: "0.2"
+- id: 338
+  name: cmakebuilder
+  version: "1.0"
+- id: 339
+  name: mercurial
+  version: "1.25"
+- id: 340
+  name: gradle
+  version: "1.0"
+- id: 341
+  name: maven-plugin
+  version: "1.325"
+- id: 342
+  name: maven-plugin
+  version: "1.303"
+- id: 343
+  name: speaks
+  version: "0.1"
+- id: 344
+  name: maven-plugin
+  version: "1.302"
+- id: 345
+  name: ci-game
+  version: "1.14"
+- id: 346
+  name: join
+  version: "1.4"
+- id: 347
+  name: findbugs
+  version: "3.12"
+- id: 348
+  name: checkstyle
+  version: "2.13"
+- id: 349
+  name: mantis
+  version: 0.8.1
+- id: 350
+  name: sloccount
+  version: "1.2"
+- id: 351
+  name: maven-plugin
+  version: "1.301"
+- id: 352
+  name: m2-repo-reaper
+  version: "1.0"
+- id: 353
+  name: dry
+  version: "1.12"
+- id: 354
+  name: hudson-wsclean-plugin
+  version: 1.0.2
+- id: 355
+  name: checkstyle
+  version: "2.6"
+- id: 356
+  name: findbugs
+  version: "3.5"
+- id: 357
+  name: pmd
+  version: "2.5"
+- id: 358
+  name: ci-game
+  version: "1.13"
+- id: 359
+  name: msbuild
+  version: "1.1"
+- id: 360
+  name: phing
+  version: "0.3"
+- id: 361
+  name: pmd
+  version: "2.11"
+- id: 362
+  name: tasks
+  version: "3.11"
+- id: 363
+  name: versionnumber
+  version: "1.1"
+- id: 364
+  name: crowd
+  version: "1.0"
+- id: 365
+  name: scons
+  version: "0.1"
+- id: 366
+  name: downstream-ext
+  version: "1.0"
+- id: 367
+  name: powershell
+  version: "1.1"
+- id: 368
+  name: ldapemail
+  version: "0.4"
+- id: 369
+  name: xvnc
+  version: "1.5"
+- id: 370
+  name: active-directory
+  version: "1.12"
+- id: 371
+  name: maven-plugin
+  version: "1.296"
+- id: 372
+  name: perforce
+  version: 1.0.13
+- id: 373
+  name: active-directory
+  version: "1.8"
+- id: 374
+  name: claim
+  version: "1.0"
+- id: 375
+  name: parameterized-trigger
+  version: "1.3"
+- id: 376
+  name: sidebar-link
+  version: "1.1"
+- id: 377
+  name: tasks
+  version: "2.21"
+- id: 378
+  name: warnings
+  version: "2.7"
+- id: 379
+  name: clearcase
+  version: 0.8.4
+- id: 380
+  name: copyarchiver
+  version: "0.1"
+- id: 381
+  name: build-timeout
+  version: "1.3"
+- id: 382
+  name: email-ext
+  version: "1.1"
+- id: 383
+  name: findbugs
+  version: "1.18"
+- id: 384
+  name: javanet-uploader
+  version: "1.5"
+- id: 385
+  name: javatest-report
+  version: "1.1"
+- id: 386
+  name: jira
+  version: "1.7"
+- id: 387
+  name: violations
+  version: 0.6.0
+- id: 388
+  name: maven-plugin
+  version: "1.300"
+- id: 389
+  name: svn-tag
+  version: "1.9"
+- id: 390
+  name: scp
+  version: "1.3"
 - id: 391
+  name: findbugs
+  version: "1.17"
+- id: 392
+  name: twitter
+  version: "0.2"
+- id: 393
+  name: findbugs
+  version: "3.11"
+- id: 394
+  name: svn-tag
+  version: "1.2"
+- id: 395
   name: tracking-svn
   version: "1.0"
-- id: 392
+- id: 396
   name: screenshot
   version: "1.0"
-- id: 393
+- id: 397
   name: junit-attachments
   version: "1.0"
-- id: 394
+- id: 398
   name: ircbot
   version: "1.7"
-- id: 395
+- id: 399
   name: mercurial
   version: "1.23"
-- id: 396
+- id: 400
   name: bruceschneier
   version: "0.1"
-- id: 397
+- id: 401
   name: cppncss
   version: 1.0-beta-4
-- id: 398
+- id: 402
   name: emma
   version: "1.9"
-- id: 399
+- id: 403
   name: jython
   version: "1.0"
-- id: 400
+- id: 404
   name: downstream-ext
   version: "1.1"
-- id: 401
+- id: 405
   name: distfork
   version: "1.0"
-- id: 402
+- id: 406
   name: easyant
   version: "1.0"
-- id: 403
-  name: active-directory
-  version: "1.9"
-- id: 404
-  name: batch-task
-  version: "1.6"
-- id: 405
-  name: active-directory
-  version: "1.13"
-- id: 406
-  name: email-ext
-  version: 1.13.0
 - id: 407
-  name: bugzilla
-  version: "1.2"
-- id: 408
   name: build-publisher
-  version: "1.1"
-- id: 409
-  name: sonar
-  version: "0.2"
-- id: 410
-  name: checkstyle
-  version: "1.17"
-- id: 411
-  name: disk-usage
-  version: "0.6"
-- id: 412
-  name: pmd
-  version: "1.17"
-- id: 413
-  name: warnings
-  version: "1.27"
-- id: 414
-  name: active-directory
   version: "1.5"
-- id: 415
+- id: 408
   name: clover
   version: "1.7"
-- id: 416
-  name: dependencyanalyzer
-  version: "0.1"
-- id: 417
-  name: webtestpresenter
-  version: "0.21"
-- id: 418
-  name: release
-  version: "1.8"
-- id: 419
+- id: 409
   name: dashboard-view
   version: "1.0"
+- id: 410
+  name: release
+  version: "1.8"
+- id: 411
+  name: active-directory
+  version: "1.9"
+- id: 412
+  name: batch-task
+  version: "1.6"
+- id: 413
+  name: speaks
+  version: 0.1.1
+- id: 414
+  name: bugzilla
+  version: "1.2"
+- id: 415
+  name: build-publisher
+  version: "1.1"
+- id: 416
+  name: sonar
+  version: "0.2"
+- id: 417
+  name: active-directory
+  version: "1.5"
+- id: 418
+  name: dependencyanalyzer
+  version: "0.1"
+- id: 419
+  name: webtestpresenter
+  version: "0.21"
 - id: 420
   name: rake
   version: "1.6"
@@ -1265,668 +1265,668 @@
   name: seleniumhq
   version: "0.1"
 - id: 423
-  name: m2release
-  version: 0.3.2
-- id: 424
   name: promoted-builds
   version: "1.4"
-- id: 425
-  name: checkstyle
-  version: "2.4"
-- id: 426
-  name: dry
-  version: "1.3"
-- id: 427
-  name: pmd
-  version: "2.3"
-- id: 428
-  name: tasks
-  version: "3.2"
-- id: 429
-  name: text-finder
-  version: "1.2"
-- id: 430
-  name: clover
-  version: "1.6"
-- id: 431
-  name: findbugs
-  version: "2.6"
-- id: 432
-  name: checkstyle
-  version: "1.2"
-- id: 433
-  name: tasks
-  version: "2.6"
-- id: 434
-  name: crap4j
-  version: "0.1"
-- id: 435
-  name: warnings
-  version: "1.3"
-- id: 436
-  name: cppcheck
-  version: "0.8"
-- id: 437
-  name: nabaztag
-  version: "1.5"
-- id: 438
-  name: email-ext
-  version: 1.9.0
-- id: 439
-  name: maven-plugin
-  version: "1.315"
-- id: 440
-  name: dry
-  version: "1.11"
-- id: 441
-  name: tfs
-  version: "1.4"
-- id: 442
-  name: m2-extra-steps
-  version: "1.1"
-- id: 443
-  name: text-finder
-  version: "1.5"
-- id: 444
-  name: job-exporter
-  version: 0.1.0
-- id: 445
+- id: 424
   name: screenshot
   version: "1.1"
+- id: 425
+  name: active-directory
+  version: "1.13"
+- id: 426
+  name: email-ext
+  version: 1.13.0
+- id: 427
+  name: checkstyle
+  version: "2.4"
+- id: 428
+  name: dry
+  version: "1.3"
+- id: 429
+  name: pmd
+  version: "2.3"
+- id: 430
+  name: tasks
+  version: "3.2"
+- id: 431
+  name: text-finder
+  version: "1.2"
+- id: 432
+  name: clover
+  version: "1.6"
+- id: 433
+  name: checkstyle
+  version: "1.17"
+- id: 434
+  name: warnings
+  version: "1.27"
+- id: 435
+  name: findbugs
+  version: "2.6"
+- id: 436
+  name: checkstyle
+  version: "1.2"
+- id: 437
+  name: tasks
+  version: "2.6"
+- id: 438
+  name: crap4j
+  version: "0.1"
+- id: 439
+  name: warnings
+  version: "1.3"
+- id: 440
+  name: cppcheck
+  version: "0.8"
+- id: 441
+  name: nabaztag
+  version: "1.5"
+- id: 442
+  name: email-ext
+  version: 1.9.0
+- id: 443
+  name: maven-plugin
+  version: "1.315"
+- id: 444
+  name: dry
+  version: "1.11"
+- id: 445
+  name: tfs
+  version: "1.4"
 - id: 446
+  name: m2-extra-steps
+  version: "1.1"
+- id: 447
+  name: text-finder
+  version: "1.5"
+- id: 448
+  name: job-exporter
+  version: 0.1.0
+- id: 449
   name: validating-string-parameter
   version: "1.2"
-- id: 447
+- id: 450
   name: xvnc
   version: "1.4"
-- id: 448
+- id: 451
   name: maven-plugin
   version: "1.307"
-- id: 449
+- id: 452
   name: findbugs
   version: "2.11"
-- id: 450
+- id: 453
   name: starteam
   version: 0.1.7
-- id: 451
+- id: 454
   name: findbugs
   version: "2.17"
-- id: 452
+- id: 455
   name: groovy
   version: "1.2"
-- id: 453
+- id: 456
   name: pmd
   version: "1.14"
-- id: 454
+- id: 457
   name: scp
   version: "1.4"
-- id: 455
+- id: 458
   name: claim
   version: "1.4"
-- id: 456
+- id: 459
+  name: cygpath
+  version: "1.2"
+- id: 460
   name: email-ext
   version: "1.2"
-- id: 457
+- id: 461
   name: clearcase-release
   version: "0.1"
-- id: 458
+- id: 462
   name: m2release
   version: 0.2.0
-- id: 459
+- id: 463
   name: bugzilla
   version: "1.0"
-- id: 460
+- id: 464
   name: checkstyle
   version: "2.9"
-- id: 461
+- id: 465
   name: tasks
   version: "3.6"
-- id: 462
-  name: changelog-history
-  version: "1.0"
-- id: 463
+- id: 466
   name: jabber
   version: "0.6"
-- id: 464
+- id: 467
   name: violations
   version: 0.5.7
-- id: 465
+- id: 468
   name: ec2
   version: "1.4"
-- id: 466
+- id: 469
   name: tasks
   version: "3.5"
-- id: 467
+- id: 470
   name: findbugs
   version: "3.6"
-- id: 468
+- id: 471
   name: drools
   version: "0.1"
-- id: 469
-  name: xunit
-  version: 0.3.1
-- id: 470
+- id: 472
   name: backup
   version: "1.0"
-- id: 471
+- id: 473
   name: warnings
   version: "2.5"
-- id: 472
+- id: 474
+  name: pmd
+  version: "1.17"
+- id: 475
   name: warnings
   version: "1.26"
-- id: 473
-  name: maven-plugin
-  version: "1.301"
-- id: 474
+- id: 476
   name: tasks
   version: "1.14"
-- id: 475
+- id: 477
   name: mercurial
   version: "1.22"
-- id: 476
+- id: 478
   name: mercurial
   version: "1.15"
-- id: 477
+- id: 479
   name: accurev
   version: 0.6.8
-- id: 478
+- id: 480
   name: accurev
   version: 0.6.6
-- id: 479
+- id: 481
   name: build-publisher
   version: "1.4"
-- id: 480
+- id: 482
   name: warnings
   version: "2.4"
-- id: 481
+- id: 483
   name: checkstyle
   version: "2.1"
-- id: 482
+- id: 484
   name: redmine
   version: "0.6"
-- id: 483
+- id: 485
+  name: disk-usage
+  version: "0.6"
+- id: 486
   name: mantis
   version: "0.7"
-- id: 484
+- id: 487
   name: cobertura
   version: 0.8.7
-- id: 485
+- id: 488
   name: cpptest
   version: "0.2"
-- id: 486
+- id: 489
   name: monitoring
   version: 1.8.2
-- id: 487
+- id: 490
   name: hudsontrayapp
   version: 0.6.3
-- id: 488
+- id: 491
   name: ivy
   version: "0.1"
-- id: 489
+- id: 492
   name: warnings
   version: "1.29"
-- id: 490
+- id: 493
   name: javanet
   version: "1.2"
-- id: 491
+- id: 494
   name: copyarchiver
   version: "0.3"
-- id: 492
+- id: 495
   name: findbugs
   version: "3.2"
-- id: 493
+- id: 496
   name: crap4j
   version: "0.5"
-- id: 494
+- id: 497
   name: claim
   version: "1.3"
-- id: 495
-  name: warnings
-  version: "2.2"
-- id: 496
-  name: grails
-  version: 1.0.1
-- id: 497
-  name: sonar
-  version: "1.0"
 - id: 498
   name: warnings
-  version: "2.12"
+  version: "2.2"
 - id: 499
-  name: join
-  version: "1.3"
-- id: 500
-  name: maven-plugin
-  version: "1.308"
-- id: 501
-  name: clearcase
-  version: 0.8.3
-- id: 502
-  name: ldapemail
-  version: "0.1"
-- id: 503
-  name: sectioned-view
-  version: "1.2"
-- id: 504
-  name: clearcase
-  version: 0.5.1
-- id: 505
-  name: parameterized-trigger
-  version: "1.6"
-- id: 506
-  name: active-directory
-  version: "1.11"
-- id: 507
-  name: active-directory
-  version: "1.14"
-- id: 508
-  name: cvs-tag
-  version: "1.3"
-- id: 509
-  name: trac
-  version: "1.7"
-- id: 510
-  name: tasks
-  version: "2.19"
-- id: 511
-  name: warnings
-  version: "1.18"
-- id: 512
-  name: crap4j
-  version: "0.6"
-- id: 513
-  name: artifactory
-  version: 1.0.1
-- id: 514
-  name: checkstyle
-  version: "1.11"
-- id: 515
-  name: cvs-tag
-  version: "1.2"
-- id: 516
-  name: description-setter
-  version: "1.3"
-- id: 517
-  name: promoted-builds
-  version: "1.0"
-- id: 518
-  name: warnings
-  version: "1.10"
-- id: 519
-  name: rake
-  version: "1.4"
-- id: 520
-  name: rubyMetrics
-  version: 1.2.2
-- id: 521
-  name: jabber
-  version: "0.9"
-- id: 522
-  name: cmakebuilder
-  version: "0.5"
-- id: 523
-  name: javanet-uploader
-  version: "1.6"
-- id: 524
-  name: clover
-  version: 1.7.2
-- id: 525
-  name: description-setter
-  version: "1.5"
-- id: 526
-  name: sounds
-  version: "0.2"
-- id: 527
-  name: campfire
-  version: "1.0"
-- id: 528
-  name: bitkeeper
-  version: "1.4"
-- id: 529
-  name: hudson-pview-plugin
-  version: "1.2"
-- id: 530
-  name: parameterized-trigger
-  version: "1.4"
-- id: 531
-  name: url-change-trigger
-  version: "1.0"
-- id: 532
-  name: warnings
-  version: "1.23"
-- id: 533
-  name: violations
-  version: "0.5"
-- id: 534
-  name: tasks
-  version: "1.9"
-- id: 535
-  name: plot
-  version: "1.1"
-- id: 536
-  name: cygpath
-  version: "1.0"
-- id: 537
-  name: collabnet
-  version: "1.0"
-- id: 538
-  name: ivy
-  version: "0.2"
-- id: 539
-  name: cppcheck
-  version: "0.6"
-- id: 540
-  name: zentimestamp
-  version: "1.0"
-- id: 541
-  name: gnat
-  version: "0.1"
-- id: 542
-  name: jdepend
-  version: 1.2.1
-- id: 543
-  name: rad-builder
-  version: "1.1"
-- id: 544
-  name: locks-and-latches
-  version: "0.2"
-- id: 545
-  name: email-ext
-  version: "2.0"
-- id: 546
-  name: description-setter
-  version: "1.0"
-- id: 547
-  name: active-directory
-  version: "1.2"
-- id: 548
-  name: violations
-  version: 0.5.4
-- id: 549
-  name: audit-trail
-  version: "1.2"
-- id: 550
-  name: synergy
-  version: 0.11 Nokia
-- id: 551
-  name: script-realm
-  version: "1.0"
-- id: 552
-  name: deploy
-  version: "1.1"
-- id: 553
-  name: promoted-builds
-  version: "1.2"
-- id: 554
-  name: pmd
-  version: "1.16"
-- id: 555
-  name: checkstyle
-  version: "1.16"
-- id: 556
-  name: findbugs
-  version: "2.19"
-- id: 557
-  name: locks-and-latches
-  version: "0.3"
-- id: 558
-  name: artifactory
-  version: "1.0"
-- id: 559
-  name: join
-  version: "1.5"
-- id: 560
-  name: promoted-builds
-  version: "1.1"
-- id: 561
-  name: cygpath
-  version: "1.2"
-- id: 562
-  name: release
-  version: "1.0"
-- id: 563
-  name: release
-  version: "1.3"
-- id: 564
-  name: buckminster
-  version: 0.9.2
-- id: 565
-  name: jabber
-  version: "1.5"
-- id: 566
-  name: instant-messaging
-  version: "1.4"
-- id: 567
-  name: ircbot
-  version: "2.1"
-- id: 568
-  name: build-publisher
-  version: "1.2"
-- id: 569
-  name: warnings
-  version: "1.19"
-- id: 570
-  name: pmd
-  version: "1.20"
-- id: 571
-  name: clearcase
-  version: "1.0"
-- id: 572
-  name: perforce
-  version: 1.0.5
-- id: 573
-  name: tasks
-  version: "3.4"
-- id: 574
-  name: hadoop
-  version: "1.3"
-- id: 575
-  name: monitoring
-  version: 1.10.0
-- id: 576
-  name: parameterized-trigger
-  version: "1.5"
-- id: 577
   name: grails
   version: 1.0.2
-- id: 578
+- id: 500
+  name: grails
+  version: 1.0.1
+- id: 501
+  name: description-setter
+  version: "1.5"
+- id: 502
+  name: sonar
+  version: "1.0"
+- id: 503
+  name: warnings
+  version: "2.12"
+- id: 504
+  name: join
+  version: "1.3"
+- id: 505
+  name: maven-plugin
+  version: "1.308"
+- id: 506
+  name: clearcase
+  version: 0.8.3
+- id: 507
+  name: ldapemail
+  version: "0.1"
+- id: 508
+  name: sectioned-view
+  version: "1.2"
+- id: 509
+  name: clearcase
+  version: 0.5.1
+- id: 510
+  name: parameterized-trigger
+  version: "1.6"
+- id: 511
+  name: active-directory
+  version: "1.11"
+- id: 512
+  name: active-directory
+  version: "1.14"
+- id: 513
+  name: cvs-tag
+  version: "1.3"
+- id: 514
+  name: trac
+  version: "1.7"
+- id: 515
+  name: tasks
+  version: "2.19"
+- id: 516
+  name: warnings
+  version: "1.18"
+- id: 517
+  name: crap4j
+  version: "0.6"
+- id: 518
+  name: perforce
+  version: 1.0.15-excludepatch
+- id: 519
+  name: zentimestamp
+  version: "1.0"
+- id: 520
+  name: artifactory
+  version: 1.0.1
+- id: 521
+  name: checkstyle
+  version: "1.11"
+- id: 522
+  name: cvs-tag
+  version: "1.2"
+- id: 523
+  name: description-setter
+  version: "1.3"
+- id: 524
+  name: promoted-builds
+  version: "1.0"
+- id: 525
+  name: warnings
+  version: "1.10"
+- id: 526
+  name: rake
+  version: "1.4"
+- id: 527
+  name: rubyMetrics
+  version: 1.2.2
+- id: 528
+  name: jabber
+  version: "0.9"
+- id: 529
+  name: cmakebuilder
+  version: "0.5"
+- id: 530
+  name: javanet-uploader
+  version: "1.6"
+- id: 531
   name: clover
+  version: 1.7.2
+- id: 532
+  name: sounds
+  version: "0.2"
+- id: 533
+  name: campfire
+  version: "1.0"
+- id: 534
+  name: hadoop
+  version: "1.3"
+- id: 535
+  name: bitkeeper
+  version: "1.4"
+- id: 536
+  name: hudson-pview-plugin
+  version: "1.2"
+- id: 537
+  name: parameterized-trigger
+  version: "1.4"
+- id: 538
+  name: url-change-trigger
+  version: "1.0"
+- id: 539
+  name: warnings
+  version: "1.23"
+- id: 540
+  name: violations
+  version: "0.5"
+- id: 541
+  name: tasks
+  version: "1.9"
+- id: 542
+  name: plot
+  version: "1.1"
+- id: 543
+  name: cygpath
+  version: "1.0"
+- id: 544
+  name: collabnet
+  version: "1.0"
+- id: 545
+  name: ivy
+  version: "0.2"
+- id: 546
+  name: cppcheck
+  version: "0.6"
+- id: 547
+  name: gnat
+  version: "0.1"
+- id: 548
+  name: jdepend
+  version: 1.2.1
+- id: 549
+  name: rad-builder
+  version: "1.1"
+- id: 550
+  name: locks-and-latches
+  version: "0.2"
+- id: 551
+  name: email-ext
   version: "2.0"
+- id: 552
+  name: description-setter
+  version: "1.0"
+- id: 553
+  name: active-directory
+  version: "1.2"
+- id: 554
+  name: violations
+  version: 0.5.4
+- id: 555
+  name: audit-trail
+  version: "1.2"
+- id: 556
+  name: promoted-builds
+  version: "1.2"
+- id: 557
+  name: synergy
+  version: 0.11 Nokia
+- id: 558
+  name: script-realm
+  version: "1.0"
+- id: 559
+  name: deploy
+  version: "1.1"
+- id: 560
+  name: pmd
+  version: "1.16"
+- id: 561
+  name: checkstyle
+  version: "1.16"
+- id: 562
+  name: findbugs
+  version: "2.19"
+- id: 563
+  name: locks-and-latches
+  version: "0.3"
+- id: 564
+  name: artifactory
+  version: "1.0"
+- id: 565
+  name: join
+  version: "1.5"
+- id: 566
+  name: dimensionsscm
+  version: 0.5.7
+- id: 567
+  name: promoted-builds
+  version: "1.1"
+- id: 568
+  name: release
+  version: "1.0"
+- id: 569
+  name: release
+  version: "1.3"
+- id: 570
+  name: buckminster
+  version: 0.9.2
+- id: 571
+  name: jabber
+  version: "1.5"
+- id: 572
+  name: instant-messaging
+  version: "1.4"
+- id: 573
+  name: ircbot
+  version: "2.1"
+- id: 574
+  name: build-publisher
+  version: "1.2"
+- id: 575
+  name: warnings
+  version: "1.19"
+- id: 576
+  name: pmd
+  version: "1.20"
+- id: 577
+  name: clearcase
+  version: "1.0"
+- id: 578
+  name: perforce
+  version: 1.0.5
 - id: 579
-  name: xunit
-  version: 0.1.3
+  name: tasks
+  version: "3.4"
 - id: 580
-  name: clover
+  name: parameterized-trigger
   version: "1.5"
 - id: 581
+  name: clover
+  version: "2.0"
+- id: 582
+  name: xunit
+  version: 0.1.3
+- id: 583
+  name: clover
+  version: "1.5"
+- id: 584
   name: sounds
   version: "0.1"
-- id: 582
+- id: 585
   name: pmd
   version: "1.3"
-- id: 583
+- id: 586
   name: accurev
   version: 0.6.1
-- id: 584
+- id: 587
   name: doxygen
   version: "0.3"
-- id: 585
-  name: release
-  version: "1.1"
-- id: 586
+- id: 588
   name: ec2
   version: "1.3"
-- id: 587
+- id: 589
   name: clearcase
   version: "0.8"
-- id: 588
-  name: violations
-  version: 0.7.0
-- id: 589
-  name: cobertura
-  version: 0.8.4.2
 - id: 590
-  name: fitnesse
-  version: "1.3"
-- id: 591
-  name: clearcase
-  version: 0.6.2
-- id: 592
-  name: ci-game
-  version: 1.6.1
-- id: 593
-  name: doclinks
-  version: 0.2.1
-- id: 594
-  name: pmd
-  version: "2.0"
-- id: 595
-  name: tasks
-  version: "3.0"
-- id: 596
-  name: warnings
-  version: "2.0"
-- id: 597
-  name: doxygen
-  version: "0.1"
-- id: 598
-  name: pmd
-  version: "2.6"
-- id: 599
-  name: ci-game
-  version: "1.6"
-- id: 600
-  name: hadoop
-  version: "1.2"
-- id: 601
-  name: pxe
-  version: "1.2"
-- id: 602
-  name: join
-  version: "1.1"
-- id: 603
-  name: ec2
-  version: "1.1"
-- id: 604
-  name: vss
-  version: "1.2"
-- id: 605
-  name: build-publisher
-  version: "1.5"
-- id: 606
-  name: audit-trail
-  version: "1.1"
-- id: 607
-  name: findbugs
-  version: "2.8"
-- id: 608
-  name: phing
-  version: "0.1"
-- id: 609
-  name: svn-tag
-  version: "1.3"
-- id: 610
-  name: mantis
-  version: 0.4.2
-- id: 611
-  name: checkstyle
-  version: "1.8"
-- id: 612
-  name: findbugs
-  version: "2.10"
-- id: 613
-  name: pmd
-  version: "1.8"
-- id: 614
-  name: perforce
-  version: 1.0.11
-- id: 615
   name: naginator
   version: "1.3"
-- id: 616
+- id: 591
+  name: port-allocator
+  version: "1.0"
+- id: 592
+  name: vss
+  version: ???
+- id: 593
+  name: violations
+  version: 0.7.0
+- id: 594
+  name: cobertura
+  version: 0.8.4.2
+- id: 595
+  name: fitnesse
+  version: "1.3"
+- id: 596
+  name: clearcase
+  version: 0.6.2
+- id: 597
+  name: ci-game
+  version: 1.6.1
+- id: 598
+  name: doclinks
+  version: 0.2.1
+- id: 599
+  name: pmd
+  version: "2.0"
+- id: 600
+  name: tasks
+  version: "3.0"
+- id: 601
+  name: warnings
+  version: "2.0"
+- id: 602
+  name: doxygen
+  version: "0.1"
+- id: 603
+  name: pmd
+  version: "2.6"
+- id: 604
+  name: ci-game
+  version: "1.6"
+- id: 605
+  name: audit-trail
+  version: "1.1"
+- id: 606
+  name: slave-status
+  version: "1.2"
+- id: 607
+  name: hadoop
+  version: "1.2"
+- id: 608
+  name: pxe
+  version: "1.2"
+- id: 609
+  name: join
+  version: "1.1"
+- id: 610
+  name: ec2
+  version: "1.1"
+- id: 611
+  name: vss
+  version: "1.2"
+- id: 612
+  name: findbugs
+  version: "2.8"
+- id: 613
+  name: perforce
+  version: 1.0.11
+- id: 614
   name: rake
   version: "1.3"
-- id: 617
+- id: 615
   name: email-ext
   version: "2.2"
-- id: 618
+- id: 616
   name: rad-builder
   version: 1.0.1
-- id: 619
+- id: 617
   name: starteam
   version: 0.1.6
-- id: 620
+- id: 618
   name: checkstyle
   version: "2.5"
-- id: 621
+- id: 619
   name: tasks
   version: "3.3"
-- id: 622
+- id: 620
   name: warnings
   version: "2.3"
-- id: 623
+- id: 621
   name: crap4j
   version: "0.4"
-- id: 624
+- id: 622
   name: createjobadvanced
   version: "1.1"
-- id: 625
+- id: 623
   name: jdepend
   version: 1.1.4
-- id: 626
+- id: 624
   name: sectioned-view
   version: "1.3"
-- id: 627
+- id: 625
   name: clover
   version: "2.3"
-- id: 628
+- id: 626
   name: pmd
   version: "1.7"
-- id: 629
-  name: subversion
-  version: "1.3"
-- id: 630
+- id: 627
   name: git
   version: 0.7.6-SNAPSHOT-WITH-BETTER-TESTS
-- id: 631
+- id: 628
   name: clearcase
   version: "0.6"
-- id: 632
+- id: 629
   name: mantis
   version: 0.5.2
-- id: 633
+- id: 630
   name: mercurial
   version: "1.13"
-- id: 634
+- id: 631
   name: mercurial
   version: "1.20"
-- id: 635
-  name: mantis
-  version: 0.6.1
-- id: 636
-  name: cmakebuilder
-  version: "0.6"
-- id: 637
+- id: 632
   name: codescanner
   version: "0.1"
-- id: 638
+- id: 633
+  name: mantis
+  version: 0.6.1
+- id: 634
+  name: cmakebuilder
+  version: "0.6"
+- id: 635
+  name: warnings
+  version: "0.5"
+- id: 636
   name: checkstyle
   version: "1.0"
-- id: 639
+- id: 637
   name: findbugs
   version: "2.5"
-- id: 640
+- id: 638
   name: cppcheck
   version: "0.2"
-- id: 641
+- id: 639
   name: build-publisher
   version: 1.7.1 b-i version
-- id: 642
+- id: 640
   name: checkstyle
   version: "1.14"
-- id: 643
+- id: 641
   name: maven-plugin
   version: "1.305"
+- id: 642
+  name: kagemai
+  version: "1.2"
+- id: 643
+  name: kundo
+  version: "0.1"
 - id: 644
   name: postbuild-task
   version: "1.1"
@@ -1937,635 +1937,635 @@
   name: findbugs
   version: "3.1"
 - id: 647
-  name: warnings
-  version: "0.5"
-- id: 648
   name: checkstyle
   version: "1.18"
-- id: 649
+- id: 648
   name: warnings
   version: "1.28"
-- id: 650
+- id: 649
   name: findbugs
   version: "2.21"
-- id: 651
+- id: 650
   name: git
   version: "0.5"
-- id: 652
+- id: 651
   name: harvest
   version: 0.2.1
-- id: 653
+- id: 652
   name: mantis
   version: 0.7.1
-- id: 654
+- id: 653
   name: collabnet
   version: 1.1.1
-- id: 655
+- id: 654
   name: cppcheck
   version: "0.1"
-- id: 656
+- id: 655
   name: setenv
   version: "1.2"
-- id: 657
+- id: 656
   name: piwikanalytics
   version: "1.0"
-- id: 658
-  name: javanet
-  version: "1.3"
-- id: 659
-  name: hudsontrayapp
-  version: 0.7.3
-- id: 660
-  name: sectioned-view
-  version: "1.1"
-- id: 661
-  name: clearcase
-  version: 1.0.1
-- id: 662
-  name: japex
-  version: "1.6"
-- id: 663
-  name: polarion
-  version: "1.2"
-- id: 664
-  name: m2-extra-steps
-  version: "1.0"
-- id: 665
-  name: regexemail
-  version: "0.3"
-- id: 666
+- id: 657
   name: email-ext
   version: 1.0.1.0 (***)
-- id: 667
+- id: 658
   name: harvest
   version: 0.2.7
-- id: 668
+- id: 659
   name: ftppublisher
   version: 0.9.1
-- id: 669
+- id: 660
   name: build-publisher
   version: "1.0"
-- id: 670
+- id: 661
   name: m2release
   version: 0.1.0
-- id: 671
+- id: 662
   name: warnings
   version: "1.20"
-- id: 672
-  name: promoted-builds-simple
-  version: "1.0"
-- id: 673
-  name: codescanner
-  version: "0.9"
-- id: 674
-  name: tasks
-  version: "2.20"
-- id: 675
-  name: vss
-  version: ???
-- id: 676
-  name: createjobadvanced
-  version: "1.0"
-- id: 677
-  name: dimensionsscm
-  version: 0.5.8
-- id: 678
-  name: tfs
-  version: "1.7"
-- id: 679
-  name: kagemai
-  version: "1.2"
-- id: 680
-  name: cvs-tag
-  version: "1.1"
-- id: 681
-  name: checkstyle
-  version: "1.19"
-- id: 682
-  name: claim
-  version: "1.2"
-- id: 683
-  name: tasks
-  version: "2.23"
-- id: 684
-  name: cppunit
-  version: "0.4"
-- id: 685
-  name: ncover
-  version: 0.2.5
-- id: 686
-  name: tasks
-  version: "2.7"
-- id: 687
-  name: parameterized-trigger
-  version: "1.1"
-- id: 688
-  name: clover
-  version: "2.1"
-- id: 689
-  name: dimensionsscm
-  version: 0.5.7
-- id: 690
-  name: cppunit
-  version: "1.0"
-- id: 691
-  name: jdepend
-  version: "1.2"
-- id: 692
-  name: cppcheck
-  version: 0.5.1
-- id: 693
-  name: gcal
-  version: "0.1"
-- id: 694
-  name: findbugs
-  version: "3.4"
-- id: 695
-  name: findbugs
-  version: "2.22"
-- id: 696
-  name: nant
-  version: "1.2"
-- id: 697
-  name: vss
-  version: "1.3"
-- id: 698
-  name: checkstyle
-  version: "2.7"
-- id: 699
-  name: findbugs
-  version: "3.0"
-- id: 700
-  name: findbugs
-  version: "2.9"
-- id: 701
-  name: active-directory
-  version: "1.1"
-- id: 702
-  name: violations
-  version: 0.5.3
-- id: 703
-  name: cobertura
-  version: 0.8.3
-- id: 704
-  name: was-builder
-  version: "1.0"
-- id: 705
-  name: collabnet
-  version: 1.1.2
-- id: 706
-  name: testabilityexplorer
-  version: "0.1"
-- id: 707
-  name: deploy
-  version: "1.2"
-- id: 708
-  name: jabber
-  version: "0.5"
-- id: 709
-  name: slave-status
-  version: "1.2"
-- id: 710
-  name: findbugs
-  version: "2.7"
-- id: 711
-  name: jabber
-  version: "0.7"
-- id: 712
-  name: mozmill
-  version: "1.2"
-- id: 713
-  name: mercurial
-  version: "1.19"
-- id: 714
-  name: violations
-  version: 0.5.6
-- id: 715
-  name: synergy
-  version: 0.5 Nokia
-- id: 716
-  name: clearcase
-  version: 0.8.2
-- id: 717
-  name: jira
-  version: "1.8"
-- id: 718
-  name: groovy
-  version: "1.0"
-- id: 719
-  name: findbugs
-  version: "1.9"
-- id: 720
-  name: port-allocator
-  version: "1.1"
-- id: 721
-  name: findbugs
-  version: "0.3"
-- id: 722
-  name: cobertura
-  version: "0.3"
-- id: 723
-  name: join
-  version: "1.0"
-- id: 724
-  name: synergy
-  version: 0.10 Nokia
-- id: 725
-  name: mantis
-  version: 0.8.0
-- id: 726
-  name: jira
-  version: "1.0"
-- id: 727
-  name: ircbot
-  version: "1.6"
-- id: 728
-  name: cppunit
-  version: 0.5.1
-- id: 729
-  name: synergy
-  version: "1.4"
-- id: 730
-  name: disk-usage
-  version: "0.5"
-- id: 731
-  name: tasks
-  version: "2.1"
-- id: 732
-  name: jira
-  version: "1.12"
-- id: 733
-  name: warnings
-  version: "1.7"
-- id: 734
-  name: jdepend
-  version: 1.1.2
-- id: 735
-  name: checkstyle
-  version: "2.3"
-- id: 736
-  name: cmvc
-  version: "0.2"
-- id: 737
-  name: SCTMExecutor
-  version: "1.2"
-- id: 738
-  name: jsunit
-  version: "0.2"
-- id: 739
-  name: maven-plugin
-  version: 1.309-CGU
-- id: 740
-  name: pmd
-  version: "2.2"
-- id: 741
-  name: dry
-  version: "1.5"
-- id: 742
-  name: clearcase
-  version: 0.7.1-VALEO-3
-- id: 743
-  name: schedule-failed-builds
-  version: 1.1-VALEO
-- id: 744
-  name: checkstyle
-  version: "1.7"
-- id: 745
-  name: findbugs
-  version: "2.13"
-- id: 746
-  name: warnings
-  version: "1.5"
-- id: 747
-  name: nunit
-  version: "0.5"
-- id: 748
+- id: 663
   name: grinder
   version: "1.1"
-- id: 749
-  name: warnings
-  version: "2.1"
-- id: 750
-  name: git
-  version: 0.7.3-PATCHED
-- id: 751
-  name: sfee
-  version: 1.0.2
-- id: 752
-  name: jira
-  version: "1.13"
-- id: 753
-  name: buckminster
-  version: 0.9.3
-- id: 754
-  name: jswidgets
-  version: "1.3"
-- id: 755
-  name: sfee
-  version: 1.0.3
-- id: 756
-  name: doxygen
-  version: 0.4.1
-- id: 757
-  name: clearcase
-  version: "0.4"
-- id: 758
-  name: findbugs
-  version: "2.4"
-- id: 759
-  name: pmd
-  version: "1.1"
-- id: 760
-  name: violations
-  version: 0.7.5-hci-patch-1
-- id: 761
-  name: tasks
-  version: "2.0"
-- id: 762
-  name: ci-game
-  version: "1.1"
-- id: 763
-  name: pmd
-  version: "1.11"
-- id: 764
-  name: redmine
-  version: "0.4"
-- id: 765
-  name: git
-  version: "0.3"
-- id: 766
-  name: bugzilla
-  version: "1.1"
-- id: 767
-  name: clearcase
-  version: 0.7.2-SolarisFix+CompositeBaselines
-- id: 768
-  name: active-directory
-  version: "1.4"
-- id: 769
-  name: kundo
-  version: "0.1"
-- id: 770
-  name: violations
-  version: 0.5.5
-- id: 771
-  name: tasks
-  version: "2.13"
-- id: 772
-  name: warnings
-  version: "1.11"
-- id: 773
-  name: findbugs
-  version: "2.3"
-- id: 774
-  name: tasks
-  version: "2.2"
-- id: 775
-  name: groovy
-  version: "1.1"
-- id: 776
-  name: swarm
+- id: 664
+  name: promoted-builds-simple
   version: "1.0"
-- id: 777
-  name: URLSCM
-  version: 1.4-SAP
-- id: 778
-  name: dry
-  version: "1.4"
-- id: 779
-  name: pmd
-  version: "2.4"
-- id: 780
-  name: mercurial
-  version: "1.7"
-- id: 781
-  name: mantis
-  version: 0.4.3
-- id: 782
-  name: active-directory
-  version: "1.6"
-- id: 783
-  name: build-timeout
-  version: "1.2"
-- id: 784
-  name: buckminster
-  version: "0.6"
-- id: 785
-  name: release
-  version: "1.2"
-- id: 786
-  name: pmd
-  version: "1.19"
-- id: 787
-  name: buckminster
-  version: "0.9"
-- id: 788
-  name: cppunit
-  version: "0.5"
-- id: 789
-  name: svn-tag
-  version: "1.5"
-- id: 790
-  name: gant
-  version: "1.0"
-- id: 791
-  name: mantis
-  version: "0.2"
-- id: 792
-  name: maven-info
-  version: 0.1.1
-- id: 793
-  name: doxygen
-  version: "0.5"
-- id: 794
-  name: copyarchiver
-  version: 0.4.1
-- id: 795
-  name: dry
-  version: "1.2"
-- id: 796
-  name: warnings
-  version: "1.24"
-- id: 797
-  name: tfs
-  version: "1.5"
-- id: 798
-  name: hudsontrayapp
-  version: 0.5.1
-- id: 799
-  name: cppunit
-  version: "0.2"
-- id: 800
-  name: perforce
-  version: smss-1.0.12
-- id: 801
-  name: findbugs
-  version: "2.0"
-- id: 802
-  name: cppcheck
-  version: "0.7"
-- id: 803
-  name: jabber
-  version: "0.10"
-- id: 804
-  name: grails
-  version: "1.0"
-- id: 805
-  name: jsunit
-  version: "0.1"
-- id: 806
-  name: clearcase
-  version: 0.7.1
-- id: 807
-  name: mstest
-  version: "0.5"
-- id: 808
-  name: klaros-testmanagement
-  version: "1.0"
-- id: 809
-  name: msbuild
-  version: "1.0"
-- id: 810
-  name: nant
-  version: "1.0"
-- id: 811
-  name: radiatorviewplugin
-  version: "1.1"
-- id: 812
-  name: windmill
-  version: "1.3"
-- id: 813
-  name: rake
-  version: "1.1"
-- id: 814
-  name: rubyMetrics
-  version: "1.2"
-- id: 815
-  name: gradle
-  version: "1.1"
-- id: 816
+- id: 665
   name: codescanner
-  version: "0.5"
-- id: 817
-  name: copyarchiver
-  version: "0.2"
-- id: 818
-  name: locked-files-report
-  version: "1.0"
-- id: 819
-  name: ssh-slaves
-  version: "0.2"
-- id: 820
-  name: deploy
-  version: 1.0.0
-- id: 821
-  name: accurev
-  version: 0.6.8-avid-4
-- id: 822
-  name: perforce
-  version: 1.0.14b
-- id: 823
-  name: Schmant
-  version: "1.0"
-- id: 824
-  name: sonar
-  version: "0.1"
-- id: 825
-  name: pmd
-  version: "1.9"
-- id: 826
-  name: checkstyle
-  version: "1.9"
-- id: 827
-  name: hudsontrayapp
-  version: 0.6.0
-- id: 828
+  version: "0.9"
+- id: 666
   name: tasks
-  version: "2.11"
-- id: 829
-  name: jira
+  version: "2.20"
+- id: 667
+  name: createjobadvanced
+  version: "1.0"
+- id: 668
+  name: dimensionsscm
+  version: 0.5.8
+- id: 669
+  name: tfs
+  version: "1.7"
+- id: 670
+  name: cvs-tag
+  version: "1.1"
+- id: 671
+  name: checkstyle
+  version: "1.19"
+- id: 672
+  name: claim
+  version: "1.2"
+- id: 673
+  name: tasks
+  version: "2.23"
+- id: 674
+  name: cppunit
+  version: "0.4"
+- id: 675
+  name: ncover
+  version: 0.2.5
+- id: 676
+  name: tasks
+  version: "2.7"
+- id: 677
+  name: parameterized-trigger
+  version: "1.1"
+- id: 678
+  name: clover
+  version: "2.1"
+- id: 679
+  name: cppunit
+  version: "1.0"
+- id: 680
+  name: jdepend
+  version: "1.2"
+- id: 681
+  name: cppcheck
+  version: 0.5.1
+- id: 682
+  name: gcal
+  version: "0.1"
+- id: 683
+  name: findbugs
+  version: "3.4"
+- id: 684
+  name: findbugs
+  version: "2.22"
+- id: 685
+  name: mercurial
   version: "1.11"
-- id: 830
-  name: tuxdroid
+- id: 686
+  name: nant
   version: "1.2"
-- id: 831
-  name: jira
-  version: "1.15"
-- id: 832
-  name: warnings
-  version: "1.17"
-- id: 833
+- id: 687
   name: vss
-  version: "1.4"
-- id: 834
+  version: "1.3"
+- id: 688
   name: checkstyle
-  version: "1.13"
-- id: 835
-  name: emma
-  version: "1.6"
-- id: 836
-  name: perforce
-  version: 1.0.14.arcsight
-- id: 837
-  name: blame-upstream-commiters
-  version: "1.0"
-- id: 838
-  name: doxygen
-  version: "0.2"
-- id: 839
-  name: tasks
-  version: "2.8"
-- id: 840
-  name: checkstyle
-  version: "1.5"
-- id: 841
-  name: trac
-  version: "1.4"
-- id: 842
-  name: scp
-  version: 1.5.1
-- id: 843
-  name: mercurial
-  version: "1.17"
-- id: 844
-  name: perforce
-  version: 1.4.0
-- id: 845
-  name: mantis
-  version: "0.6"
-- id: 846
-  name: crap4j
-  version: "0.2"
-- id: 847
-  name: googlecode
-  version: "1.2"
-- id: 848
-  name: github
-  version: "0.1"
-- id: 849
-  name: fortify360
-  version: "1.0"
-- id: 850
-  name: mercurial
-  version: "1.8"
-- id: 851
-  name: buckminster
-  version: 0.8.3
-- id: 852
-  name: starteam
-  version: 0.1.7-SNAPSHOT-MCK-11-18-2009
-- id: 853
-  name: xunit
-  version: 0.1.1
-- id: 854
+  version: "2.7"
+- id: 689
+  name: findbugs
+  version: "3.0"
+- id: 690
+  name: findbugs
+  version: "2.9"
+- id: 691
+  name: active-directory
+  version: "1.1"
+- id: 692
+  name: violations
+  version: 0.5.3
+- id: 693
   name: cobertura
+  version: 0.8.3
+- id: 694
+  name: was-builder
+  version: "1.0"
+- id: 695
+  name: collabnet
+  version: 1.1.2
+- id: 696
+  name: testabilityexplorer
+  version: "0.1"
+- id: 697
+  name: deploy
+  version: "1.2"
+- id: 698
+  name: jabber
+  version: "0.5"
+- id: 699
+  name: findbugs
+  version: "2.7"
+- id: 700
+  name: jabber
+  version: "0.7"
+- id: 701
+  name: mozmill
+  version: "1.2"
+- id: 702
+  name: clearcase
+  version: 1.0.1
+- id: 703
+  name: mercurial
+  version: "1.19"
+- id: 704
+  name: m2-extra-steps
+  version: "1.0"
+- id: 705
+  name: violations
+  version: 0.5.6
+- id: 706
+  name: synergy
+  version: 0.5 Nokia
+- id: 707
+  name: clearcase
   version: 0.8.2
-- id: 855
-  name: email-ext
-  version: 2.2.1 - patched
-- id: 856
+- id: 708
+  name: jira
+  version: "1.8"
+- id: 709
+  name: groovy
+  version: "1.0"
+- id: 710
+  name: findbugs
+  version: "1.9"
+- id: 711
+  name: port-allocator
+  version: "1.1"
+- id: 712
+  name: findbugs
+  version: "0.3"
+- id: 713
+  name: cobertura
+  version: "0.3"
+- id: 714
+  name: Schmant
+  version: 1.1.4
+- id: 715
   name: gnat
   version: "0.3"
+- id: 716
+  name: jswidgets
+  version: "1.3"
+- id: 717
+  name: join
+  version: "1.0"
+- id: 718
+  name: synergy
+  version: 0.10 Nokia
+- id: 719
+  name: mantis
+  version: 0.8.0
+- id: 720
+  name: jira
+  version: "1.0"
+- id: 721
+  name: ircbot
+  version: "1.6"
+- id: 722
+  name: cppunit
+  version: 0.5.1
+- id: 723
+  name: synergy
+  version: "1.4"
+- id: 724
+  name: disk-usage
+  version: "0.5"
+- id: 725
+  name: tasks
+  version: "2.1"
+- id: 726
+  name: jira
+  version: "1.12"
+- id: 727
+  name: svn-tag
+  version: "1.3"
+- id: 728
+  name: warnings
+  version: "1.7"
+- id: 729
+  name: jdepend
+  version: 1.1.2
+- id: 730
+  name: checkstyle
+  version: "2.3"
+- id: 731
+  name: cmvc
+  version: "0.2"
+- id: 732
+  name: SCTMExecutor
+  version: "1.2"
+- id: 733
+  name: jsunit
+  version: "0.2"
+- id: 734
+  name: clearcase
+  version: 0.7.1
+- id: 735
+  name: warnings
+  version: "1.5"
+- id: 736
+  name: maven-plugin
+  version: 1.309-CGU
+- id: 737
+  name: pmd
+  version: "2.2"
+- id: 738
+  name: synergy
+  version: 0.9.1 Nokia
+- id: 739
+  name: dry
+  version: "1.5"
+- id: 740
+  name: clearcase
+  version: 0.7.1-VALEO-3
+- id: 741
+  name: schedule-failed-builds
+  version: 1.1-VALEO
+- id: 742
+  name: checkstyle
+  version: "1.7"
+- id: 743
+  name: findbugs
+  version: "2.13"
+- id: 744
+  name: nunit
+  version: "0.5"
+- id: 745
+  name: warnings
+  version: "2.1"
+- id: 746
+  name: git
+  version: 0.7.3-PATCHED
+- id: 747
+  name: sfee
+  version: 1.0.2
+- id: 748
+  name: jira
+  version: "1.13"
+- id: 749
+  name: buckminster
+  version: 0.9.3
+- id: 750
+  name: sfee
+  version: 1.0.3
+- id: 751
+  name: doxygen
+  version: 0.4.1
+- id: 752
+  name: clearcase
+  version: "0.4"
+- id: 753
+  name: findbugs
+  version: "2.4"
+- id: 754
+  name: pmd
+  version: "1.1"
+- id: 755
+  name: violations
+  version: 0.7.5-hci-patch-1
+- id: 756
+  name: tasks
+  version: "2.0"
+- id: 757
+  name: ci-game
+  version: "1.1"
+- id: 758
+  name: pmd
+  version: "1.11"
+- id: 759
+  name: redmine
+  version: "0.4"
+- id: 760
+  name: git
+  version: "0.3"
+- id: 761
+  name: bugzilla
+  version: "1.1"
+- id: 762
+  name: clearcase
+  version: 0.7.2-SolarisFix+CompositeBaselines
+- id: 763
+  name: active-directory
+  version: "1.4"
+- id: 764
+  name: violations
+  version: 0.5.5
+- id: 765
+  name: tasks
+  version: "2.13"
+- id: 766
+  name: warnings
+  version: "1.11"
+- id: 767
+  name: findbugs
+  version: "2.3"
+- id: 768
+  name: tasks
+  version: "2.2"
+- id: 769
+  name: groovy
+  version: "1.1"
+- id: 770
+  name: swarm
+  version: "1.0"
+- id: 771
+  name: URLSCM
+  version: 1.4-SAP
+- id: 772
+  name: dry
+  version: "1.4"
+- id: 773
+  name: pmd
+  version: "2.4"
+- id: 774
+  name: mercurial
+  version: "1.7"
+- id: 775
+  name: mantis
+  version: 0.4.3
+- id: 776
+  name: active-directory
+  version: "1.6"
+- id: 777
+  name: build-timeout
+  version: "1.2"
+- id: 778
+  name: buckminster
+  version: "0.6"
+- id: 779
+  name: release
+  version: "1.2"
+- id: 780
+  name: pmd
+  version: "1.19"
+- id: 781
+  name: buckminster
+  version: "0.9"
+- id: 782
+  name: cppunit
+  version: "0.5"
+- id: 783
+  name: svn-tag
+  version: "1.5"
+- id: 784
+  name: secret
+  version: "1.3"
+- id: 785
+  name: gant
+  version: "1.0"
+- id: 786
+  name: mantis
+  version: "0.2"
+- id: 787
+  name: maven-info
+  version: 0.1.1
+- id: 788
+  name: doxygen
+  version: "0.5"
+- id: 789
+  name: copyarchiver
+  version: 0.4.1
+- id: 790
+  name: dry
+  version: "1.2"
+- id: 791
+  name: warnings
+  version: "1.24"
+- id: 792
+  name: violations
+  version: 0.5.8
+- id: 793
+  name: tfs
+  version: "1.5"
+- id: 794
+  name: cygpath
+  version: "1.1"
+- id: 795
+  name: hudsontrayapp
+  version: 0.5.1
+- id: 796
+  name: cppunit
+  version: "0.2"
+- id: 797
+  name: perforce
+  version: smss-1.0.12
+- id: 798
+  name: findbugs
+  version: "2.0"
+- id: 799
+  name: cppcheck
+  version: "0.7"
+- id: 800
+  name: jabber
+  version: "0.10"
+- id: 801
+  name: grails
+  version: "1.0"
+- id: 802
+  name: jsunit
+  version: "0.1"
+- id: 803
+  name: mstest
+  version: "0.5"
+- id: 804
+  name: klaros-testmanagement
+  version: "1.0"
+- id: 805
+  name: msbuild
+  version: "1.0"
+- id: 806
+  name: nant
+  version: "1.0"
+- id: 807
+  name: radiatorviewplugin
+  version: "1.1"
+- id: 808
+  name: windmill
+  version: "1.3"
+- id: 809
+  name: rake
+  version: "1.1"
+- id: 810
+  name: rubyMetrics
+  version: "1.2"
+- id: 811
+  name: gradle
+  version: "1.1"
+- id: 812
+  name: codescanner
+  version: "0.5"
+- id: 813
+  name: copyarchiver
+  version: "0.2"
+- id: 814
+  name: locked-files-report
+  version: "1.0"
+- id: 815
+  name: ssh-slaves
+  version: "0.2"
+- id: 816
+  name: deploy
+  version: 1.0.0
+- id: 817
+  name: accurev
+  version: 0.6.8-avid-4
+- id: 818
+  name: perforce
+  version: 1.0.14b
+- id: 819
+  name: Schmant
+  version: "1.0"
+- id: 820
+  name: phing
+  version: "0.1"
+- id: 821
+  name: findbugs
+  version: "2.10"
+- id: 822
+  name: mantis
+  version: 0.4.2
+- id: 823
+  name: sonar
+  version: "0.1"
+- id: 824
+  name: pmd
+  version: "1.8"
+- id: 825
+  name: checkstyle
+  version: "1.8"
+- id: 826
+  name: pmd
+  version: "1.9"
+- id: 827
+  name: checkstyle
+  version: "1.9"
+- id: 828
+  name: hudsontrayapp
+  version: 0.6.0
+- id: 829
+  name: tasks
+  version: "2.11"
+- id: 830
+  name: jira
+  version: "1.11"
+- id: 831
+  name: tuxdroid
+  version: "1.2"
+- id: 832
+  name: jira
+  version: "1.15"
+- id: 833
+  name: warnings
+  version: "1.17"
+- id: 834
+  name: vss
+  version: "1.4"
+- id: 835
+  name: checkstyle
+  version: "1.13"
+- id: 836
+  name: emma
+  version: "1.6"
+- id: 837
+  name: perforce
+  version: 1.0.14.arcsight
+- id: 838
+  name: blame-upstream-commiters
+  version: "1.0"
+- id: 839
+  name: doxygen
+  version: "0.2"
+- id: 840
+  name: tasks
+  version: "2.8"
+- id: 841
+  name: checkstyle
+  version: "1.5"
+- id: 842
+  name: trac
+  version: "1.4"
+- id: 843
+  name: scp
+  version: 1.5.1
+- id: 844
+  name: mercurial
+  version: "1.17"
+- id: 845
+  name: perforce
+  version: 1.4.0
+- id: 846
+  name: mantis
+  version: "0.6"
+- id: 847
+  name: crap4j
+  version: "0.2"
+- id: 848
+  name: googlecode
+  version: "1.2"
+- id: 849
+  name: github
+  version: "0.1"
+- id: 850
+  name: fortify360
+  version: "1.0"
+- id: 851
+  name: mercurial
+  version: "1.8"
+- id: 852
+  name: buckminster
+  version: 0.8.3
+- id: 853
+  name: starteam
+  version: 0.1.7-SNAPSHOT-MCK-11-18-2009
+- id: 854
+  name: xunit
+  version: 0.1.1
+- id: 855
+  name: cobertura
+  version: 0.8.2
+- id: 856
+  name: email-ext
+  version: 2.2.1 - patched
 - id: 857
   name: versionnumber
   version: 1.3.1
@@ -2576,31 +2576,31 @@
   name: m2-extra-steps
   version: 1.1.3
 - id: 860
-  name: violations
-  version: 0.5.8
-- id: 861
   name: jira
   version: "1.9"
-- id: 862
+- id: 861
   name: pmd
   version: "1.6"
-- id: 863
+- id: 862
   name: sloccount
   version: "1.0"
-- id: 864
+- id: 863
   name: warnings
   version: "2.15"
-- id: 865
+- id: 864
   name: mercurial
   version: "1.9"
-- id: 866
+- id: 865
   name: windmill
   version: "1.1"
-- id: 867
+- id: 866
   name: artifactory
   version: 1.0.2
-- id: 868
+- id: 867
   name: radiatorviewplugin
+  version: "1.4"
+- id: 868
+  name: svn-tag
   version: "1.4"
 - id: 869
   name: vss
@@ -2615,362 +2615,389 @@
   name: tasks
   version: "2.22"
 - id: 873
-  name: campfire
-  version: "1.1"
+  name: findbugs
+  version: "1.10"
 - id: 874
-  name: jira
-  version: "1.5"
-- id: 875
-  name: scp
-  version: "1.1"
-- id: 876
-  name: svn-tag
-  version: "1.1"
-- id: 877
-  name: clearcase
-  version: "0.1"
-- id: 878
-  name: tasks
-  version: "2.15"
-- id: 879
   name: cmakebuilder
   version: "1.1"
+- id: 875
+  name: campfire
+  version: "1.1"
+- id: 876
+  name: jira
+  version: "1.5"
+- id: 877
+  name: scp
+  version: "1.1"
+- id: 878
+  name: svn-tag
+  version: "1.1"
+- id: 879
+  name: clearcase
+  version: "0.1"
 - id: 880
+  name: tasks
+  version: "2.15"
+- id: 881
   name: gnat
   version: 0.2.1
-- id: 881
-  name: Schmant
-  version: 1.1.4
 - id: 882
-  name: svn-tag
-  version: "1.4"
-- id: 883
   name: cpptest
   version: "0.1"
+- id: 883
+  name: findbugs
+  version: 3.9-CPL1
 - id: 884
+  name: pmd
+  version: 2.9-CPL1
+- id: 885
   name: dry
   version: "1.6"
-- id: 885
+- id: 886
   name: cppunit
   version: "0.1"
-- id: 886
+- id: 887
   name: cccc
   version: "0.1"
-- id: 887
+- id: 888
+  name: hudsontrayapp
+  version: 0.7.3
+- id: 889
   name: ircbot
   version: "1.8"
-- id: 888
+- id: 890
+  name: japex
+  version: "1.6"
+- id: 891
+  name: javanet
+  version: "1.3"
+- id: 892
+  name: polarion
+  version: "1.2"
+- id: 893
   name: ruby
   version: "1.2"
-- id: 889
+- id: 894
   name: findbugs
   version: "1.8"
-- id: 890
+- id: 895
   name: validating-string-parameter
   version: "1.1"
-- id: 891
+- id: 896
   name: subversion
   version: "1.8"
-- id: 892
+- id: 897
   name: collabnet
   version: "1.1"
-- id: 893
+- id: 898
   name: git
   version: "0.4"
-- id: 894
+- id: 899
   name: deploy
   version: "1.4"
-- id: 895
+- id: 900
   name: jabber
   version: "1.2"
-- id: 896
+- id: 901
   name: maven-plugin
   version: "1.339"
-- id: 897
+- id: 902
+  name: subversion
+  version: "1.3"
+- id: 903
   name: cvs
   version: "0.1"
-- id: 898
+- id: 904
   name: locks-and-latches
   version: "0.5"
-- id: 899
+- id: 905
   name: serenity
   version: "1.0"
-- id: 900
-  name: warnings
-  version: "3.1"
-- id: 901
-  name: checkstyle
-  version: "3.1"
-- id: 902
-  name: analysis-core
-  version: "1.1"
-- id: 903
-  name: tasks
-  version: "4.1"
-- id: 904
-  name: dry
-  version: "2.1"
-- id: 905
-  name: mercurial
-  version: "1.18"
 - id: 906
-  name: pmd
+  name: warnings
   version: "3.1"
 - id: 907
+  name: checkstyle
+  version: "3.1"
+- id: 908
+  name: analysis-core
+  version: "1.1"
+- id: 909
+  name: tasks
+  version: "4.1"
+- id: 910
+  name: dry
+  version: "2.1"
+- id: 911
+  name: mercurial
+  version: "1.18"
+- id: 912
+  name: pmd
+  version: "3.1"
+- id: 913
   name: warnings
   version: "1.8"
-- id: 908
+- id: 914
   name: findbugs
   version: "2.16"
-- id: 909
+- id: 915
   name: build-timeout
   version: "1.6"
-- id: 910
+- id: 916
   name: dimensionsscm
   version: 0.6.0
-- id: 911
+- id: 917
   name: maven-info
   version: 0.0.3
-- id: 912
+- id: 918
   name: description-setter
   version: "1.2"
-- id: 913
+- id: 919
   name: svncompat13
   version: "1.0"
-- id: 914
+- id: 920
   name: vmware
   version: "0.6"
-- id: 915
-  name: xvnc
-  version: "1.1"
-- id: 916
-  name: warnings
-  version: "1.22"
-- id: 917
-  name: warnings
-  version: 3.0.1-LBR
-- id: 918
-  name: build-publisher
-  version: "1.8"
-- id: 919
+- id: 921
   name: setenv
   version: "1.1"
-- id: 920
+- id: 922
+  name: xvnc
+  version: "1.1"
+- id: 923
+  name: warnings
+  version: "1.22"
+- id: 924
+  name: build-publisher
+  version: "1.8"
+- id: 925
+  name: warnings
+  version: 3.0.1-LBR
+- id: 926
   name: redmine
   version: "0.8"
-- id: 921
+- id: 927
+  name: port-allocator
+  version: "1.4"
+- id: 928
   name: gcal
   version: "0.3"
-- id: 922
-  name: port-allocator
-  version: "1.4"
-- id: 923
+- id: 929
   name: schedule-failed-builds
   version: "1.1"
-- id: 924
+- id: 930
   name: msbuild
   version: "1.3"
-- id: 925
+- id: 931
   name: viewVC
   version: "1.3"
-- id: 926
+- id: 932
   name: SCTMExecutor
   version: "0.5"
-- id: 927
-  name: findbugs
-  version: "4.1"
-- id: 928
-  name: violations
-  version: 0.7.5
-- id: 929
-  name: statusmonitor
-  version: 1.2-ASH
-- id: 930
-  name: m2release
-  version: 0.3.4
-- id: 931
-  name: groovy
-  version: "1.4"
-- id: 932
-  name: hgca
-  version: "1.1"
 - id: 933
-  name: url-change-trigger
-  version: "1.2"
-- id: 934
-  name: grinder
-  version: "1.3"
-- id: 935
-  name: dimensionsscm
-  version: 0.6.1
-- id: 936
-  name: swarm
-  version: "1.2"
-- id: 937
-  name: codescanner
-  version: 1.0-beta
-- id: 938
-  name: ivy
-  version: "0.4"
-- id: 939
-  name: promoted-builds
-  version: "1.6"
-- id: 940
-  name: jython
-  version: "1.1"
-- id: 941
-  name: testabilityexplorer
-  version: "0.3"
-- id: 942
-  name: downstream-buildview
-  version: "1.0"
-- id: 943
-  name: locale
-  version: "1.1"
-- id: 944
-  name: svn-release-mgr
-  version: "0.2"
-- id: 945
-  name: doclinks
-  version: "0.1"
-- id: 946
-  name: chucknorris
-  version: "0.3"
-- id: 947
-  name: crap4j
-  version: "0.7"
-- id: 948
-  name: downstream-buildview
-  version: "1.1"
-- id: 949
-  name: statusmonitor
-  version: "1.2"
-- id: 950
-  name: bamboo-notifier
-  version: "1.0"
-- id: 951
-  name: downstream-buildview
-  version: "1.2"
-- id: 952
-  name: javanet-uploader
-  version: "1.7"
-- id: 953
-  name: perfpublisher
-  version: "7.93"
-- id: 954
-  name: dimensionsscm
-  version: 0.6.3
-- id: 955
-  name: ci-game
-  version: "1.16"
-- id: 956
   name: kagemai
   version: "1.3"
+- id: 934
+  name: url-change-trigger
+  version: "1.2"
+- id: 935
+  name: groovy
+  version: "1.4"
+- id: 936
+  name: findbugs
+  version: "4.1"
+- id: 937
+  name: violations
+  version: 0.7.5
+- id: 938
+  name: statusmonitor
+  version: 1.2-ASH
+- id: 939
+  name: m2release
+  version: 0.3.4
+- id: 940
+  name: bamboo-notifier
+  version: "1.0"
+- id: 941
+  name: ivy
+  version: "0.4"
+- id: 942
+  name: hgca
+  version: "1.1"
+- id: 943
+  name: grinder
+  version: "1.3"
+- id: 944
+  name: dimensionsscm
+  version: 0.6.1
+- id: 945
+  name: swarm
+  version: "1.2"
+- id: 946
+  name: codescanner
+  version: 1.0-beta
+- id: 947
+  name: promoted-builds
+  version: "1.6"
+- id: 948
+  name: jython
+  version: "1.1"
+- id: 949
+  name: testabilityexplorer
+  version: "0.3"
+- id: 950
+  name: downstream-buildview
+  version: "1.0"
+- id: 951
+  name: locale
+  version: "1.1"
+- id: 952
+  name: svn-release-mgr
+  version: "0.2"
+- id: 953
+  name: doclinks
+  version: "0.1"
+- id: 954
+  name: chucknorris
+  version: "0.3"
+- id: 955
+  name: findbugs
+  version: 3.9-CPL3
+- id: 956
+  name: crap4j
+  version: "0.7"
 - id: 957
-  name: filesystem_scm
-  version: "1.5"
+  name: downstream-buildview
+  version: "1.1"
 - id: 958
-  name: hudsontrayapp
-  version: 0.6.2
+  name: statusmonitor
+  version: "1.2"
 - id: 959
-  name: batch-task
-  version: "1.11"
+  name: downstream-buildview
+  version: "1.2"
 - id: 960
-  name: emma
+  name: javanet-uploader
   version: "1.7"
 - id: 961
-  name: disk-usage
-  version: "0.4"
+  name: perfpublisher
+  version: "7.93"
 - id: 962
-  name: synergy
-  version: "1.7"
-- id: 963
   name: tfs
   version: "1.10"
+- id: 963
+  name: dimensionsscm
+  version: 0.6.3
 - id: 964
+  name: ci-game
+  version: "1.16"
+- id: 965
+  name: filesystem_scm
+  version: "1.5"
+- id: 966
+  name: hudsontrayapp
+  version: 0.6.2
+- id: 967
+  name: batch-task
+  version: "1.11"
+- id: 968
+  name: emma
+  version: "1.7"
+- id: 969
+  name: disk-usage
+  version: "0.4"
+- id: 970
+  name: synergy
+  version: "1.7"
+- id: 971
   name: perforce
   version: 1.0.10
-- id: 965
-  name: mercurial
-  version: "1.10"
-- id: 966
+- id: 972
   name: cygpath
   version: "1.3"
-- id: 967
+- id: 973
+  name: mercurial
+  version: "1.10"
+- id: 974
   name: mercurial
   version: "1.14"
-- id: 968
+- id: 975
   name: perforce
   version: 1.0.16
-- id: 969
+- id: 976
   name: pmd
   version: "1.13"
-- id: 970
+- id: 977
   name: codescanner
   version: "0.6"
-- id: 971
+- id: 978
   name: clearcase
   version: "1.1"
-- id: 972
+- id: 979
   name: powershell
   version: "1.0"
-- id: 973
+- id: 980
   name: email-ext
   version: 2.3b
-- id: 974
-  name: xfpanel
-  version: 1.0.5
-- id: 975
+- id: 981
   name: rubyMetrics
   version: "1.4"
-- id: 976
+- id: 982
+  name: xfpanel
+  version: 1.0.5
+- id: 983
+  name: dbCharts
+  version: "0.2"
+- id: 984
   name: xunit
   version: "0.1"
-- id: 977
+- id: 985
   name: startup-trigger-plugin
   version: "0.1"
-- id: 978
+- id: 986
   name: shelve-project-plugin
   version: "0.1"
-- id: 979
+- id: 987
   name: email-ext
   version: "2.3"
-- id: 980
+- id: 988
   name: radiatorviewplugin
   version: "1.5"
-- id: 981
+- id: 989
   name: hudson-wsclean-plugin
   version: 1.0.4
-- id: 982
+- id: 990
   name: batch-task
   version: "1.2"
-- id: 983
-  name: port-allocator
-  version: "1.0"
-- id: 984
+- id: 991
   name: starteam
   version: 0.1.7-SNAPSHOT-MCK-11-16-2009
-- id: 985
+- id: 992
   name: vmware
   version: "0.7"
-- id: 986
+- id: 993
   name: accurev
   version: 0.6.9-GREG-SPECIAL
-- id: 987
+- id: 994
   name: artifactory
   version: 1.0.3
-- id: 988
-  name: git
-  version: "0.8"
-- id: 989
+- id: 995
   name: email-ext
   version: "2.4"
-- id: 990
+- id: 996
+  name: git
+  version: "0.8"
+- id: 997
+  name: performance
+  version: "1.0"
+- id: 998
   name: dimensionsscm
   version: 0.6.6
-- id: 991
+- id: 999
+  name: parameterized-trigger
+  version: "2.1"
+- id: 1000
   name: translation
   version: "1.2"
-- id: 992
+- id: 1001
   name: ssh-slaves
   version: "0.10"

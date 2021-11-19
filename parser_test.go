@@ -20,7 +20,7 @@ func TestParseDailyJSON(t *testing.T) {
 	assert.Equal(t, uint64(50), reports[0].Jobs["hudson-maven-MavenModuleSet"])
 	assert.Len(t, reports[0].Plugins, 75)
 	assert.Equal(t, "1.8", reports[0].Nodes[0].JVMVersion)
-	assert.Equal(t, "11", reports[1].Nodes[0].JVMVersion)
+	assert.Equal(t, "1.6", reports[1].Nodes[0].JVMVersion)
 
 	ts, err := reports[0].Timestamp()
 	require.NoError(t, err)
