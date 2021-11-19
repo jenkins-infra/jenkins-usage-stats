@@ -529,7 +529,7 @@ func GenerateReport(db sq.BaseRunner, currentYear, currentMonth int, baseDir str
 			return err
 		}
 
-		for _, topNum := range []uint64{500, 100, 2500} {
+		for _, topNum := range []uint64{500, 1000, 2500} {
 			topPRSVG, topPRCSV, err := CreateBarSVG(fmt.Sprintf("Plugin installations (installations > %d)", topNum), pr.Plugins, 100, true, false, false, func(s string, u uint64) bool {
 				return u > topNum
 			})

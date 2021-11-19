@@ -48,7 +48,7 @@ func TestReportFuncs(t *testing.T) {
 		ir, err := stats.GetInstallCountForVersions(db, 2009, 12)
 		require.NoError(t, err)
 
-		goldenBytes := readGoldenAndUpdateIfDesired(t, ir)
+		goldenBytes := jsonReadGoldenAndUpdateIfDesired(t, ir)
 
 		var goldenIR stats.InstallationReport
 		require.NoError(t, json.Unmarshal(goldenBytes, &goldenIR))
@@ -60,7 +60,7 @@ func TestReportFuncs(t *testing.T) {
 		pn, err := stats.GetLatestPluginNumbers(db, 2009, 12)
 		require.NoError(t, err)
 
-		goldenBytes := readGoldenAndUpdateIfDesired(t, pn)
+		goldenBytes := jsonReadGoldenAndUpdateIfDesired(t, pn)
 
 		var goldenPN stats.LatestPluginNumbersReport
 		require.NoError(t, json.Unmarshal(goldenBytes, &goldenPN))
@@ -72,7 +72,7 @@ func TestReportFuncs(t *testing.T) {
 		pn, err := stats.GetCapabilities(db, 2009, 12)
 		require.NoError(t, err)
 
-		goldenBytes := readGoldenAndUpdateIfDesired(t, pn)
+		goldenBytes := jsonReadGoldenAndUpdateIfDesired(t, pn)
 
 		var goldenPN stats.CapabilitiesReport
 		require.NoError(t, json.Unmarshal(goldenBytes, &goldenPN))
@@ -84,7 +84,7 @@ func TestReportFuncs(t *testing.T) {
 		pn, err := stats.JobCountsForMonth(db, 2009, 12)
 		require.NoError(t, err)
 
-		goldenBytes := readGoldenAndUpdateIfDesired(t, pn)
+		goldenBytes := jsonReadGoldenAndUpdateIfDesired(t, pn)
 
 		var goldenPN map[string]uint64
 		require.NoError(t, json.Unmarshal(goldenBytes, &goldenPN))
@@ -96,7 +96,7 @@ func TestReportFuncs(t *testing.T) {
 		pn, err := stats.OSCountsForMonth(db, 2009, 12)
 		require.NoError(t, err)
 
-		goldenBytes := readGoldenAndUpdateIfDesired(t, pn)
+		goldenBytes := jsonReadGoldenAndUpdateIfDesired(t, pn)
 
 		var goldenPN map[string]uint64
 		require.NoError(t, json.Unmarshal(goldenBytes, &goldenPN))
@@ -108,7 +108,7 @@ func TestReportFuncs(t *testing.T) {
 		pn, err := stats.GetJVMsReport(db, 2010, 2)
 		require.NoError(t, err)
 
-		goldenBytes := readGoldenAndUpdateIfDesired(t, pn)
+		goldenBytes := jsonReadGoldenAndUpdateIfDesired(t, pn)
 
 		var goldenPN stats.JVMReport
 		require.NoError(t, json.Unmarshal(goldenBytes, &goldenPN))
@@ -120,7 +120,7 @@ func TestReportFuncs(t *testing.T) {
 		pn, err := stats.GetPluginReports(db, 2010, 2)
 		require.NoError(t, err)
 
-		goldenBytes := readGoldenAndUpdateIfDesired(t, pn)
+		goldenBytes := jsonReadGoldenAndUpdateIfDesired(t, pn)
 
 		var goldenPN []stats.PluginReport
 		require.NoError(t, json.Unmarshal(goldenBytes, &goldenPN))
@@ -132,7 +132,7 @@ func TestReportFuncs(t *testing.T) {
 		pn, err := stats.JenkinsVersionsForPluginVersions(db, 2010, 1)
 		require.NoError(t, err)
 
-		goldenBytes := readGoldenAndUpdateIfDesired(t, pn)
+		goldenBytes := jsonReadGoldenAndUpdateIfDesired(t, pn)
 
 		var goldenPN map[string]map[string]map[string]uint64
 		require.NoError(t, json.Unmarshal(goldenBytes, &goldenPN))
@@ -144,12 +144,14 @@ func TestReportFuncs(t *testing.T) {
 		pn, err := stats.ExecutorCountsForMonth(db, 2010, 1)
 		require.NoError(t, err)
 
-		_, execCSV, err := stats.CreateBarSVG(fmt.Sprintf("Executors per install (total: %d)", 5), pn, 25, false, false, true, stats.DefaultFilter)
+		execSVG, execCSV, err := stats.CreateBarSVG(fmt.Sprintf("Executors per install (total: %d)", 5), pn, 25, false, false, true, stats.DefaultFilter)
 		require.NoError(t, err)
 
-		goldenBytes := csvReadGoldenAndUpdateIfDesired(t, execCSV)
+		goldenSVG := rawReadGoldenAndUpdateIfDesired(t, execSVG, "svg")
+		assert.Equal(t, string(goldenSVG), string(execSVG))
 
-		assert.Equal(t, string(goldenBytes), string(execCSV))
+		goldenCSV := rawReadGoldenAndUpdateIfDesired(t, execCSV, "csv")
+		assert.Equal(t, string(goldenCSV), string(execCSV))
 	})
 
 	t.Run("GenerateReport", func(t *testing.T) {
@@ -163,7 +165,7 @@ func TestReportFuncs(t *testing.T) {
 	})
 }
 
-func readGoldenAndUpdateIfDesired(t *testing.T, input interface{}) []byte {
+func jsonReadGoldenAndUpdateIfDesired(t *testing.T, input interface{}) []byte {
 	testName := strings.Split(t.Name(), "/")[1]
 
 	goldenFile := filepath.Join("testdata", "reports", fmt.Sprintf("%s.json", testName))
@@ -180,12 +182,12 @@ func readGoldenAndUpdateIfDesired(t *testing.T, input interface{}) []byte {
 	return goldenBytes
 }
 
-func csvReadGoldenAndUpdateIfDesired(t *testing.T, input []byte) []byte {
+func rawReadGoldenAndUpdateIfDesired(t *testing.T, input []byte, suffix string) []byte {
 	testName := strings.Split(t.Name(), "/")[1]
 
-	goldenFile := filepath.Join("testdata", "reports", fmt.Sprintf("%s.csv", testName))
+	goldenFile := filepath.Join("testdata", "reports", fmt.Sprintf("%s.%s", testName, suffix))
 
-	if os.Getenv("UPDATE_GOLDEN") != "" {
+	if os.Getenv("UPDATE_GOLDEN") == "" {
 		require.NoError(t, ioutil.WriteFile(goldenFile, input, 0644)) //nolint:gosec
 	}
 
