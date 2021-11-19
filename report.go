@@ -992,7 +992,7 @@ func GenerateVersionDistributions(db sq.BaseRunner, year, month int, outputDir s
 	var pluginNames []string
 
 	for k, v := range jvpv {
-		versionInfo, err := json.MarshalIndent(v, "", "  ")
+		versionInfo, err := json.Marshal(v)
 		if err != nil {
 			return nil, err
 		}
