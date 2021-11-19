@@ -615,7 +615,7 @@ func GenerateReport(db sq.BaseRunner, currentYear, currentMonth int, baseDir str
 			totalExecs += c
 		}
 
-		execSVG, execCSV, err := CreateBarSVG(fmt.Sprintf("Executors per install (total: %d)", totalExecs), execR, 25, false, false, false, DefaultFilter)
+		execSVG, execCSV, err := CreateBarSVG(fmt.Sprintf("Executors per install (total: %d)", totalExecs), execR, 25, false, false, true, DefaultFilter)
 		if err != nil {
 			return err
 		}
