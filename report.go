@@ -1071,17 +1071,19 @@ func JenkinsVersionsForPluginVersions(db sq.BaseRunner, year, month int) (map[st
 			continue
 		}
 
+		maxVer := maxVersionsForInstanceIDs[iid]
+
 		if _, ok := pluginMap[pn]; !ok {
 			pluginMap[pn] = make(map[string]map[string]uint64)
 		}
 		if _, ok := pluginMap[pn][pv]; !ok {
 			pluginMap[pn][pv] = make(map[string]uint64)
 		}
-		if _, ok := pluginMap[pn][pv][iid]; !ok {
-			pluginMap[pn][pv][iid] = 0
+		if _, ok := pluginMap[pn][pv][maxVer]; !ok {
+			pluginMap[pn][pv][maxVer] = 0
 		}
 
-		pluginMap[pn][pv][iid]++
+		pluginMap[pn][pv][maxVer]++
 	}
 
 	return pluginMap, nil
