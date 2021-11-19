@@ -1198,7 +1198,6 @@ func OSCountsForMonth(db sq.BaseRunner, year, month int) (map[string]uint64, err
 }
 
 // CreateBarSVG takes a dataset and returns byte slices for the corresponding .svg and .csv files
-// TODO: Something's awry in ordering here.
 func CreateBarSVG(title string, data map[string]uint64, scaleReduction int, sortByValue, asVersion, asNumber bool, filterFunc func(string, uint64) bool) ([]byte, []byte, error) {
 	sortedData, maxVal := asSortedPairsAndMaxValue(data, sortByValue, asVersion, asNumber, filterFunc)
 
@@ -1209,28 +1208,28 @@ func CreateBarSVG(title string, data map[string]uint64, scaleReduction int, sort
 	_ = svg.CreateAttr("xmlns", "http://www.w3.org/2000/svg")
 	_ = svg.CreateAttr("version", "1.1")
 	_ = svg.CreateAttr("preserveAspectRatio", "xMidYMid meet")
-	_ = svg.CreateAttr("viewBox", fmt.Sprintf("0 0 %d %f", viewWidth, (float32(maxVal)/float32(scaleReduction))+350))
+	_ = svg.CreateAttr("viewBox", fmt.Sprintf("0 0 %d %.1f", viewWidth, (float32(maxVal)/float32(scaleReduction))+350))
 
 	for idx, kv := range sortedData {
-		barHeight := kv.value / uint64(scaleReduction)
+		barHeight := float64(kv.value) / float64(uint64(scaleReduction))
 		xAxis := (idx + 1) * 15
 		yAxis := ((float32(maxVal) / float32(scaleReduction)) - float32(barHeight)) + 50
 		textY := yAxis + float32(barHeight) + 5
 
 		rect := svg.CreateElement("rect")
 		_ = rect.CreateAttr("fill", "blue")
-		_ = rect.CreateAttr("height", fmt.Sprintf("%d", barHeight))
+		_ = rect.CreateAttr("height", fmt.Sprintf("%.1f", barHeight))
 		_ = rect.CreateAttr("stroke", "black")
 		_ = rect.CreateAttr("width", "12")
 		_ = rect.CreateAttr("x", fmt.Sprintf("%d", xAxis))
-		_ = rect.CreateAttr("y", fmt.Sprintf("%f", yAxis))
+		_ = rect.CreateAttr("y", fmt.Sprintf("%.1f", yAxis))
 
 		textElem := svg.CreateElement("text")
 		_ = textElem.CreateAttr("x", fmt.Sprintf("%d", xAxis))
-		_ = textElem.CreateAttr("y", fmt.Sprintf("%f", textY))
+		_ = textElem.CreateAttr("y", fmt.Sprintf("%.1f", textY))
 		_ = textElem.CreateAttr("font-family", "Tahoma")
 		_ = textElem.CreateAttr("font-size", "12")
-		_ = textElem.CreateAttr("transform", fmt.Sprintf("rotate(90 %d,%f)", xAxis, textY))
+		_ = textElem.CreateAttr("transform", fmt.Sprintf("rotate(90 %d,%.1f)", xAxis, textY))
 		_ = textElem.CreateAttr("text-rendering", "optimizeSpeed")
 		_ = textElem.CreateAttr("fill", "#000000")
 		textElem.SetText(fmt.Sprintf("%s (%d)", kv.key, kv.value))
@@ -1308,7 +1307,7 @@ func CreatePieSVG(title string, data []uint64, centerX, centerY, radius, upperLe
 			greaterThanHalfCircleAdjustment = 1
 		}
 
-		pathD := fmt.Sprintf("M %d,%d L %f,%f A %d,%d 0 %d 1 %f,%f Z", centerX, centerY, x1, y1, radius, radius, greaterThanHalfCircleAdjustment, x2, y2)
+		pathD := fmt.Sprintf("M %d,%d L %.1f,%.1f A %d,%d 0 %d 1 %.1f,%.1f Z", centerX, centerY, x1, y1, radius, radius, greaterThanHalfCircleAdjustment, x2, y2)
 
 		pathElem := svg.CreateElement("path")
 		_ = pathElem.CreateAttr("d", pathD)
