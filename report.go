@@ -1002,7 +1002,7 @@ func GenerateVersionDistributions(db sq.BaseRunner, year, month int, outputDir s
 		}
 		err = tmpl.Execute(outFile, map[string]interface{}{
 			"pluginName":        k,
-			"pluginVersionData": template.JS(versionInfo),
+			"pluginVersionData": template.JS(versionInfo), //nolint:gosec
 		})
 		if err != nil {
 			return nil, err

@@ -93,7 +93,7 @@ func (io *ImportOptions) runImport(ctx context.Context) error {
 	importStart := time.Now()
 
 	for _, fi := range files {
-		if !fi.IsDir() && !strings.Contains(fi.Name(), "fudged") && strings.HasSuffix(fi.Name(), ".gz") {
+		if !fi.IsDir() && strings.HasSuffix(fi.Name(), ".gz") {
 			startedAt := time.Now()
 			alreadyRead, err := stats.ReportAlreadyRead(db, fi.Name())
 			if err != nil {
