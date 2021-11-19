@@ -932,17 +932,22 @@ func GetPluginReports(db sq.BaseRunner, currentYear, currentMonth int) ([]Plugin
 		return nil, err
 	}
 
+	idsToName, err := pluginIDsToPlugin(db)
+	if err != nil {
+		return nil, err
+	}
+
 	totalInstalls, err := installCountsByMonth(db, currentYear, currentMonth)
 	if err != nil {
 		return nil, err
 	}
 
-	installsByMonth, err := pluginInstallsByMonthForName(db, currentYear, currentMonth)
+	installsByMonth, err := pluginInstallsByMonthForName(db, currentYear, currentMonth, idsToName)
 	if err != nil {
 		return nil, err
 	}
 
-	installsByVersion, err := pluginInstallsByVersionForName(db, previousMonth.Year(), int(previousMonth.Month()))
+	installsByVersion, err := pluginInstallsByVersionForName(db, previousMonth.Year(), int(previousMonth.Month()), idsToName)
 	if err != nil {
 		return nil, err
 	}
@@ -1383,16 +1388,15 @@ func asSortedPairsAndMaxValue(data map[string]uint64, byValue bool, filterFunc f
 	return sp, maxVal
 }
 
-func pluginInstallsByMonthForName(db sq.BaseRunner, currentYear, currentMonth int) (map[string]map[string]uint64, error) {
+func pluginInstallsByMonthForName(db sq.BaseRunner, currentYear, currentMonth int, idToPlugin map[uint64]Plugin) (map[string]map[string]uint64, error) {
 	monthCount := make(map[string]map[string]uint64)
 
-	rows, err := PSQL(db).Select("p.name", "i.year", "i.month", "count(*)").
+	rows, err := PSQL(db).Select("pr.id", "i.year", "i.month", "count(*)").
 		From("instance_reports i, unnest(i.plugins) pr(id)").
-		Join("plugins p on p.id = pr.id").
 		Where(sq.GtOrEq{"i.count_for_month": 2}).
 		Where(fmt.Sprintf("NOT (i.year = %d and i.month = %d)", currentYear, currentMonth)).
-		OrderBy("p.name", "i.year", "i.month").
-		GroupBy("p.name", "i.year", "i.month").
+		OrderBy("pr.id", "i.year", "i.month").
+		GroupBy("pr.id", "i.year", "i.month").
 		Query()
 	if err != nil {
 		return nil, err
@@ -1402,36 +1406,43 @@ func pluginInstallsByMonthForName(db sq.BaseRunner, currentYear, currentMonth in
 	}()
 
 	for rows.Next() {
-		var pn string
+		var i uint64
 		var y, m int
 		var c uint64
 
-		err = rows.Scan(&pn, &y, &m, &c)
+		err = rows.Scan(&i, &y, &m, &c)
 		if err != nil {
 			return nil, err
 		}
 
-		monthTS := startDateForYearMonth(y, m)
-		if _, ok := monthCount[pn]; !ok {
-			monthCount[pn] = make(map[string]uint64)
+		p, ok := idToPlugin[i]
+		if !ok {
+			return nil, fmt.Errorf("no plugin found for id %d", i)
 		}
-		monthCount[pn][fmt.Sprintf("%d", monthTS.Unix())] = c
+		monthTS := startDateForYearMonth(y, m)
+		if _, ok := monthCount[p.Name]; !ok {
+			monthCount[p.Name] = make(map[string]uint64)
+		}
+		mStr := fmt.Sprintf("%d", monthTS.Unix())
+		if _, ok := monthCount[p.Name][mStr]; !ok {
+			monthCount[p.Name][mStr] = 0
+		}
+		monthCount[p.Name][mStr] += c
 	}
 
 	return monthCount, nil
 }
 
-func pluginInstallsByVersionForName(db sq.BaseRunner, year, month int) (map[string]map[string]uint64, error) {
+func pluginInstallsByVersionForName(db sq.BaseRunner, year, month int, idToPlugin map[uint64]Plugin) (map[string]map[string]uint64, error) {
 	monthCount := make(map[string]map[string]uint64)
 
-	rows, err := PSQL(db).Select("p.name", "p.version", "count(*)").
+	rows, err := PSQL(db).Select("pr.id", "p.version", "count(*)").
 		From("instance_reports i, unnest(i.plugins) pr(id)").
-		Join("plugins p on p.id = pr.id").
 		Where(sq.Eq{"i.year": year}).
 		Where(sq.Eq{"i.month": month}).
 		Where(sq.GtOrEq{"i.count_for_month": 2}).
-		OrderBy("p.name", "p.version").
-		GroupBy("p.name", "p.version").
+		OrderBy("pr.id", "p.version").
+		GroupBy("pr.id", "p.version").
 		Query()
 	if err != nil {
 		return nil, err
@@ -1441,19 +1452,24 @@ func pluginInstallsByVersionForName(db sq.BaseRunner, year, month int) (map[stri
 	}()
 
 	for rows.Next() {
-		var pn string
+		var i uint64
 		var v string
 		var c uint64
 
-		err = rows.Scan(&pn, &v, &c)
+		err = rows.Scan(&i, &v, &c)
 		if err != nil {
 			return nil, err
 		}
 
-		if _, ok := monthCount[pn]; !ok {
-			monthCount[pn] = make(map[string]uint64)
+		p, ok := idToPlugin[i]
+		if !ok {
+			return nil, fmt.Errorf("no plugin found for id %d", i)
 		}
-		monthCount[pn][v] = c
+
+		if _, ok := monthCount[p.Name]; !ok {
+			monthCount[p.Name] = make(map[string]uint64)
+		}
+		monthCount[p.Name][v] = c
 	}
 
 	return monthCount, nil
@@ -1622,6 +1638,35 @@ func allPluginNames(db sq.BaseRunner) ([]string, error) {
 	}
 
 	return names, nil
+}
+
+func pluginIDsToPlugin(db sq.BaseRunner) (map[uint64]Plugin, error) {
+	plugins := make(map[uint64]Plugin)
+
+	rows, err := PSQL(db).Select("id", "name", "version").
+		From(PluginsTable).
+		Query()
+	if err != nil {
+		return nil, err
+	}
+
+	for rows.Next() {
+		var i uint64
+		var n, v string
+
+		err = rows.Scan(&i, &n, &v)
+		if err != nil {
+			return nil, err
+		}
+
+		plugins[i] = Plugin{
+			ID:      i,
+			Name:    n,
+			Version: v,
+		}
+	}
+
+	return plugins, nil
 }
 
 func writeFile(filename string, data []byte) error {
