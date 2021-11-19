@@ -699,7 +699,7 @@ func GenerateReport(db sq.BaseRunner, currentYear, currentMonth int, baseDir str
 	if err != nil {
 		return err
 	}
-	if err := writeFile(filepath.Join(pitDir, "jenkins-versions-per-plugin-version.json"), jvpvJSON); err != nil {
+	if err := writeFile(filepath.Join(pitDir, "jenkins-version-per-plugin-version.json"), jvpvJSON); err != nil {
 		return err
 	}
 
