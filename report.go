@@ -14,6 +14,7 @@ import (
 	"strings"
 	"time"
 
+	"github.com/Masterminds/semver"
 	sq "github.com/Masterminds/squirrel"
 	"github.com/beevik/etree"
 )
@@ -321,7 +322,6 @@ type monthForHTML struct {
 }
 
 // GenerateReport creates the JSON, CSV, SVG, and HTML files for a monthly report
-// TODO: Data sets don't seem to be complete compared to original, but that could just be a filtering thing? I've only compared 2009/2010 data so far.
 func GenerateReport(db sq.BaseRunner, currentYear, currentMonth int, baseDir string) error {
 	err := os.MkdirAll(baseDir, 0755) //nolint:gosec
 	if err != nil {
@@ -497,7 +497,7 @@ func GenerateReport(db sq.BaseRunner, currentYear, currentMonth int, baseDir str
 			installCountByMonth[monthStr] += c
 		}
 
-		irSVG, irCSV, err := CreateBarSVG(fmt.Sprintf("Jenkins installations (total: %d)", installCountByMonth[monthStr]), ir.Installations, 10, false, DefaultFilter)
+		irSVG, irCSV, err := CreateBarSVG(fmt.Sprintf("Jenkins installations (total: %d)", installCountByMonth[monthStr]), ir.Installations, 10, false, true, DefaultFilter)
 		if err != nil {
 			return err
 		}
@@ -517,7 +517,7 @@ func GenerateReport(db sq.BaseRunner, currentYear, currentMonth int, baseDir str
 			pluginCountByMonth[monthStr] += c
 		}
 
-		prSVG, prCSV, err := CreateBarSVG(fmt.Sprintf("Plugin installations (total: %d)", pluginCountByMonth[monthStr]), pr.Plugins, 100, true, DefaultFilter)
+		prSVG, prCSV, err := CreateBarSVG(fmt.Sprintf("Plugin installations (total: %d)", pluginCountByMonth[monthStr]), pr.Plugins, 100, true, false, DefaultFilter)
 		if err != nil {
 			return err
 		}
@@ -529,7 +529,7 @@ func GenerateReport(db sq.BaseRunner, currentYear, currentMonth int, baseDir str
 		}
 
 		for _, topNum := range []uint64{500, 100, 2500} {
-			topPRSVG, topPRCSV, err := CreateBarSVG(fmt.Sprintf("Plugin installations (installations > %d)", topNum), pr.Plugins, 100, true, func(s string, u uint64) bool {
+			topPRSVG, topPRCSV, err := CreateBarSVG(fmt.Sprintf("Plugin installations (installations > %d)", topNum), pr.Plugins, 100, true, false, func(s string, u uint64) bool {
 				return u > topNum
 			})
 			if err != nil {
@@ -562,7 +562,7 @@ func GenerateReport(db sq.BaseRunner, currentYear, currentMonth int, baseDir str
 			osNumbers = append(osNumbers, osR[n])
 		}
 
-		osBarSVG, osBarCSV, err := CreateBarSVG(fmt.Sprintf("Nodes (total: %d)", nodeCountByMonth[monthStr]), osR, 10, true, DefaultFilter)
+		osBarSVG, osBarCSV, err := CreateBarSVG(fmt.Sprintf("Nodes (total: %d)", nodeCountByMonth[monthStr]), osR, 10, true, false, DefaultFilter)
 		if err != nil {
 			return err
 		}
@@ -593,7 +593,7 @@ func GenerateReport(db sq.BaseRunner, currentYear, currentMonth int, baseDir str
 			jobCountByMonth[monthStr] += c
 		}
 
-		jobsSVG, jobsCSV, err := CreateBarSVG(fmt.Sprintf("Jobs (total: %d)", jobCountByMonth[monthStr]), jr, 1000, true, DefaultFilter)
+		jobsSVG, jobsCSV, err := CreateBarSVG(fmt.Sprintf("Jobs (total: %d)", jobCountByMonth[monthStr]), jr, 1000, true, false, DefaultFilter)
 		if err != nil {
 			return err
 		}
@@ -614,7 +614,7 @@ func GenerateReport(db sq.BaseRunner, currentYear, currentMonth int, baseDir str
 			totalExecs += c
 		}
 
-		execSVG, execCSV, err := CreateBarSVG(fmt.Sprintf("Executors per install (total: %d)", totalExecs), execR, 25, false, DefaultFilter)
+		execSVG, execCSV, err := CreateBarSVG(fmt.Sprintf("Executors per install (total: %d)", totalExecs), execR, 25, false, false, DefaultFilter)
 		if err != nil {
 			return err
 		}
@@ -626,7 +626,7 @@ func GenerateReport(db sq.BaseRunner, currentYear, currentMonth int, baseDir str
 		}
 	}
 
-	totalJenkinsSVG, totalJenkinsCSV, err := CreateBarSVG("Total Jenkins installations", installCountByMonth, 100, false, DefaultFilter)
+	totalJenkinsSVG, totalJenkinsCSV, err := CreateBarSVG("Total Jenkins installations", installCountByMonth, 100, false, false, DefaultFilter)
 	if err != nil {
 		return err
 	}
@@ -637,7 +637,7 @@ func GenerateReport(db sq.BaseRunner, currentYear, currentMonth int, baseDir str
 		return err
 	}
 
-	totalJobsSVG, totalJobsCSV, err := CreateBarSVG("Total jobs", jobCountByMonth, 1000, false, DefaultFilter)
+	totalJobsSVG, totalJobsCSV, err := CreateBarSVG("Total jobs", jobCountByMonth, 1000, false, false, DefaultFilter)
 	if err != nil {
 		return err
 	}
@@ -648,7 +648,7 @@ func GenerateReport(db sq.BaseRunner, currentYear, currentMonth int, baseDir str
 		return err
 	}
 
-	totalNodesSVG, totalNodesCSV, err := CreateBarSVG("Total nodes", nodeCountByMonth, 100, false, DefaultFilter)
+	totalNodesSVG, totalNodesCSV, err := CreateBarSVG("Total nodes", nodeCountByMonth, 100, false, false, DefaultFilter)
 	if err != nil {
 		return err
 	}
@@ -659,7 +659,7 @@ func GenerateReport(db sq.BaseRunner, currentYear, currentMonth int, baseDir str
 		return err
 	}
 
-	totalPluginsSVG, totalPluginsCSV, err := CreateBarSVG("Total Plugin installations", pluginCountByMonth, 1000, false, DefaultFilter)
+	totalPluginsSVG, totalPluginsCSV, err := CreateBarSVG("Total Plugin installations", pluginCountByMonth, 1000, false, false, DefaultFilter)
 	if err != nil {
 		return err
 	}
@@ -1197,8 +1197,8 @@ func OSCountsForMonth(db sq.BaseRunner, year, month int) (map[string]uint64, err
 
 // CreateBarSVG takes a dataset and returns byte slices for the corresponding .svg and .csv files
 // TODO: Something's awry in ordering here.
-func CreateBarSVG(title string, data map[string]uint64, scaleReduction int, sortByValue bool, filterFunc func(string, uint64) bool) ([]byte, []byte, error) {
-	sortedData, maxVal := asSortedPairsAndMaxValue(data, sortByValue, filterFunc)
+func CreateBarSVG(title string, data map[string]uint64, scaleReduction int, sortByValue, asVersion bool, filterFunc func(string, uint64) bool) ([]byte, []byte, error) {
+	sortedData, maxVal := asSortedPairsAndMaxValue(data, sortByValue, asVersion, filterFunc)
 
 	viewWidth := (len(sortedData) * 15) + 50
 
@@ -1361,7 +1361,7 @@ type kvPair struct {
 	value uint64
 }
 
-func asSortedPairsAndMaxValue(data map[string]uint64, byValue bool, filterFunc func(string, uint64) bool) ([]kvPair, uint64) {
+func asSortedPairsAndMaxValue(data map[string]uint64, byValue bool, asVersion bool, filterFunc func(string, uint64) bool) ([]kvPair, uint64) {
 	maxVal := uint64(0)
 
 	var sp []kvPair
@@ -1380,6 +1380,19 @@ func asSortedPairsAndMaxValue(data map[string]uint64, byValue bool, filterFunc f
 	if byValue {
 		sort.Slice(sp, func(i, j int) bool {
 			return sp[i].value < sp[j].value
+		})
+	} else if asVersion {
+		sort.Slice(sp, func(i, j int) bool {
+			svI, err := semver.NewVersion(sp[i].key)
+			if err != nil {
+				return sp[i].key < sp[j].key
+			}
+			svJ, err := semver.NewVersion(sp[j].key)
+			if err != nil {
+				return sp[i].key < sp[j].key
+			}
+
+			return svI.LessThan(svJ)
 		})
 	} else {
 		sort.Slice(sp, func(i, j int) bool {

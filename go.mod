@@ -3,6 +3,7 @@ module github.com/abayer/jenkins-usage-stats
 go 1.17
 
 require (
+	github.com/Masterminds/semver v1.5.0
 	github.com/Masterminds/squirrel v1.5.1
 	github.com/beevik/etree v1.1.0
 	github.com/docker/go-connections v0.4.0
