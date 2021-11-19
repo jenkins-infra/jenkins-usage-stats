@@ -974,7 +974,9 @@ func GetPluginReports(db sq.BaseRunner, currentYear, currentMonth int) ([]Plugin
 			report.MonthPercentages[monthStr] = float32(monthCount) * 100 / float32(totalInstalls[monthStr])
 		}
 
-		reports = append(reports, report)
+		if len(report.Installations) > 0 {
+			reports = append(reports, report)
+		}
 	}
 
 	return reports, nil
