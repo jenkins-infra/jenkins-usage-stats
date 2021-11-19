@@ -767,7 +767,7 @@ func GetInstallCountForVersions(db sq.BaseRunner, year, month int) (Installation
 // analogous to Groovy version's generateLatestNumbersJson
 func GetLatestPluginNumbers(db sq.BaseRunner, year, month int) (LatestPluginNumbersReport, error) {
 	report := LatestPluginNumbersReport{
-		Month:   startDateForYearMonth(year, month).Unix(),
+		Month:   startDateForYearMonth(year, month).UnixMilli(),
 		Plugins: map[string]uint64{},
 	}
 	rows, err := PSQL(db).Select("p.name as pn", "count(*) as number").
@@ -867,7 +867,7 @@ func GetJVMsReport(db sq.BaseRunner, year, month int) (JVMReport, error) {
 	for _, ym := range months {
 		err = func() error {
 			ts := startDateForYearMonth(ym.year, ym.month)
-			tsStr := fmt.Sprintf("%d", ts.Unix())
+			tsStr := fmt.Sprintf("%d", ts.UnixMilli())
 
 			monthStmt := baseStmt.Where(sq.Eq{"i.year": ym.year}).Where(sq.Eq{"i.month": ym.month})
 			rows, err := monthStmt.Query()
@@ -926,7 +926,7 @@ func GetJVMsReport(db sq.BaseRunner, year, month int) (JVMReport, error) {
 // analogous to Groovy version's generatePluginsJson
 func GetPluginReports(db sq.BaseRunner, currentYear, currentMonth int) ([]PluginReport, error) {
 	previousMonth := startDateForYearMonth(currentYear, currentMonth).AddDate(0, -1, 0)
-	prevMonthStr := fmt.Sprintf("%d", previousMonth.Unix())
+	prevMonthStr := fmt.Sprintf("%d", previousMonth.UnixMilli())
 
 	var reports []PluginReport
 
@@ -1454,7 +1454,7 @@ func pluginInstallsByMonthForName(db sq.BaseRunner, currentYear, currentMonth in
 			if _, ok := monthCount[p.Name]; !ok {
 				monthCount[p.Name] = make(map[string]uint64)
 			}
-			mStr := fmt.Sprintf("%d", monthTS.Unix())
+			mStr := fmt.Sprintf("%d", monthTS.UnixMilli())
 			if _, ok := monthCount[p.Name][mStr]; !ok {
 				monthCount[p.Name][mStr] = 0
 			}
@@ -1608,7 +1608,7 @@ func installCountsByMonth(db sq.BaseRunner, currentYear, currentMonth int) (map[
 		}
 
 		if !(y == currentYear && m == currentMonth) {
-			startTS := fmt.Sprintf("%d", startDateForYearMonth(y, m).Unix())
+			startTS := fmt.Sprintf("%d", startDateForYearMonth(y, m).UnixMilli())
 			installs[startTS] = c
 		}
 	}
