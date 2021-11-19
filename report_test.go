@@ -140,6 +140,18 @@ func TestReportFuncs(t *testing.T) {
 		assert.Equal(t, goldenPN, pn)
 	})
 
+	t.Run("ExecutorCountsForMonth", func(t *testing.T) {
+		pn, err := stats.ExecutorCountsForMonth(db, 2010, 1)
+		require.NoError(t, err)
+
+		_, execCSV, err := stats.CreateBarSVG(fmt.Sprintf("Executors per install (total: %d)", 5), pn, 25, false, false, true, stats.DefaultFilter)
+		require.NoError(t, err)
+
+		goldenBytes := csvReadGoldenAndUpdateIfDesired(t, execCSV)
+
+		assert.Equal(t, string(goldenBytes), string(execCSV))
+	})
+
 	t.Run("GenerateReport", func(t *testing.T) {
 		tmpOut, err := os.MkdirTemp("", "out-dir-")
 		require.NoError(t, err)
@@ -160,6 +172,21 @@ func readGoldenAndUpdateIfDesired(t *testing.T, input interface{}) []byte {
 		jb, err := json.MarshalIndent(input, "", "  ")
 		require.NoError(t, err)
 		require.NoError(t, ioutil.WriteFile(goldenFile, jb, 0644)) //nolint:gosec
+	}
+
+	goldenBytes, err := ioutil.ReadFile(goldenFile) //nolint:gosec
+	require.NoError(t, err)
+
+	return goldenBytes
+}
+
+func csvReadGoldenAndUpdateIfDesired(t *testing.T, input []byte) []byte {
+	testName := strings.Split(t.Name(), "/")[1]
+
+	goldenFile := filepath.Join("testdata", "reports", fmt.Sprintf("%s.csv", testName))
+
+	if os.Getenv("UPDATE_GOLDEN") != "" {
+		require.NoError(t, ioutil.WriteFile(goldenFile, input, 0644)) //nolint:gosec
 	}
 
 	goldenBytes, err := ioutil.ReadFile(goldenFile) //nolint:gosec
