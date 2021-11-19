@@ -15,6 +15,8 @@ import (
 	"strings"
 	"time"
 
+	"gitlab.com/c0b/go-ordered-json"
+
 	"github.com/Masterminds/semver"
 	sq "github.com/Masterminds/squirrel"
 	"github.com/beevik/etree"
@@ -983,7 +985,7 @@ func GetPluginReports(db sq.BaseRunner, currentYear, currentMonth int) ([]Plugin
 }
 
 // GenerateVersionDistributions writes out HTML files for each plugin's version distribution
-func GenerateVersionDistributions(db sq.BaseRunner, year, month int, outputDir string) (map[string]map[string]map[string]uint64, error) {
+func GenerateVersionDistributions(db sq.BaseRunner, year, month int, outputDir string) (map[string]*PVDPluginVersionMap, error) {
 	jvpv, err := JenkinsVersionsForPluginVersions(db, year, month)
 	if err != nil {
 		return nil, err
@@ -1039,9 +1041,42 @@ func GenerateVersionDistributions(db sq.BaseRunner, year, month int, outputDir s
 	return jvpv, indexTmpl.Execute(indexFile, map[string]interface{}{"pluginNames": pluginNames})
 }
 
+// PVDJenkinsVersionMap is an ordered map
+type PVDJenkinsVersionMap struct {
+	*ordered.OrderedMap
+}
+
+// Incr bumps the count for a particular Jenkins version
+func (pvdj *PVDJenkinsVersionMap) Incr(jv string) {
+	rawCount := pvdj.Get(jv)
+	if rawCount == nil {
+		pvdj.Set(jv, uint64(1))
+		return
+	}
+	count := rawCount.(uint64)
+	pvdj.Set(jv, count+1)
+}
+
+// PVDPluginVersionMap is used with PVDJenkinsVersionMap to have an ordered map for plugin version->Jenkins version distribution
+type PVDPluginVersionMap struct {
+	*ordered.OrderedMap
+}
+
+// Version returns a pointer to the PVDJenkinsVersionMap for this plugin version
+func (pvdp *PVDPluginVersionMap) Version(pv string) *PVDJenkinsVersionMap {
+	rawVal := pvdp.Get(pv)
+	if rawVal == nil {
+		m := &PVDJenkinsVersionMap{OrderedMap: ordered.NewOrderedMap()}
+		pvdp.Set(pv, m)
+		return m
+	}
+	val := rawVal.(*PVDJenkinsVersionMap)
+	return val
+}
+
 // JenkinsVersionsForPluginVersions generates a report for each plugin's version, with a count of installs for each Jenkins version
 // analogous to Groovy version's generateOldestJenkinsPerPlugin
-func JenkinsVersionsForPluginVersions(db sq.BaseRunner, year, month int) (map[string]map[string]map[string]uint64, error) {
+func JenkinsVersionsForPluginVersions(db sq.BaseRunner, year, month int) (map[string]*PVDPluginVersionMap, error) {
 	maxVersionsForInstanceIDs, err := maxInstanceVersionForMonth(db, year, month)
 	if err != nil {
 		return nil, err
@@ -1062,7 +1097,7 @@ func JenkinsVersionsForPluginVersions(db sq.BaseRunner, year, month int) (map[st
 		_ = rows.Close()
 	}()
 
-	pluginMap := make(map[string]map[string]map[string]uint64)
+	pluginMap := make(map[string]*PVDPluginVersionMap)
 	for rows.Next() {
 		var pn, pv, iid string
 
@@ -1079,16 +1114,10 @@ func JenkinsVersionsForPluginVersions(db sq.BaseRunner, year, month int) (map[st
 		maxVer := maxVersionsForInstanceIDs[iid]
 
 		if _, ok := pluginMap[pn]; !ok {
-			pluginMap[pn] = make(map[string]map[string]uint64)
-		}
-		if _, ok := pluginMap[pn][pv]; !ok {
-			pluginMap[pn][pv] = make(map[string]uint64)
-		}
-		if _, ok := pluginMap[pn][pv][maxVer]; !ok {
-			pluginMap[pn][pv][maxVer] = 0
+			pluginMap[pn] = &PVDPluginVersionMap{OrderedMap: ordered.NewOrderedMap()}
 		}
 
-		pluginMap[pn][pv][maxVer]++
+		pluginMap[pn].Version(pv).Incr(maxVer)
 	}
 
 	return pluginMap, nil
