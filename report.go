@@ -1436,7 +1436,7 @@ func pluginInstallsByMonthForName(db sq.BaseRunner, currentYear, currentMonth in
 func pluginInstallsByVersionForName(db sq.BaseRunner, year, month int, idToPlugin map[uint64]Plugin) (map[string]map[string]uint64, error) {
 	monthCount := make(map[string]map[string]uint64)
 
-	rows, err := PSQL(db).Select("pr.id", "p.version", "count(*)").
+	rows, err := PSQL(db).Select("pr.id", "count(*)").
 		From("instance_reports i, unnest(i.plugins) pr(id)").
 		Where(sq.Eq{"i.year": year}).
 		Where(sq.Eq{"i.month": month}).
@@ -1453,10 +1453,9 @@ func pluginInstallsByVersionForName(db sq.BaseRunner, year, month int, idToPlugi
 
 	for rows.Next() {
 		var i uint64
-		var v string
 		var c uint64
 
-		err = rows.Scan(&i, &v, &c)
+		err = rows.Scan(&i, &c)
 		if err != nil {
 			return nil, err
 		}
@@ -1469,7 +1468,7 @@ func pluginInstallsByVersionForName(db sq.BaseRunner, year, month int, idToPlugi
 		if _, ok := monthCount[p.Name]; !ok {
 			monthCount[p.Name] = make(map[string]uint64)
 		}
-		monthCount[p.Name][v] = c
+		monthCount[p.Name][p.Version] = c
 	}
 
 	return monthCount, nil
