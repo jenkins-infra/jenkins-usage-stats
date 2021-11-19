@@ -1423,7 +1423,6 @@ func pluginInstallsByMonthForName(db sq.BaseRunner, currentYear, currentMonth in
 	rows, err := PSQL(db).Select("pr.id", "i.year", "i.month", "count(*)").
 		From("instance_reports i, unnest(i.plugins) pr(id)").
 		Where(sq.GtOrEq{"i.count_for_month": 2}).
-		Where(fmt.Sprintf("NOT (i.year = %d and i.month = %d)", currentYear, currentMonth)).
 		OrderBy("pr.id", "i.year", "i.month").
 		GroupBy("pr.id", "i.year", "i.month").
 		Query()
@@ -1444,19 +1443,21 @@ func pluginInstallsByMonthForName(db sq.BaseRunner, currentYear, currentMonth in
 			return nil, err
 		}
 
-		p, ok := idToPlugin[i]
-		if !ok {
-			return nil, fmt.Errorf("no plugin found for id %d", i)
+		if !(y == currentYear && m == currentMonth) {
+			p, ok := idToPlugin[i]
+			if !ok {
+				return nil, fmt.Errorf("no plugin found for id %d", i)
+			}
+			monthTS := startDateForYearMonth(y, m)
+			if _, ok := monthCount[p.Name]; !ok {
+				monthCount[p.Name] = make(map[string]uint64)
+			}
+			mStr := fmt.Sprintf("%d", monthTS.Unix())
+			if _, ok := monthCount[p.Name][mStr]; !ok {
+				monthCount[p.Name][mStr] = 0
+			}
+			monthCount[p.Name][mStr] += c
 		}
-		monthTS := startDateForYearMonth(y, m)
-		if _, ok := monthCount[p.Name]; !ok {
-			monthCount[p.Name] = make(map[string]uint64)
-		}
-		mStr := fmt.Sprintf("%d", monthTS.Unix())
-		if _, ok := monthCount[p.Name][mStr]; !ok {
-			monthCount[p.Name][mStr] = 0
-		}
-		monthCount[p.Name][mStr] += c
 	}
 
 	return monthCount, nil
@@ -1584,7 +1585,6 @@ func installCountsByMonth(db sq.BaseRunner, currentYear, currentMonth int) (map[
 
 	rows, err := PSQL(db).Select("year", "month", "count(*)").
 		From(InstanceReportsTable).
-		Where(fmt.Sprintf("NOT (year = %d and month = %d)", currentYear, currentMonth)).
 		Where(sq.GtOrEq{"count_for_month": 2}).
 		GroupBy("year", "month").
 		OrderBy("year", "month").
@@ -1605,8 +1605,10 @@ func installCountsByMonth(db sq.BaseRunner, currentYear, currentMonth int) (map[
 			return nil, err
 		}
 
-		startTS := fmt.Sprintf("%d", startDateForYearMonth(y, m).Unix())
-		installs[startTS] = c
+		if !(y == currentYear && m == currentMonth) {
+			startTS := fmt.Sprintf("%d", startDateForYearMonth(y, m).Unix())
+			installs[startTS] = c
+		}
 	}
 
 	return installs, nil
