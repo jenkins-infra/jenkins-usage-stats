@@ -1332,9 +1332,9 @@ func CreatePieSVG(title string, data []uint64, centerX, centerY, radius, upperLe
 		textElem := svg.CreateElement("text")
 		_ = textElem.CreateAttr("x", fmt.Sprintf("%d", upperLeftX+30))
 		_ = textElem.CreateAttr("y", fmt.Sprintf("%d", upperLeftY+squareHeight*i+18))
-		_ = titleElem.CreateAttr("font-family", "sans-serif")
-		_ = titleElem.CreateAttr("font-size", "16")
-		titleElem.SetText(fmt.Sprintf("%s (%d)", labels[i], v))
+		_ = textElem.CreateAttr("font-family", "sans-serif")
+		_ = textElem.CreateAttr("font-size", "16")
+		textElem.SetText(fmt.Sprintf("%s (%d)", labels[i], v))
 	}
 
 	doc.Indent(2)
