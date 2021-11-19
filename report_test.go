@@ -187,7 +187,7 @@ func rawReadGoldenAndUpdateIfDesired(t *testing.T, input []byte, suffix string) 
 
 	goldenFile := filepath.Join("testdata", "reports", fmt.Sprintf("%s.%s", testName, suffix))
 
-	if os.Getenv("UPDATE_GOLDEN") == "" {
+	if os.Getenv("UPDATE_GOLDEN") != "" {
 		require.NoError(t, ioutil.WriteFile(goldenFile, input, 0644)) //nolint:gosec
 	}
 

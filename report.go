@@ -356,7 +356,7 @@ func GenerateReport(db sq.BaseRunner, currentYear, currentMonth int, baseDir str
 	if err != nil {
 		return err
 	}
-	icAsJSON, err := json.MarshalIndent(installCount, "", "  ")
+	icAsJSON, err := json.MarshalIndent(installCount, "", "    ")
 	if err != nil {
 		return err
 	}
@@ -389,7 +389,7 @@ func GenerateReport(db sq.BaseRunner, currentYear, currentMonth int, baseDir str
 		return err
 	}
 	for _, pr := range pluginReports {
-		prAsJSON, err := json.MarshalIndent(pr, "", "  ")
+		prAsJSON, err := json.MarshalIndent(pr, "", "    ")
 		if err != nil {
 			return err
 		}
@@ -405,7 +405,7 @@ func GenerateReport(db sq.BaseRunner, currentYear, currentMonth int, baseDir str
 	if err != nil {
 		return err
 	}
-	lnAsJSON, err := json.MarshalIndent(latestNumbers, "", "  ")
+	lnAsJSON, err := json.MarshalIndent(latestNumbers, "", "    ")
 	if err != nil {
 		return err
 	}
@@ -428,7 +428,7 @@ func GenerateReport(db sq.BaseRunner, currentYear, currentMonth int, baseDir str
 	if err != nil {
 		return err
 	}
-	capAsJSON, err := json.MarshalIndent(capabilities, "", "  ")
+	capAsJSON, err := json.MarshalIndent(capabilities, "", "    ")
 	if err != nil {
 		return err
 	}
@@ -452,7 +452,7 @@ func GenerateReport(db sq.BaseRunner, currentYear, currentMonth int, baseDir str
 	if err != nil {
 		return err
 	}
-	jvmsAsJSON, err := json.MarshalIndent(jvms, "", "  ")
+	jvmsAsJSON, err := json.MarshalIndent(jvms, "", "    ")
 	if err != nil {
 		return err
 	}
@@ -695,7 +695,7 @@ func GenerateReport(db sq.BaseRunner, currentYear, currentMonth int, baseDir str
 	}
 	fmt.Printf("svgs time: %s\n", time.Since(svgStart))
 
-	jvpvJSON, err := json.MarshalIndent(jvpv, "", "  ")
+	jvpvJSON, err := json.MarshalIndent(jvpv, "", "    ")
 	if err != nil {
 		return err
 	}
