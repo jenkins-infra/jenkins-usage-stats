@@ -1441,8 +1441,8 @@ func pluginInstallsByVersionForName(db sq.BaseRunner, year, month int, idToPlugi
 		Where(sq.Eq{"i.year": year}).
 		Where(sq.Eq{"i.month": month}).
 		Where(sq.GtOrEq{"i.count_for_month": 2}).
-		OrderBy("pr.id", "p.version").
-		GroupBy("pr.id", "p.version").
+		OrderBy("pr.id").
+		GroupBy("pr.id").
 		Query()
 	if err != nil {
 		return nil, err
