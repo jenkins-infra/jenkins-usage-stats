@@ -2,6 +2,14 @@
 
 `jenkins-usage-stats` handles importing daily Jenkins usage reports into a database, and generating monthly reports from that data. It replaces https://github.com/jenkins-infra/infra-statistics, and is run on Jenkins project infrastructure.
 
+### Differences from infra-statistics report generator
+
+* Much, much faster.
+* Uses a persistent Postgres database rather than a weird hodge-podge of Mongo, giant JSON files, and sqlite. This means `jenkins-usage-stats` can be run on dynamically provisioned compute resources using a hosted Postgres database, rather than the whole thing needing to live on a single persistent machine using >500GB of disk.
+* The "start time" for months is midnight UTC, rather than midnight PST/-0800. Data is very slightly different as a result, but not in a meaningful way.
+* Months which have no data but do have report gzip files (i.e., April 2007 until December 2008) will not be included in the generated reports, SVGs, etc.
+* Input data is filtered a little more aggressively when it comes to weird/non-standard Jenkins and plugin versions. This doesn't seem to make a statistically significant difference in the generated reports.
+
 ### Running
 
 #### Database
