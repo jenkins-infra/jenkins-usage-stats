@@ -1111,6 +1111,11 @@ func JenkinsVersionsForPluginVersions(db sq.BaseRunner, year, month int) (map[st
 			continue
 		}
 
+		// If the plugin version is "???", skip.
+		if pv == questionVersion {
+			continue
+		}
+
 		maxVer := maxVersionsForInstanceIDs[iid]
 
 		if _, ok := pluginMap[pn]; !ok {
@@ -1411,7 +1416,13 @@ func asSortedPairsAndMaxValue(data map[string]uint64, byValue, asVersion, asNumb
 
 	if byValue {
 		sort.Slice(sp, func(i, j int) bool {
-			return sp[i].value < sp[j].value
+			if sp[i].value < sp[j].value {
+				return true
+			}
+			if sp[i].value > sp[j].value {
+				return false
+			}
+			return sp[i].key < sp[j].key
 		})
 	} else if asVersion {
 		sort.Slice(sp, func(i, j int) bool {
@@ -1524,6 +1535,10 @@ func pluginInstallsByVersionForName(db sq.BaseRunner, year, month int, idToPlugi
 		p, ok := idToPlugin[i]
 		if !ok {
 			return nil, fmt.Errorf("no plugin found for id %d", i)
+		}
+
+		if p.Version == questionVersion {
+			continue
 		}
 
 		if _, ok := monthCount[p.Name]; !ok {

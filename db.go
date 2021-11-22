@@ -27,6 +27,8 @@ const (
 	JenkinsVersionsTable = "jenkins_versions"
 	// InstanceReportsTable is the instance_reports table name
 	InstanceReportsTable = "instance_reports"
+
+	questionVersion = "???"
 )
 
 // ReportFile records a daily report file which has been imported.
@@ -480,11 +482,14 @@ func AddIndividualReport(db sq.BaseRunner, cache *DBCache, jsonReport *JSONRepor
 
 	var pluginIDs pq.Int64Array
 	for _, jsonPlugin := range jsonReport.Plugins {
-		pluginID, err := GetPluginID(db, cache, jsonPlugin.Name, jsonPlugin.Version)
-		if err != nil {
-			return err
+		// Exclude weird cases where there's no real version for the plugin
+		if jsonPlugin.Version != questionVersion {
+			pluginID, err := GetPluginID(db, cache, jsonPlugin.Name, jsonPlugin.Version)
+			if err != nil {
+				return err
+			}
+			pluginIDs = append(pluginIDs, int64(pluginID))
 		}
-		pluginIDs = append(pluginIDs, int64(pluginID))
 	}
 	report.Plugins = pluginIDs
 
