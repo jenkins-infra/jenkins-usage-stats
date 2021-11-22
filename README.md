@@ -9,6 +9,7 @@
 * The "start time" for months is midnight UTC, rather than midnight PST/-0800. Data is very slightly different as a result, but not in a meaningful way.
 * Months which have no data but do have report gzip files (i.e., April 2007 until December 2008) will not be included in the generated reports, SVGs, etc.
 * Input data is filtered a little more aggressively when it comes to weird/non-standard Jenkins and plugin versions. This doesn't seem to make a statistically significant difference in the generated reports.
+* With the infra-statistics tooling, JVM versions were limited to explicitly specified patterns. That's no longer the case, so modern JVM versions are going to be much more accurately represented.
 
 ### Running
 
