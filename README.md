@@ -41,8 +41,10 @@ Make sure you have Docker running, and run `make test` to execute the unit tests
 
 Run `make fmt lint` to format the Go code and report on any linting/static analysis problems.
 
-### Building
+#### Building
 
 Run `make build` to generate `build/jenkins-usage-stats`, compiled for your current platform.
 
+#### Local usage
 
+Run `make migrate` - by default, this will expect to be able to use the `postgres` user against localhost without authentication, and that the `jenkins_usage_stats` database already exists. You can use `testdata/report-stats` as a small (22 days) dataset to import.
