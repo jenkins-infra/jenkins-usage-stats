@@ -2,7 +2,6 @@ package main
 
 import (
 	"context"
-	"database/sql"
 	"fmt"
 	"io/ioutil"
 	"os"
@@ -12,7 +11,6 @@ import (
 	"strings"
 	"time"
 
-	sq "github.com/Masterminds/squirrel"
 	stats "github.com/abayer/jenkins-usage-stats"
 	"github.com/spf13/cobra"
 )
@@ -48,15 +46,11 @@ func NewImportCmd(ctx context.Context) *cobra.Command {
 }
 
 func (io *ImportOptions) runImport(ctx context.Context) error {
-	rawDB, err := sql.Open("postgres", io.Database)
+	db, closeFunc, err := getDatabase(io.Database)
 	if err != nil {
 		return err
 	}
-	defer func() {
-		_ = rawDB.Close()
-	}()
-
-	db := sq.NewStmtCacheProxy(rawDB)
+	defer closeFunc()
 
 	files, err := ioutil.ReadDir(io.Directory)
 	if err != nil {

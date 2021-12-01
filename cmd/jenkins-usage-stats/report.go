@@ -2,12 +2,10 @@ package main
 
 import (
 	"context"
-	"database/sql"
 	"fmt"
 	"os"
 	"time"
 
-	sq "github.com/Masterminds/squirrel"
 	stats "github.com/abayer/jenkins-usage-stats"
 	"github.com/spf13/cobra"
 )
@@ -43,15 +41,11 @@ func NewReportCmd(ctx context.Context) *cobra.Command {
 }
 
 func (ro *ReportOptions) runReport(ctx context.Context) error {
-	rawDB, err := sql.Open("postgres", ro.Database)
+	db, closeFunc, err := getDatabase(ro.Database)
 	if err != nil {
 		return err
 	}
-	defer func() {
-		_ = rawDB.Close()
-	}()
-
-	db := sq.NewStmtCacheProxy(rawDB)
+	defer closeFunc()
 
 	now := time.Now()
 
