@@ -1,0 +1,98 @@
+- id: 1
+  name: Linux (i386)
+- id: 2
+  name: N/A
+- id: 3
+  name: Linux (amd64)
+- id: 4
+  name: Windows XP (x86)
+- id: 5
+  name: Windows 2003 (x86)
+- id: 6
+  name: Windows XP (amd64)
+- id: 7
+  name: Windows Server 2008 (x86)
+- id: 8
+  name: SunOS (sparc)
+- id: 9
+  name: SunOS (x86)
+- id: 10
+  name: Windows 2003 (amd64)
+- id: 11
+  name: Windows 7 (x86)
+- id: 12
+  name: SunOS (sparcv9)
+- id: 13
+  name: Windows 2000 (x86)
+- id: 14
+  name: Linux (ppc64)
+- id: 15
+  name: Windows Vista (x86)
+- id: 16
+  name: Linux (x86)
+- id: 17
+  name: Mac OS X (x86_64)
+- id: 18
+  name: HP-UX (PA_RISC2.0)
+- id: 19
+  name: AIX (ppc64)
+- id: 20
+  name: HP-UX (IA64N)
+- id: 21
+  name: Windows 7 (amd64)
+- id: 22
+  name: Mac OS X (ppc)
+- id: 23
+  name: Mac OS X (i386)
+- id: 24
+  name: Windows Vista (amd64)
+- id: 25
+  name: FreeBSD (i386)
+- id: 26
+  name: Windows Server 2003 (amd64)
+- id: 27
+  name: Windows Server 2008 (amd64)
+- id: 28
+  name: AIX (ppc)
+- id: 29
+  name: Linux (ia64)
+- id: 30
+  name: Windows Server 2008 (ia64)
+- id: 31
+  name: Windows Server 2008 R2 (amd64)
+- id: 32
+  name: FreeBSD (amd64)
+- id: 33
+  name: OpenBSD (i386)
+- id: 34
+  name: Linux (ppc)
+- id: 35
+  name: Linux (sparc)
+- id: 36
+  name: SunOS (amd64)
+- id: 37
+  name: Linux (arm)
+- id: 38
+  name: HP-UX (IA64W)
+- id: 39
+  name: Darwin (i386)
+- id: 40
+  name: Windows NT (unknown) (x86)
+- id: 41
+  name: Windows Server 2003 (x86)
+- id: 42
+  name: Windows Server 2008 R2 (x86)
+- id: 43
+  name: Linux (s390x)
+- id: 44
+  name: z/OS (s390)
+- id: 45
+  name: linux (amd64)
+- id: 46
+  name: HP-UX (PA_RISC2.0W)
+- id: 47
+  name: Linux (zArch_64)
+- id: 48
+  name: OS/400 (PowerPC)
+- id: 49
+  name: Linux (s390)
