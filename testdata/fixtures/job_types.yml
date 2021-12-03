@@ -1,0 +1,12 @@
+- id: 1
+  name: hudson-model-FreeStyleProject
+- id: 2
+  name: hudson-maven-MavenModuleSet
+- id: 3
+  name: hudson-matrix-MatrixProject
+- id: 4
+  name: hudson-model-ExternalJob
+- id: 5
+  name: hudson-drools-DroolsProject
+- id: 6
+  name: hudson-plugins-BranchMonitor
