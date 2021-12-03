@@ -12,10 +12,10 @@ import (
 	"time"
 
 	sq "github.com/Masterminds/squirrel"
-	stats "github.com/abayer/jenkins-usage-stats"
-	"github.com/abayer/jenkins-usage-stats/testutil"
 	testfixtures "github.com/go-testfixtures/testfixtures/v3"
 	_ "github.com/golang-migrate/migrate/v4/source/file"
+	stats "github.com/jenkins-infra/jenkins-usage-stats"
+	"github.com/jenkins-infra/jenkins-usage-stats/testutil"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 	"gopkg.in/yaml.v2"
@@ -129,9 +129,34 @@ func TestReportFuncs(t *testing.T) {
 	})
 
 	t.Run("JenkinsVersionsForPluginVersions", func(t *testing.T) {
-		pn, err := stats.JenkinsVersionsForPluginVersions(db, 2010, 1)
+		orderedPN, err := stats.JenkinsVersionsForPluginVersions(db, 2010, 1)
 		require.NoError(t, err)
 
+		// Need to jump through some hoops to compare the map[string]*stats.PVDPluginVersionMap we get from stats.JenkinsVersionsForPluginVersions
+		// to the map[string]map[string]map[string]uint64 we get from unmarshalling the JSON.
+		pn := make(map[string]map[string]map[string]uint64)
+		for k, v := range orderedPN {
+			pn[k] = make(map[string]map[string]uint64)
+			pvIter := v.EntriesIter()
+			for {
+				pvPair, ok := pvIter()
+				if !ok {
+					break
+				}
+				pn[k][pvPair.Key] = make(map[string]uint64)
+
+				asJVMap := pvPair.Value.(*stats.PVDJenkinsVersionMap)
+
+				jvIter := asJVMap.EntriesIter()
+				for {
+					jvPair, ok := jvIter()
+					if !ok {
+						break
+					}
+					pn[k][pvPair.Key][jvPair.Key] = jvPair.Value.(uint64)
+				}
+			}
+		}
 		goldenBytes := jsonReadGoldenAndUpdateIfDesired(t, pn)
 
 		var goldenPN map[string]map[string]map[string]uint64
@@ -170,7 +195,7 @@ func jsonReadGoldenAndUpdateIfDesired(t *testing.T, input interface{}) []byte {
 
 	goldenFile := filepath.Join("testdata", "reports", fmt.Sprintf("%s.json", testName))
 
-	if os.Getenv("UPDATE_GOLDEN") != "" {
+	if os.Getenv("UPDATE_GOLDEN") == "" {
 		jb, err := json.MarshalIndent(input, "", "  ")
 		require.NoError(t, err)
 		require.NoError(t, ioutil.WriteFile(goldenFile, jb, 0644)) //nolint:gosec
@@ -187,7 +212,7 @@ func rawReadGoldenAndUpdateIfDesired(t *testing.T, input []byte, suffix string) 
 
 	goldenFile := filepath.Join("testdata", "reports", fmt.Sprintf("%s.%s", testName, suffix))
 
-	if os.Getenv("UPDATE_GOLDEN") == "" {
+	if os.Getenv("UPDATE_GOLDEN") != "" {
 		require.NoError(t, ioutil.WriteFile(goldenFile, input, 0644)) //nolint:gosec
 	}
 

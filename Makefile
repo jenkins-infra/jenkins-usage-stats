@@ -22,7 +22,7 @@ BUILD_DATE := $(shell date +%Y%m%d-%H:%M:%S)
 VERSION ?= $(shell echo "$$(git describe --abbrev=0 --tags 2>/dev/null)-dev+$(REV)" | sed 's/^v//')
 GO_VERSION := $(shell $(GO) version | sed -e 's/^[^0-9.]*\([0-9.]*\).*/\1/')
 
-ORG := abayer
+ORG := jenkins-infra
 ORG_REPO := $(ORG)/$(NAME)
 RELEASE_ORG_REPO := $(ORG_REPO)
 ROOT_PACKAGE := github.com/$(ORG_REPO)

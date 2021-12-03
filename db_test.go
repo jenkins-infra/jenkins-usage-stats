@@ -6,9 +6,9 @@ import (
 	"testing"
 
 	sq "github.com/Masterminds/squirrel"
-	stats "github.com/abayer/jenkins-usage-stats"
-	"github.com/abayer/jenkins-usage-stats/testutil"
 	_ "github.com/golang-migrate/migrate/v4/source/file"
+	stats "github.com/jenkins-infra/jenkins-usage-stats"
+	"github.com/jenkins-infra/jenkins-usage-stats/testutil"
 	_ "github.com/lib/pq"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"

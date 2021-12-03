@@ -9,7 +9,7 @@ import (
 
 	"github.com/Azure/azure-sdk-for-go/sdk/storage/azblob"
 
-	stats "github.com/abayer/jenkins-usage-stats"
+	stats "github.com/jenkins-infra/jenkins-usage-stats"
 	"github.com/spf13/cobra"
 )
 

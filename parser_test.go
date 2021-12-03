@@ -5,7 +5,7 @@ import (
 	"testing"
 	"time"
 
-	stats "github.com/abayer/jenkins-usage-stats"
+	stats "github.com/jenkins-infra/jenkins-usage-stats"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 )

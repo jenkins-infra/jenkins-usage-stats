@@ -14,8 +14,8 @@ import (
 	"time"
 
 	sq "github.com/Masterminds/squirrel"
-	stats "github.com/abayer/jenkins-usage-stats"
-	"github.com/abayer/jenkins-usage-stats/testutil"
+	stats "github.com/jenkins-infra/jenkins-usage-stats"
+	"github.com/jenkins-infra/jenkins-usage-stats/testutil"
 	"github.com/stretchr/testify/require"
 )
 

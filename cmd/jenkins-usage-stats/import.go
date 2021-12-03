@@ -11,7 +11,7 @@ import (
 	"strings"
 	"time"
 
-	stats "github.com/abayer/jenkins-usage-stats"
+	stats "github.com/jenkins-infra/jenkins-usage-stats"
 	"github.com/spf13/cobra"
 )
 

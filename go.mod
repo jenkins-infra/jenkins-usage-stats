@@ -1,4 +1,4 @@
-module github.com/abayer/jenkins-usage-stats
+module github.com/jenkins-infra/jenkins-usage-stats
 
 go 1.17
 
