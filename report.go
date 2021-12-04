@@ -222,7 +222,7 @@ var (
 type PluginReport struct {
 	Name               string             `json:"name"`
 	Installations      map[string]uint64  `json:"installations"`
-	MonthPercentages   map[string]float32 `json:"installationsPercentages"`
+	MonthPercentages   map[string]float32 `json:"installationsPercentage"`
 	PerVersion         map[string]uint64  `json:"installationsPerVersion"`
 	VersionPercentages map[string]float32 `json:"installationsPercentagePerVersion"`
 }
