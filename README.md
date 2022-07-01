@@ -27,6 +27,33 @@ Each report will then be added to the database specified. If there is already a 
 
 Run `jenkins-usage-stats report --database "(database URL from above)" --directory (output directory to write the generated reports to)`. The various reports used on https://stats.jenkins.io will be written to that output directory in the same layout as is used on the `gh-pages` branch of this repo, and its predecessor, https://github.com/jenkins-infra/infra-statistics. Data will be considered for every month _before_ the current one, so that we don't include incomplete data for this month.
 
+Note that the "start time" for months is midnight UTC. For example, 1654041600000 is June 1, 2022, 00:00:00 UTC, identifying the data gathered in June:
+
+```sh
+$ curl https://stats.jenkins.io/plugin-installation-trend/jvms.json | jq '.jvmStatsPerMonth | to_entries | last'
+{
+  "key": "1654041600000",
+  "value": {
+    "1.5": 1,
+    "1.6": 588,
+    "1.7": 2156,
+    "1.8": 182865,
+    "10": 44,
+    "11": 117976,
+    "12": 45,
+    "13": 42,
+    "14": 64,
+    "15": 126,
+    "16": 63,
+    "17": 1331,
+    "18": 216,
+    "9": 26
+  }
+}
+$ python -c 'from datetime import datetime; print(datetime.utcfromtimestamp(1654041600000 / 1000.0))'
+2022-06-01 00:00:00
+```
+
 ### Development
 
 #### Setup
