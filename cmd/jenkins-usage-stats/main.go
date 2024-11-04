@@ -28,8 +28,8 @@ func run(ctx context.Context) error {
 		DisableAutoGenTag: true,
 	}
 
-	rootCmd.AddCommand(NewImportCmd(ctx))
-	rootCmd.AddCommand(NewReportCmd(ctx))
+	rootCmd.AddCommand(NewImportCmd())
+	rootCmd.AddCommand(NewReportCmd())
 	rootCmd.AddCommand(NewFetchCmd(ctx))
 
 	return rootCmd.Execute()

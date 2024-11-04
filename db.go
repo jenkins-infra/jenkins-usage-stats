@@ -9,9 +9,8 @@ import (
 	"strings"
 	"time"
 
-	"github.com/lib/pq"
-
 	sq "github.com/Masterminds/squirrel"
+	"github.com/lib/pq"
 )
 
 const (
@@ -69,25 +68,25 @@ type JenkinsVersion struct {
 
 // InstanceReport is a record of an individual instance's most recent report in a given month
 type InstanceReport struct {
-	ID            uint64         `db:"id"`
-	InstanceID    string         `db:"instance_id"`
-	ReportTime    time.Time      `db:"report_time"`
-	Year          int            `db:"year"`
-	Month         int            `db:"month"`
-	Version       uint64         `db:"version"`
-	JVMVersionID  uint64         `db:"jvm_version_id"`
-	Executors     uint64         `db:"executors"`
-	CountForMonth uint64         `db:"count_for_month"`
-	Plugins       pq.Int64Array  `db:"plugins"`
-	Jobs          JobsForReport  `db:"jobs"`
-	Nodes         NodesForReport `db:"nodes"`
+	ID            uint64          `db:"id"`
+	InstanceID    string          `db:"instance_id"`
+	ReportTime    time.Time       `db:"report_time"`
+	Year          int             `db:"year"`
+	Month         int             `db:"month"`
+	Version       uint64          `db:"version"`
+	JVMVersionID  uint64          `db:"jvm_version_id"`
+	Executors     uint64          `db:"executors"`
+	CountForMonth uint64          `db:"count_for_month"`
+	Plugins       pq.Int64Array   `db:"plugins"`
+	Jobs          *JobsForReport  `db:"jobs"`
+	Nodes         *NodesForReport `db:"nodes"`
 }
 
 // PluginsForReport is a map of IDs from the "plugins" table seen on an instance report
 type PluginsForReport []uint64
 
 // Value is used for marshalling to JSON
-func (p PluginsForReport) Value() (driver.Value, error) {
+func (p *PluginsForReport) Value() (driver.Value, error) {
 	return json.Marshal(p)
 }
 
@@ -105,7 +104,7 @@ func (p *PluginsForReport) Scan(value interface{}) error {
 type NodesForReport map[uint64]uint64
 
 // Value is used for marshalling to JSON
-func (n NodesForReport) Value() (driver.Value, error) {
+func (n *NodesForReport) Value() (driver.Value, error) {
 	return json.Marshal(n)
 }
 
@@ -123,7 +122,7 @@ func (n *NodesForReport) Scan(value interface{}) error {
 type JobsForReport map[uint64]uint64
 
 // Value is used for marshalling to JSON
-func (j JobsForReport) Value() (driver.Value, error) {
+func (j *JobsForReport) Value() (driver.Value, error) {
 	return json.Marshal(j)
 }
 
@@ -216,7 +215,7 @@ func GetJVMVersionID(db sq.BaseRunner, cache *DBCache, name string) (uint64, err
 		Where(sq.Eq{"name": name}).
 		QueryRow().
 		Scan(&row.ID)
-	if err == sql.ErrNoRows {
+	if errors.Is(err, sql.ErrNoRows) {
 		var id uint64
 		q := PSQL(db).Insert(JVMVersionsTable).Columns("name").Values(name).Suffix(`RETURNING "id"`)
 		err = q.QueryRow().Scan(&id)
@@ -250,7 +249,7 @@ func GetOSTypeID(db sq.BaseRunner, cache *DBCache, name string) (uint64, error) 
 		Where(sq.Eq{"name": name}).
 		QueryRow().
 		Scan(&row.ID)
-	if err == sql.ErrNoRows {
+	if errors.Is(err, sql.ErrNoRows) {
 		var id uint64
 		q := PSQL(db).Insert(OSTypesTable).Columns("name").Values(name).Suffix(`RETURNING "id"`)
 		err = q.QueryRow().Scan(&id)
@@ -281,7 +280,7 @@ func GetJobTypeID(db sq.BaseRunner, cache *DBCache, name string) (uint64, error)
 		Where(sq.Eq{"name": name}).
 		QueryRow().
 		Scan(&row.ID)
-	if err == sql.ErrNoRows {
+	if errors.Is(err, sql.ErrNoRows) {
 		var id uint64
 		q := PSQL(db).Insert(JobTypesTable).Columns("name").Values(name).Suffix(`RETURNING "id"`)
 		err = q.QueryRow().Scan(&id)
@@ -312,7 +311,7 @@ func GetJenkinsVersionID(db sq.BaseRunner, cache *DBCache, version string) (uint
 		Where(sq.Eq{"version": version}).
 		QueryRow().
 		Scan(&row.ID)
-	if err == sql.ErrNoRows {
+	if errors.Is(err, sql.ErrNoRows) {
 		var id uint64
 		q := PSQL(db).Insert(JenkinsVersionsTable).Columns("version").Values(version).Suffix(`RETURNING "id"`)
 		err = q.QueryRow().Scan(&id)
@@ -348,7 +347,7 @@ func GetPluginID(db sq.BaseRunner, cache *DBCache, name, version string) (uint64
 		Where(sq.Eq{"version": version}).
 		QueryRow().
 		Scan(&row.ID)
-	if err == sql.ErrNoRows {
+	if errors.Is(err, sql.ErrNoRows) {
 		var id uint64
 		q := PSQL(db).Insert(PluginsTable).Columns("name", "version").Values(name, version).Suffix(`RETURNING "id"`)
 		err = q.QueryRow().Scan(&id)
@@ -404,7 +403,7 @@ func AddIndividualReport(db sq.BaseRunner, cache *DBCache, jsonReport *JSONRepor
 	defer func() {
 		_ = rows.Close()
 	}()
-	if err == sql.ErrNoRows {
+	if errors.Is(err, sql.ErrNoRows) {
 		insertRow = true
 	} else if err != nil {
 		return err
@@ -470,7 +469,7 @@ func AddIndividualReport(db sq.BaseRunner, cache *DBCache, jsonReport *JSONRepor
 		}
 		nodes[osTypeID]++
 	}
-	report.Nodes = nodes
+	report.Nodes = &nodes
 
 	if report.JVMVersionID == 0 {
 		jvmVersionID, err := GetJVMVersionID(db, cache, "N/A")
@@ -509,7 +508,7 @@ func AddIndividualReport(db sq.BaseRunner, cache *DBCache, jsonReport *JSONRepor
 		cache.skippedForJobs++
 		return nil
 	}
-	report.Jobs = jobs
+	report.Jobs = &jobs
 	cache.insertNewReportsTime += time.Since(newReportsStart)
 
 	report.ReportTime = ts
@@ -574,7 +573,7 @@ func ReportAlreadyRead(db sq.BaseRunner, filename string) (bool, error) {
 		_ = rows.Close()
 	}()
 	if err != nil {
-		if err == sql.ErrNoRows {
+		if errors.Is(err, sql.ErrNoRows) {
 			return false, nil
 		}
 		return false, err
