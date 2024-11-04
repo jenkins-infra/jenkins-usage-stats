@@ -186,7 +186,7 @@ func TestReportFuncs(t *testing.T) {
 			_ = os.RemoveAll(tmpOut)
 		}()
 
-		require.NoError(t, stats.GenerateReport(db, 2010, 2, tmpOut))
+		require.NoError(t, stats.GenerateReport(db, 2010, 1, tmpOut))
 	})
 }
 

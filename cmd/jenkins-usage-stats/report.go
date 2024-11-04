@@ -37,8 +37,8 @@ func NewReportCmd() *cobra.Command {
 	_ = cobraCmd.MarkFlagRequired("database")
 	cobraCmd.Flags().StringVar(&options.Directory, "directory", "", "Directory to output to")
 	_ = cobraCmd.MarkFlagRequired("directory")
-	cobraCmd.Flags().IntVar(&options.LatestYear, "latest-year", 0, "Year of latest data to include. Defaults to current year.")
-	cobraCmd.Flags().IntVar(&options.LatestMonth, "latest-month", 0, "Month of latest data to include. Defaults to current month.")
+	cobraCmd.Flags().IntVar(&options.LatestYear, "latest-year", 0, "Year of latest data to include. Defaults to the year of the previous month of when this is running.")
+	cobraCmd.Flags().IntVar(&options.LatestMonth, "latest-month", 0, "Month of latest data to include. Defaults the previous month of when this is running.")
 	cobraCmd.MarkFlagsRequiredTogether("latest-year", "latest-month")
 
 	return cobraCmd
@@ -50,15 +50,6 @@ func (ro *ReportOptions) runReport() error {
 		return err
 	}
 	defer closeFunc()
-
-	now := time.Now()
-
-	if ro.LatestYear == 0 {
-		ro.LatestYear = now.Year()
-	}
-	if ro.LatestMonth == 0 {
-		ro.LatestMonth = int(now.Month())
-	}
 
 	startTime := time.Now()
 	err = stats.GenerateReport(db, ro.LatestYear, ro.LatestMonth, ro.Directory)

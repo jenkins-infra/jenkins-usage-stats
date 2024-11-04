@@ -325,7 +325,7 @@ type monthForHTML struct {
 }
 
 // GenerateReport creates the JSON, CSV, SVG, and HTML files for a monthly report
-func GenerateReport(db sq.BaseRunner, currentYear, currentMonth int, baseDir string) error {
+func GenerateReport(db sq.BaseRunner, specifiedYear, specifiedMonth int, baseDir string) error {
 	err := os.MkdirAll(baseDir, 0755) //nolint:gosec
 	if err != nil {
 		return err
@@ -349,12 +349,22 @@ func GenerateReport(db sq.BaseRunner, currentYear, currentMonth int, baseDir str
 		return err
 	}
 
-	previousMonth := startDateForYearMonth(currentYear, currentMonth).AddDate(0, -1, 0)
-	prevYear := previousMonth.Year()
-	prevMonth := int(previousMonth.Month())
+	var latestMonthToReport time.Time
+
+	// If we're given specific year/month, generate through that month. Otherwise, generate through the previous month
+	// from the time we're running.
+	if specifiedYear > 0 && specifiedMonth > 0 {
+		latestMonthToReport = startDateForYearMonth(specifiedYear, specifiedMonth)
+	} else {
+		now := time.Now()
+		latestMonthToReport = startDateForYearMonth(now.Year(), int(now.Month())).AddDate(0, -1, 0)
+	}
+
+	reportYear := latestMonthToReport.Year()
+	reportMonth := int(latestMonthToReport.Month())
 
 	icStart := time.Now()
-	installCount, err := GetInstallCountForVersions(db, prevYear, prevMonth)
+	installCount, err := GetInstallCountForVersions(db, reportYear, reportMonth)
 	if err != nil {
 		return err
 	}
@@ -378,7 +388,7 @@ func GenerateReport(db sq.BaseRunner, currentYear, currentMonth int, baseDir str
 	fmt.Printf("installCount time: %s\n", time.Since(icStart))
 
 	vdStart := time.Now()
-	jvpv, err := GenerateVersionDistributions(db, prevYear, prevMonth, pvDir)
+	jvpv, err := GenerateVersionDistributions(db, reportYear, reportMonth, pvDir)
 	if err != nil {
 		return err
 	}
@@ -386,7 +396,7 @@ func GenerateReport(db sq.BaseRunner, currentYear, currentMonth int, baseDir str
 
 	prStart := time.Now()
 	// GetPluginReports expects to get the _current_ year/month so it can exclude that from its reports.
-	pluginReports, err := GetPluginReports(db, currentYear, currentMonth)
+	pluginReports, err := GetPluginReports(db, specifiedYear, specifiedMonth)
 	if err != nil {
 		return err
 	}
@@ -403,7 +413,7 @@ func GenerateReport(db sq.BaseRunner, currentYear, currentMonth int, baseDir str
 	fmt.Printf("pluginReport time: %s\n", time.Since(prStart))
 
 	lnStart := time.Now()
-	latestNumbers, err := GetLatestPluginNumbers(db, prevYear, prevMonth)
+	latestNumbers, err := GetLatestPluginNumbers(db, reportYear, reportMonth)
 	if err != nil {
 		return err
 	}
@@ -426,7 +436,7 @@ func GenerateReport(db sq.BaseRunner, currentYear, currentMonth int, baseDir str
 	fmt.Printf("latestNumbers time: %s\n", time.Since(lnStart))
 
 	capStart := time.Now()
-	capabilities, err := GetCapabilities(db, prevYear, prevMonth)
+	capabilities, err := GetCapabilities(db, reportYear, reportMonth)
 	if err != nil {
 		return err
 	}
@@ -450,7 +460,7 @@ func GenerateReport(db sq.BaseRunner, currentYear, currentMonth int, baseDir str
 
 	jvmStart := time.Now()
 	// GetJVMsReport expects to get the _current_ year/month so that month can be excluded.
-	jvms, err := GetJVMsReport(db, currentYear, currentMonth)
+	jvms, err := GetJVMsReport(db, specifiedYear, specifiedMonth)
 	if err != nil {
 		return err
 	}
@@ -464,7 +474,7 @@ func GenerateReport(db sq.BaseRunner, currentYear, currentMonth int, baseDir str
 	}
 	fmt.Printf("jvms time: %s\n", time.Since(jvmStart))
 
-	allMonths, err := allOrderedMonths(db, currentYear, currentMonth)
+	allMonths, err := allOrderedMonths(db, specifiedYear, specifiedMonth)
 	if err != nil {
 		return err
 	}
