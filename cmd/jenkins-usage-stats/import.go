@@ -1,9 +1,7 @@
 package main
 
 import (
-	"context"
 	"fmt"
-	"io/ioutil"
 	"os"
 	"path/filepath"
 	"regexp"
@@ -22,14 +20,14 @@ type ImportOptions struct {
 }
 
 // NewImportCmd returns the import command
-func NewImportCmd(ctx context.Context) *cobra.Command {
+func NewImportCmd() *cobra.Command {
 	options := &ImportOptions{}
 
 	cobraCmd := &cobra.Command{
 		Use:   "import",
 		Short: "Import instance reports",
 		Run: func(cmd *cobra.Command, args []string) {
-			if err := options.runImport(ctx); err != nil {
+			if err := options.runImport(); err != nil {
 				fmt.Println(err)
 				os.Exit(1)
 			}
@@ -45,14 +43,14 @@ func NewImportCmd(ctx context.Context) *cobra.Command {
 	return cobraCmd
 }
 
-func (io *ImportOptions) runImport(ctx context.Context) error {
+func (io *ImportOptions) runImport() error {
 	db, closeFunc, err := getDatabase(io.Database)
 	if err != nil {
 		return err
 	}
 	defer closeFunc()
 
-	files, err := ioutil.ReadDir(io.Directory)
+	files, err := os.ReadDir(io.Directory)
 	if err != nil {
 		return err
 	}

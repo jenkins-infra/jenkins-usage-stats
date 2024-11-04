@@ -8,7 +8,6 @@ import (
 	"path/filepath"
 
 	"github.com/Azure/azure-sdk-for-go/sdk/storage/azblob"
-
 	stats "github.com/jenkins-infra/jenkins-usage-stats"
 	"github.com/spf13/cobra"
 )

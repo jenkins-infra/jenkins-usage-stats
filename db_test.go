@@ -207,10 +207,11 @@ func TestAddIndividualReport(t *testing.T) {
 		}
 	}
 
+	jobMap := *updatedFirstReport.Jobs
 	// There should be 11 MultiJobs in the initial report
-	assert.Equal(t, 11, int(updatedFirstReport.Jobs[multiJobID]))
+	assert.Equal(t, 11, int(jobMap[multiJobID]))
 	// There should be 0 MatrixProjects in the initial report
-	assert.Equal(t, 0, int(updatedFirstReport.Jobs[matrixJobID]))
+	assert.Equal(t, 0, int(jobMap[matrixJobID]))
 
 	secondFile := filepath.Join("testdata", "day-later.json.gz")
 	dayLaterReports, err := stats.ParseDailyJSON(secondFile)
@@ -250,8 +251,10 @@ func TestAddIndividualReport(t *testing.T) {
 	assert.Equal(t, updatedFirstReport.CountForMonth+1, updatedSecondReport.CountForMonth)
 	// There should be once less plugin in the second report
 	assert.Len(t, updatedSecondReport.Plugins, len(updatedFirstReport.Plugins)-1)
+
+	secondJobMap := *updatedSecondReport.Jobs
 	// There should be 0 MultiJobs
-	assert.Equal(t, 0, int(updatedSecondReport.Jobs[multiJobID]))
+	assert.Equal(t, 0, int(secondJobMap[multiJobID]))
 	// There should be 10 MatrixProjects
-	assert.Equal(t, 10, int(updatedSecondReport.Jobs[matrixJobID]))
+	assert.Equal(t, 10, int(secondJobMap[matrixJobID]))
 }

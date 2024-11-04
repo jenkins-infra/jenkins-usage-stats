@@ -7,7 +7,6 @@ import (
 	"log"
 	"path/filepath"
 	"runtime"
-	"time"
 
 	"github.com/docker/go-connections/nat"
 	"github.com/golang-migrate/migrate/v4"
@@ -64,7 +63,7 @@ func CreateTestContainer(ctx context.Context) (testcontainers.Container, *sql.DB
 		"POSTGRES_DB":       dbName,
 	}
 	dockerPort := "5432/tcp"
-	dbURL := func(port nat.Port) string {
+	dbURL := func(_ string, port nat.Port) string {
 		return fmt.Sprintf("postgres://postgres:password@localhost:%s/%s?sslmode=disable", port.Port(), dbName)
 	}
 
@@ -74,7 +73,7 @@ func CreateTestContainer(ctx context.Context) (testcontainers.Container, *sql.DB
 			ExposedPorts: []string{dockerPort},
 			Cmd:          []string{"postgres", "-c", "fsync=off"},
 			Env:          env,
-			WaitingFor:   wait.ForSQL(nat.Port(dockerPort), "postgres", dbURL).Timeout(time.Second * 30),
+			WaitingFor:   wait.ForSQL(nat.Port(dockerPort), "postgres", dbURL),
 		},
 		Started: true,
 	}
