@@ -570,6 +570,9 @@ func ReportAlreadyRead(db sq.BaseRunner, filename string) (bool, error) {
 		Where(sq.Eq{"filename": filename}).
 		Query()
 	defer func() {
+		if err != nil {
+			panic(err)
+		}
 		_ = rows.Close()
 	}()
 	if err != nil {
