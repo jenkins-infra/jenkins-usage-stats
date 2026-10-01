@@ -2308,6 +2308,21 @@
     }
   },
   {
+    "name": "ssh-credentials",
+    "installations": {
+      "1262304000000": 1
+    },
+    "installationsPercentage": {
+      "1262304000000": 0.0119976
+    },
+    "installationsPerVersion": {
+      "361.vb_f\u0016760818e8c": 1
+    },
+    "installationsPercentagePerVersion": {
+      "361.vb_f\u0016760818e8c": 0.0119976
+    }
+  },
+  {
     "name": "redmine",
     "installations": {
       "1259625600000": 249,
@@ -3953,6 +3968,21 @@
       "1.1": 0.0719856,
       "1.2": 0.8278344,
       "1.3": 0.083983205
+    }
+  },
+  {
+    "name": "amazon-ecs",
+    "installations": {
+      "1262304000000": 1
+    },
+    "installationsPercentage": {
+      "1262304000000": 0.0119976
+    },
+    "installationsPerVersion": {
+      "1.7-SNAPSHOT\u001b:wq": 1
+    },
+    "installationsPercentagePerVersion": {
+      "1.7-SNAPSHOT\u001b:wq": 0.0119976
     }
   },
   {

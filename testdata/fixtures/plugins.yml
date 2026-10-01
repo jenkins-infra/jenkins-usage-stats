@@ -3001,3 +3001,9 @@
 - id: 1001
   name: ssh-slaves
   version: "0.10"
+- id: 1002
+  name: amazon-ecs
+  version: "1.7-SNAPSHOT\x1B:wq"
+- id: 1003
+  name: ssh-credentials
+  version: "361.vb_f\x16760818e8c"
