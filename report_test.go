@@ -165,6 +165,14 @@ func TestReportFuncs(t *testing.T) {
 		assert.Equal(t, goldenPN, pn)
 	})
 
+	t.Run("JenkinsVersionsForPluginVersionsMarshalJSON", func(t *testing.T) {
+		orderedPN, err := stats.JenkinsVersionsForPluginVersions(db, 2010, 1)
+		require.NoError(t, err)
+
+		_, err = json.Marshal(orderedPN)
+		require.NoError(t, err)
+	})
+
 	t.Run("ExecutorCountsForMonth", func(t *testing.T) {
 		pn, err := stats.ExecutorCountsForMonth(db, 2010, 1)
 		require.NoError(t, err)
