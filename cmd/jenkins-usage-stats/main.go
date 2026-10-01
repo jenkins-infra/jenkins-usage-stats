@@ -9,6 +9,8 @@ import (
 	sq "github.com/Masterminds/squirrel"
 
 	"github.com/spf13/cobra"
+
+	"github.com/jenkins-infra/jenkins-usage-stats/pkg/version"
 )
 
 func main() {
@@ -21,6 +23,7 @@ func main() {
 func run(ctx context.Context) error {
 	rootCmd := &cobra.Command{
 		Use:   "jenkins-usage-stats",
+		Version: version.Version,
 		Short: "Command for running the Jenkins usage stats import and report generation",
 		Run: func(cmd *cobra.Command, args []string) {
 			_ = cmd.Help()
