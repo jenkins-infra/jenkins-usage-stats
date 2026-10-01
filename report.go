@@ -15,7 +15,7 @@ import (
 	"strings"
 	"time"
 
-	"gitlab.com/c0b/go-ordered-json"
+	ordered "github.com/iancoleman/orderedmap"
 
 	"github.com/Masterminds/semver"
 	sq "github.com/Masterminds/squirrel"
@@ -1058,8 +1058,8 @@ type PVDJenkinsVersionMap struct {
 
 // Incr bumps the count for a particular Jenkins version
 func (pvdj *PVDJenkinsVersionMap) Incr(jv string) {
-	rawCount := pvdj.Get(jv)
-	if rawCount == nil {
+	rawCount, ok := pvdj.Get(jv)
+	if !ok {
 		pvdj.Set(jv, uint64(1))
 		return
 	}
@@ -1074,9 +1074,9 @@ type PVDPluginVersionMap struct {
 
 // Version returns a pointer to the PVDJenkinsVersionMap for this plugin version
 func (pvdp *PVDPluginVersionMap) Version(pv string) *PVDJenkinsVersionMap {
-	rawVal := pvdp.Get(pv)
-	if rawVal == nil {
-		m := &PVDJenkinsVersionMap{OrderedMap: ordered.NewOrderedMap()}
+	rawVal, ok := pvdp.Get(pv)
+	if !ok {
+		m := &PVDJenkinsVersionMap{OrderedMap: ordered.New()}
 		pvdp.Set(pv, m)
 		return m
 	}
@@ -1129,7 +1129,7 @@ func JenkinsVersionsForPluginVersions(db sq.BaseRunner, year, month int) (map[st
 		maxVer := maxVersionsForInstanceIDs[iid]
 
 		if _, ok := pluginMap[pn]; !ok {
-			pluginMap[pn] = &PVDPluginVersionMap{OrderedMap: ordered.NewOrderedMap()}
+			pluginMap[pn] = &PVDPluginVersionMap{OrderedMap: ordered.New()}
 		}
 
 		pluginMap[pn].Version(pv).Incr(maxVer)
