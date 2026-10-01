@@ -10,11 +10,11 @@ require (
 	github.com/docker/go-connections v0.5.0
 	github.com/go-testfixtures/testfixtures/v3 v3.6.1
 	github.com/golang-migrate/migrate/v4 v4.15.1
+	github.com/iancoleman/orderedmap v0.3.0
 	github.com/lib/pq v1.10.3
 	github.com/spf13/cobra v1.8.1
 	github.com/stretchr/testify v1.9.0
 	github.com/testcontainers/testcontainers-go v0.29.1
-	gitlab.com/c0b/go-ordered-json v0.0.0-20201030195603-febf46534d5a
 	gopkg.in/yaml.v2 v2.4.0
 )
 

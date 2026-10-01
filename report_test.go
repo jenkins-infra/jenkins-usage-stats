@@ -137,23 +137,19 @@ func TestReportFuncs(t *testing.T) {
 		pn := make(map[string]map[string]map[string]uint64)
 		for k, v := range orderedPN {
 			pn[k] = make(map[string]map[string]uint64)
-			pvIter := v.EntriesIter()
-			for {
-				pvPair, ok := pvIter()
-				if !ok {
-					break
-				}
-				pn[k][pvPair.Key] = make(map[string]uint64)
 
-				asJVMap := pvPair.Value.(*stats.PVDJenkinsVersionMap)
+			for _, pv := range v.Keys() {
+				rawJVMap, ok := v.Get(pv)
+				require.True(t, ok)
 
-				jvIter := asJVMap.EntriesIter()
-				for {
-					jvPair, ok := jvIter()
-					if !ok {
-						break
-					}
-					pn[k][pvPair.Key][jvPair.Key] = jvPair.Value.(uint64)
+				pn[k][pv] = make(map[string]uint64)
+				asJVMap := rawJVMap.(*stats.PVDJenkinsVersionMap)
+
+				for _, jv := range asJVMap.Keys() {
+					rawCount, ok := asJVMap.Get(jv)
+					require.True(t, ok)
+
+					pn[k][pv][jv] = rawCount.(uint64)
 				}
 			}
 		}
