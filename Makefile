@@ -42,7 +42,7 @@ endif
 
 GOLANGCI_LINT :=
 GOLANGCI_LINT_OPTS ?=
-GOLANGCI_LINT_VERSION ?= v1.41.1
+GOLANGCI_LINT_VERSION ?= v1.63.1
 # golangci-lint only supports linux, darwin and windows platforms on i386/amd64.
 # windows isn't included here because of the path separator being different.
 ifeq ($(GOHOSTOS),$(filter $(GOHOSTOS),linux darwin))
@@ -108,6 +108,7 @@ endif
 .PHONY: lint
 lint: $(GOLANGCI_LINT)
 	@echo "--> Running golangci-lint"
+	golangci-lint --version
 	golangci-lint run
 
 .PHONY: make-reports-dir

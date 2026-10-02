@@ -26,7 +26,7 @@ func NewImportCmd() *cobra.Command {
 	cobraCmd := &cobra.Command{
 		Use:   "import",
 		Short: "Import instance reports",
-		Run: func(cmd *cobra.Command, args []string) {
+		Run: func(_ *cobra.Command, _ []string) {
 			if err := options.runImport(); err != nil {
 				fmt.Println(err)
 				os.Exit(1)

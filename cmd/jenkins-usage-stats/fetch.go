@@ -28,7 +28,7 @@ func NewFetchCmd(ctx context.Context) *cobra.Command {
 	cobraCmd := &cobra.Command{
 		Use:   "fetch",
 		Short: "Fetch raw usage data from Azure",
-		Run: func(cmd *cobra.Command, args []string) {
+		Run: func(_ *cobra.Command, _ []string) {
 			if err := options.runFetch(ctx); err != nil {
 				fmt.Println(err)
 				os.Exit(1)

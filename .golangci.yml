@@ -19,19 +19,18 @@ run:
 
 linters:
   enable:
-    - depguard
     - errcheck
     - goconst
     - gofmt
     - goimports
     - gosec
+    - gosimple
     - govet
     - ineffassign
-    - megacheck
     - misspell
     - revive
-    - structcheck
-    - varcheck
+    - staticcheck
+    - unused
   include:
     # Enable off-by-default rules for revive requiring that all exported elements have a properly formatted comment.
     - EXC0012
@@ -43,4 +42,9 @@ issues:
   # But independently from this option we use default exclude patterns,
   # it can be disabled by `exclude-use-default: false`. To list all
   # excluded by default patterns execute `golangci-lint run --help`
-  # exclude: []
+  exclude:
+    - 'package-comments: should have a package comment'
+    # https://github.com/securego/gosec/issues/1185 / https://github.com/golangci/golangci-lint/pull/4941
+    - 'G115'
+    # TODO "io/ioutil" has been deprecated since Go 1.19: As of Go 1.16, the same functionality is now provided by package [io] or package [os], and those implementations should be preferred in new code. See the specific function documentation for details
+    - 'SA1019'

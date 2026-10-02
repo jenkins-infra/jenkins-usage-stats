@@ -25,7 +25,7 @@ func run(ctx context.Context) error {
 		Use:   "jenkins-usage-stats",
 		Version: version.Version,
 		Short: "Command for running the Jenkins usage stats import and report generation",
-		Run: func(cmd *cobra.Command, args []string) {
+		Run: func(cmd *cobra.Command, _ []string) {
 			_ = cmd.Help()
 		},
 		DisableAutoGenTag: true,

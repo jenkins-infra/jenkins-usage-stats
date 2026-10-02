@@ -24,7 +24,7 @@ func NewReportCmd() *cobra.Command {
 	cobraCmd := &cobra.Command{
 		Use:   "report",
 		Short: "Generate stats.jenkins.io reports",
-		Run: func(_ *cobra.Command, args []string) {
+		Run: func(_ *cobra.Command, _ []string) {
 			if err := options.runReport(); err != nil {
 				fmt.Println(err)
 				os.Exit(1)
